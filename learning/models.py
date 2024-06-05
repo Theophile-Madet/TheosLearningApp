@@ -12,9 +12,16 @@ class Result(models.Model):
 
 
 class LearnedWord(models.Model):
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "word"], name="unique_word_per_user"
+            ),
+        ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
 
 
 class InvalidWord(models.Model):
-    word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    word = models.OneToOneField(Word, on_delete=models.CASCADE)
