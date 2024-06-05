@@ -1,0 +1,134 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /learning/api/get_next_word/:
+    get:
+      operationId: learning_api_get_next_word_retrieve
+      tags:
+      - learning
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Word'
+          description: ''
+  /learning/api/mark_word_as_invalid/:
+    post:
+      operationId: learning_api_mark_word_as_invalid_create
+      tags:
+      - learning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkWordAsInvalidRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MarkWordAsInvalidRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MarkWordAsInvalidRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          description: No response body
+  /learning/api/send_answer/:
+    post:
+      operationId: learning_api_send_answer_create
+      tags:
+      - learning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendAnswerRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendAnswerRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendAnswerRequest'
+        required: true
+      security:
+      - cookieAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WasAnswerCorrect'
+          description: ''
+components:
+  schemas:
+    MarkWordAsInvalidRequest:
+      type: object
+      properties:
+        word_id:
+          type: integer
+      required:
+      - word_id
+    SendAnswerRequest:
+      type: object
+      properties:
+        word_id:
+          type: integer
+        answer:
+          type: string
+          minLength: 1
+      required:
+      - answer
+      - word_id
+    TypeEnum:
+      enum:
+      - noun
+      - verb
+      - adjective
+      type: string
+      description: |-
+        * `noun` - Noun
+        * `verb` - Verb
+        * `adjective` - Adjective
+    WasAnswerCorrect:
+      type: object
+      properties:
+        correct:
+          type: boolean
+      required:
+      - correct
+    Word:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        word:
+          type: string
+          maxLength: 100
+        type:
+          $ref: '#/components/schemas/TypeEnum'
+        gender:
+          type: string
+          nullable: true
+          maxLength: 10
+        usage_frequency:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: -9223372036854775808
+          format: int64
+      required:
+      - id
+      - type
+      - usage_frequency
+      - word
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
