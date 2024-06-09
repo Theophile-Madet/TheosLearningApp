@@ -1,0 +1,11 @@
+.openapi-generator-ignore
+apis/LearningApi.ts
+apis/index.ts
+index.ts
+models/MarkWordAsInvalidRequest.ts
+models/SendAnswerRequest.ts
+models/TypeEnum.ts
+models/WasAnswerCorrect.ts
+models/Word.ts
+models/index.ts
+runtime.ts

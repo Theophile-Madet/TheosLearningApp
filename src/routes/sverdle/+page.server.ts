@@ -1,29 +1,12 @@
 import { fail } from '@sveltejs/kit';
 import { Game } from './game';
 import type { Actions, PageServerLoad } from './$types';
+import { useApi } from '../../utils/useApi';
+import { LearningApi } from '../../api-client';
 
 async function fetchData() {
-	// const response = await fetch('http://localhost:8000/learning/api/get_next_word/');
-	// return await response.text();
-
-	const response = await fetch('http://localhost:8000/learning/api/get_next_word/')
-		.then((response) => {
-			return response;
-		})
-		.catch((error) => {
-			return 'Fetch error:' + error;
-		});
-
-	if (typeof response === 'string') return response;
-
-	return await response
-		.text()
-		.then((data) => {
-			return data;
-		})
-		.catch((error) => {
-			return 'Json Error:' + error;
-		});
+	const learningApi = useApi(LearningApi);
+	return await learningApi.learningApiGetNextWordRetrieve();
 }
 
 export const load = (async ({ cookies }) => {
