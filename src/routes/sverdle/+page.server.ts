@@ -2,7 +2,31 @@ import { fail } from '@sveltejs/kit';
 import { Game } from './game';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load = (({ cookies }) => {
+async function fetchData() {
+	// const response = await fetch('http://localhost:8000/learning/api/get_next_word/');
+	// return await response.text();
+
+	const response = await fetch('http://localhost:8000/learning/api/get_next_word/')
+		.then((response) => {
+			return response;
+		})
+		.catch((error) => {
+			return 'Fetch error:' + error;
+		});
+
+	if (typeof response === 'string') return response;
+
+	return await response
+		.text()
+		.then((data) => {
+			return data;
+		})
+		.catch((error) => {
+			return 'Json Error:' + error;
+		});
+}
+
+export const load = (async ({ cookies }) => {
 	const game = new Game(cookies.get('sverdle'));
 
 	return {
@@ -10,6 +34,8 @@ export const load = (({ cookies }) => {
 		 * The player's guessed words so far
 		 */
 		guesses: game.guesses,
+
+		fetchedData: await fetchData(),
 
 		/**
 		 * An array of strings like '__x_c' corresponding to the guesses, where 'x' means

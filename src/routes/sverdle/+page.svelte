@@ -105,6 +105,7 @@
 	}}
 >
 	<a class="how-to-play" href="/sverdle/how-to-play">How to play</a>
+	<div>{data.fetchedData}</div>
 
 	<div class="grid" class:playing={!won} class:bad-guess={form?.badGuess}>
 		{#each Array.from(Array(6).keys()) as row (row)}
