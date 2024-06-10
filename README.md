@@ -6,6 +6,6 @@
 # Generate API client
 
 ```shell
-python ./manage.py spectacular --file schema.yml
-openapi-generator-cli generate -i schema.yml -g typescript-fetch -o ./src/api-client
+python ./manage.py spectacular --file schema.yml;
+openapi-generator-cli generate -i schema.yml -g typescript-fetch -o ./src/api-client;
 ```

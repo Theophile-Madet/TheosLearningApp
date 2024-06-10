@@ -24,7 +24,7 @@ import {
 	SendAnswerRequestToJSON,
 	WasAnswerCorrectFromJSON,
 	WordFromJSON
-} from '../models/index';
+} from '..models/index';
 
 export interface LearningApiMarkWordAsInvalidCreateRequest {
 	markWordAsInvalidRequest: MarkWordAsInvalidRequest;
