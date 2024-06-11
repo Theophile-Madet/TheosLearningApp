@@ -9,3 +9,14 @@
 python ./manage.py spectacular --file schema.yml;
 openapi-generator-cli generate -i schema.yml -g typescript-fetch -o ./src/api-client;
 ```
+
+# Start the server
+
+```shell
+pnpm dev
+python manage.py runserver
+```
+
+# Improvements
+
+- Import the Bootstrap CSS file locally instead of through a CDN

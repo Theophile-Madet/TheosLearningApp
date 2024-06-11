@@ -2,7 +2,10 @@
 	import { page } from '$app/stores';
 	import logo from '$lib/images/svelte-logo.svg';
 	import github from '$lib/images/github.svg';
+	import { Styles } from '@sveltestrap/sveltestrap';
 </script>
+
+<Styles />
 
 <header>
 	<div class="corner">
@@ -27,6 +30,9 @@
 			</li>
 			<li aria-current={$page.url.pathname === '/login' ? 'page' : undefined}>
 				<a href="/login">Login</a>
+			</li>
+			<li aria-current={$page.url.pathname === '/learndle' ? 'page' : undefined}>
+				<a href="/learndle">Learndle</a>
 			</li>
 		</ul>
 		<svg viewBox="0 0 2 3" aria-hidden="true">

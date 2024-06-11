@@ -7,9 +7,9 @@ paths:
     get:
       operationId: learning_api_get_next_word_retrieve
       tags:
-      - learning
+        - learning
       security:
-      - cookieAuth: []
+        - cookieAuth: [ ]
       responses:
         '200':
           content:
@@ -21,7 +21,7 @@ paths:
     post:
       operationId: learning_api_mark_word_as_invalid_create
       tags:
-      - learning
+        - learning
       requestBody:
         content:
           application/json:
@@ -35,7 +35,7 @@ paths:
               $ref: '#/components/schemas/MarkWordAsInvalidRequest'
         required: true
       security:
-      - cookieAuth: []
+        - cookieAuth: [ ]
       responses:
         '200':
           description: No response body
@@ -43,7 +43,7 @@ paths:
     post:
       operationId: learning_api_send_answer_create
       tags:
-      - learning
+        - learning
       requestBody:
         content:
           application/json:
@@ -57,7 +57,7 @@ paths:
               $ref: '#/components/schemas/SendAnswerRequest'
         required: true
       security:
-      - cookieAuth: []
+        - cookieAuth: [ ]
       responses:
         '200':
           content:
@@ -73,7 +73,7 @@ components:
         word_id:
           type: integer
       required:
-      - word_id
+        - word_id
     SendAnswerRequest:
       type: object
       properties:
@@ -83,13 +83,13 @@ components:
           type: string
           minLength: 1
       required:
-      - answer
-      - word_id
+        - answer
+        - word_id
     TypeEnum:
       enum:
-      - noun
-      - verb
-      - adjective
+        - noun
+        - verb
+        - adjective
       type: string
       description: |-
         * `noun` - Noun
@@ -101,7 +101,7 @@ components:
         correct:
           type: boolean
       required:
-      - correct
+        - correct
     Word:
       type: object
       properties:
@@ -123,10 +123,10 @@ components:
           minimum: -9223372036854775808
           format: int64
       required:
-      - id
-      - type
-      - usage_frequency
-      - word
+        - id
+        - type
+        - usage_frequency
+        - word
   securitySchemes:
     cookieAuth:
       type: apiKey

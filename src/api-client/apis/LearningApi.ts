@@ -13,18 +13,13 @@
  */
 
 import * as runtime from '../runtime';
-import type {
-	MarkWordAsInvalidRequest,
-	SendAnswerRequest,
-	WasAnswerCorrect,
-	Word
-} from '../models/index';
+import type { MarkWordAsInvalidRequest, SendAnswerRequest, WasAnswerCorrect, Word } from '../models/index';
 import {
 	MarkWordAsInvalidRequestToJSON,
 	SendAnswerRequestToJSON,
 	WasAnswerCorrectFromJSON,
 	WordFromJSON
-} from '..models/index';
+} from '../models/index';
 
 export interface LearningApiMarkWordAsInvalidCreateRequest {
 	markWordAsInvalidRequest: MarkWordAsInvalidRequest;
