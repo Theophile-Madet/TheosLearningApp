@@ -3,6 +3,7 @@ import random
 from django.contrib.auth.models import User
 
 from content.models import Word
+from learning.apps import LearningConfig
 from learning.models import LearnedWord, InvalidWord
 
 
@@ -18,7 +19,7 @@ class WordToLearnPicker:
             )
             .exclude(
                 id__in=InvalidWord.objects.all().values_list("word__id", flat=True)
-            )[:5]
+            )[: LearningConfig.POOL_SIZE]
         )
 
         return random.choice(potential_words)

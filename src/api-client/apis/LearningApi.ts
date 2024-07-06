@@ -12,13 +12,14 @@
  * Do not edit the class manually.
  */
 
+
 import * as runtime from '../runtime';
 import type { MarkWordAsInvalidRequest, SendAnswerRequest, WasAnswerCorrect, Word } from '../models/index';
 import {
-	MarkWordAsInvalidRequestToJSON,
-	SendAnswerRequestToJSON,
-	WasAnswerCorrectFromJSON,
-	WordFromJSON
+    MarkWordAsInvalidRequestToJSON,
+    SendAnswerRequestToJSON,
+    WasAnswerCorrectFromJSON,
+    WordFromJSON
 } from '../models/index';
 
 export interface LearningApiMarkWordAsInvalidCreateRequest {
@@ -33,43 +34,34 @@ export interface LearningApiSendAnswerCreateRequest {
  *
  */
 export class LearningApi extends runtime.BaseAPI {
+
 	/**
 	 */
-	async learningApiGetNextWordRetrieveRaw(
-		initOverrides?: RequestInit | runtime.InitOverrideFunction
-	): Promise<runtime.ApiResponse<Word>> {
+	async learningApiGetNextWordRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Word>> {
 		const queryParameters: any = {};
 
 		const headerParameters: runtime.HTTPHeaders = {};
 
-		const response = await this.request(
-			{
-				path: `/learning/api/get_next_word/`,
-				method: 'GET',
-				headers: headerParameters,
-				query: queryParameters
-			},
-			initOverrides
-		);
+		const response = await this.request({
+			path: `/learning/api/get_next_word/`,
+			method: 'GET',
+			headers: headerParameters,
+			query: queryParameters
+		}, initOverrides);
 
 		return new runtime.JSONApiResponse(response, (jsonValue) => WordFromJSON(jsonValue));
 	}
 
 	/**
 	 */
-	async learningApiGetNextWordRetrieve(
-		initOverrides?: RequestInit | runtime.InitOverrideFunction
-	): Promise<Word> {
+	async learningApiGetNextWordRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Word> {
 		const response = await this.learningApiGetNextWordRetrieveRaw(initOverrides);
 		return await response.value();
 	}
 
 	/**
 	 */
-	async learningApiMarkWordAsInvalidCreateRaw(
-		requestParameters: LearningApiMarkWordAsInvalidCreateRequest,
-		initOverrides?: RequestInit | runtime.InitOverrideFunction
-	): Promise<runtime.ApiResponse<void>> {
+	async learningApiMarkWordAsInvalidCreateRaw(requestParameters: LearningApiMarkWordAsInvalidCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
 		if (requestParameters['markWordAsInvalidRequest'] == null) {
 			throw new runtime.RequiredError(
 				'markWordAsInvalidRequest',
@@ -83,35 +75,26 @@ export class LearningApi extends runtime.BaseAPI {
 
 		headerParameters['Content-Type'] = 'application/json';
 
-		const response = await this.request(
-			{
-				path: `/learning/api/mark_word_as_invalid/`,
-				method: 'POST',
-				headers: headerParameters,
-				query: queryParameters,
-				body: MarkWordAsInvalidRequestToJSON(requestParameters['markWordAsInvalidRequest'])
-			},
-			initOverrides
-		);
+		const response = await this.request({
+			path: `/learning/api/mark_word_as_invalid/`,
+			method: 'POST',
+			headers: headerParameters,
+			query: queryParameters,
+			body: MarkWordAsInvalidRequestToJSON(requestParameters['markWordAsInvalidRequest'])
+		}, initOverrides);
 
 		return new runtime.VoidApiResponse(response);
 	}
 
 	/**
 	 */
-	async learningApiMarkWordAsInvalidCreate(
-		requestParameters: LearningApiMarkWordAsInvalidCreateRequest,
-		initOverrides?: RequestInit | runtime.InitOverrideFunction
-	): Promise<void> {
+	async learningApiMarkWordAsInvalidCreate(requestParameters: LearningApiMarkWordAsInvalidCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
 		await this.learningApiMarkWordAsInvalidCreateRaw(requestParameters, initOverrides);
 	}
 
 	/**
 	 */
-	async learningApiSendAnswerCreateRaw(
-		requestParameters: LearningApiSendAnswerCreateRequest,
-		initOverrides?: RequestInit | runtime.InitOverrideFunction
-	): Promise<runtime.ApiResponse<WasAnswerCorrect>> {
+	async learningApiSendAnswerCreateRaw(requestParameters: LearningApiSendAnswerCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WasAnswerCorrect>> {
 		if (requestParameters['sendAnswerRequest'] == null) {
 			throw new runtime.RequiredError(
 				'sendAnswerRequest',
@@ -125,29 +108,22 @@ export class LearningApi extends runtime.BaseAPI {
 
 		headerParameters['Content-Type'] = 'application/json';
 
-		const response = await this.request(
-			{
-				path: `/learning/api/send_answer/`,
-				method: 'POST',
-				headers: headerParameters,
-				query: queryParameters,
-				body: SendAnswerRequestToJSON(requestParameters['sendAnswerRequest'])
-			},
-			initOverrides
-		);
+		const response = await this.request({
+			path: `/learning/api/send_answer/`,
+			method: 'POST',
+			headers: headerParameters,
+			query: queryParameters,
+			body: SendAnswerRequestToJSON(requestParameters['sendAnswerRequest'])
+		}, initOverrides);
 
-		return new runtime.JSONApiResponse(response, (jsonValue) =>
-			WasAnswerCorrectFromJSON(jsonValue)
-		);
+		return new runtime.JSONApiResponse(response, (jsonValue) => WasAnswerCorrectFromJSON(jsonValue));
 	}
 
 	/**
 	 */
-	async learningApiSendAnswerCreate(
-		requestParameters: LearningApiSendAnswerCreateRequest,
-		initOverrides?: RequestInit | runtime.InitOverrideFunction
-	): Promise<WasAnswerCorrect> {
+	async learningApiSendAnswerCreate(requestParameters: LearningApiSendAnswerCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WasAnswerCorrect> {
 		const response = await this.learningApiSendAnswerCreateRaw(requestParameters, initOverrides);
 		return await response.value();
 	}
+
 }

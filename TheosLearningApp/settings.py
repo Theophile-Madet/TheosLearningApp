@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "learning.middleware.LogResponseMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "learning.middleware.LogRequestMiddleware",
 ]
 
 ROOT_URLCONF = "TheosLearningApp.urls"
@@ -136,3 +138,5 @@ REST_FRAMEWORK = {
 }
 
 SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]

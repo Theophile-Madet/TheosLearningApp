@@ -1,6 +1,6 @@
 import { Configuration, type FetchAPI } from '../api-client';
 
-export function useApi<T>(ApiClient: new (configuration: Configuration) => T, fetch: FetchAPI): T {
+export function useApi<T>(ApiClient: new (configuration: Configuration) => T, fetch: FetchAPI, csrfToken?: string): T {
 	return new ApiClient(
 		new Configuration({
 			basePath: 'http://localhost:8000',
@@ -8,7 +8,8 @@ export function useApi<T>(ApiClient: new (configuration: Configuration) => T, fe
 			// from the browser request
 			// This way, if the user is logged in to the Django server on his browser,
 			// the requests coming from SvelteKit are also logged in
-			fetchApi: fetch
+			fetchApi: fetch,
+			headers: csrfToken ? { 'X-CSRFToken': csrfToken } : undefined
 		})
 	);
 }

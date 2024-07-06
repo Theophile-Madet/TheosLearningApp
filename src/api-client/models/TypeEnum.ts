@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+
 /**
  * * `noun` - Noun
  * * `verb` - Verb
@@ -23,7 +24,8 @@ export const TypeEnum = {
 	Verb: 'verb',
 	Adjective: 'adjective'
 } as const;
-export type TypeEnum = (typeof TypeEnum)[keyof typeof TypeEnum];
+export type TypeEnum = typeof TypeEnum[keyof typeof TypeEnum];
+
 
 export function instanceOfTypeEnum(value: any): boolean {
 	for (const key in TypeEnum) {
@@ -47,3 +49,4 @@ export function TypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
 export function TypeEnumToJSON(value?: TypeEnum | null): any {
 	return value as any;
 }
+

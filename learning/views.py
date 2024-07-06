@@ -5,13 +5,14 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from content.models import Word
-from learning.models import Result, InvalidWord
+from learning.models import Result, InvalidWord, LearnedWord
 from learning.serializers import (
     WordSerializer,
     WasAnswerCorrectSerializer,
     SendAnswerSerializer,
     MarkWordAsInvalidSerializer,
 )
+from learning.services.WordLearnedChecker import WordLearnedChecker
 from learning.services.WordToLearnPicker import WordToLearnPicker
 
 
@@ -36,6 +37,10 @@ class SendAnswer(APIView):
         answer = request_serializer.validated_data["answer"]
         word = get_object_or_404(Word, id=request_serializer.validated_data["word_id"])
         Result.objects.create(answer=answer, word=word, user=request.user)
+
+        if WordLearnedChecker.is_word_learned(request.user, word):
+            LearnedWord.objects.create(user=request.user, word=word)
+
         return Response(answer == word.gender, status=status.HTTP_200_OK)
 
 

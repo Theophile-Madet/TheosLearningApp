@@ -1,11 +1,10 @@
 <script lang="ts">
 	import PageData = App.PageData;
 	import { Col, Container, Row } from '@sveltestrap/sveltestrap';
+	import AnswerButton from './AnswerButton.svelte';
 
 	export let data: PageData;
 
-	const answerButtonClasses =
-		'btn btn-primary answer_button d-flex align-items-center justify-content-center';
 </script>
 
 <svelte:head>
@@ -19,29 +18,12 @@
 			<h1>{data.wordToGuess.word}</h1>
 		</Col>
 	</Row>
-
 	<Row class="mb-4">
 		<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-			<div class={answerButtonClasses}>
-				<div class="align-middle">Der</div>
-			</div>
-			<div class={answerButtonClasses}>
-				<div>Die</div>
-			</div>
-			<div class={answerButtonClasses}>
-				<div>Das</div>
-			</div>
-			<div class={answerButtonClasses}>
-				<div>Plural</div>
-			</div>
+			<AnswerButton text="Der" answer="m" wordId="{data.wordToGuess.id}" />
+			<AnswerButton text="Die" answer="f" wordId="{data.wordToGuess.id}" />
+			<AnswerButton text="Das" answer="n" wordId="{data.wordToGuess.id}" />
+			<AnswerButton text="Plural" answer="0" wordId="{data.wordToGuess.id}" />
 		</Col>
 	</Row>
 </Container>
-
-<style>
-    .answer_button {
-        --bs-btn-font-size: 2rem;
-        width: 200px;
-        height: 100px;
-    }
-</style>

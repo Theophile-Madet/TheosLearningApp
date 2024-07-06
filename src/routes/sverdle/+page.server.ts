@@ -1,14 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import { Game } from './game';
 import type { Actions, PageServerLoad } from './$types';
-import { useApi } from '../../utils/useApi';
-import { type FetchAPI, LearningApi } from '../../api-client';
-
-async function fetchData(fetch: FetchAPI) {
-	const learningApi = useApi(LearningApi, fetch);
-	const word = await learningApi.learningApiGetNextWordRetrieve();
-	return word.word + ' ' + word.id + ' ' + word.gender;
-}
 
 export const load = (async ({ cookies, fetch }) => {
 	const game = new Game(cookies.get('sverdle'));
@@ -18,8 +10,6 @@ export const load = (async ({ cookies, fetch }) => {
 		 * The player's guessed words so far
 		 */
 		guesses: game.guesses,
-
-		fetchedData: await fetchData(fetch),
 
 		/**
 		 * An array of strings like '__x_c' corresponding to the guesses, where 'x' means

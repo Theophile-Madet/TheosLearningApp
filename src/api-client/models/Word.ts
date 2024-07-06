@@ -73,11 +73,12 @@ export function WordFromJSONTyped(json: any, ignoreDiscriminator: boolean): Word
 		return json;
 	}
 	return {
-		id: json['id'],
-		word: json['word'],
-		type: TypeEnumFromJSON(json['type']),
-		gender: json['gender'] == null ? undefined : json['gender'],
-		usageFrequency: json['usage_frequency']
+
+		'id': json['id'],
+		'word': json['word'],
+		'type': TypeEnumFromJSON(json['type']),
+		'gender': json['gender'] == null ? undefined : json['gender'],
+		'usageFrequency': json['usage_frequency']
 	};
 }
 
@@ -86,9 +87,11 @@ export function WordToJSON(value?: Omit<Word, 'id'> | null): any {
 		return value;
 	}
 	return {
-		word: value['word'],
-		type: TypeEnumToJSON(value['type']),
-		gender: value['gender'],
-		usage_frequency: value['usageFrequency']
+
+		'word': value['word'],
+		'type': TypeEnumToJSON(value['type']),
+		'gender': value['gender'],
+		'usage_frequency': value['usageFrequency']
 	};
 }
+
