@@ -27,5 +27,17 @@ export const actions = {
 				answer: answer
 			}
 		});
+	},
+
+	markWordAsInvalid: async ({ fetch, request, cookies }) => {
+		const data = await request.formData();
+		const wordId = (data.get('wordId') ?? -1) as number;
+
+		const learningApi = useApi(LearningApi, fetch, cookies.get('csrftoken') ?? undefined);
+		await learningApi.learningApiMarkWordAsInvalidCreate({
+			markWordAsInvalidRequest: {
+				wordId: wordId
+			}
+		});
 	}
 } satisfies Actions;

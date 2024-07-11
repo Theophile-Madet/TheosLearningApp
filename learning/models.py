@@ -25,3 +25,6 @@ class LearnedWord(models.Model):
 
 class InvalidWord(models.Model):
     word = models.OneToOneField(Word, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.word}"
