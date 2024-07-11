@@ -2,19 +2,26 @@
 	import { enhance } from '$app/forms';
 
 	export let text: string;
-	export let answer: string;
-	export let wordId: number;
+	export let buttonValue: string;
+	export let wordId: number | undefined = undefined;
+	export let word: string | undefined = undefined;
+	export let givenAnswer: string | undefined = undefined;
+	export let answerWasCorrect: boolean | undefined = undefined;
+
+	$: buttonColor = buttonValue !== givenAnswer ? 'btn-primary' : (answerWasCorrect ? 'btn-success' : 'btn-danger');
 </script>
 
 <form method="POST"
 			action="?/answer"
 			use:enhance>
-	<button class="btn btn-primary answer_button d-flex align-items-center justify-content-center"
-					name="answer"
-					value="{answer}">
-		{text}
+	<button
+		class="btn {buttonColor} answer_button d-flex align-items-center justify-content-center"
+		name="answer"
+		value="{buttonValue}">
+		{text} - {buttonColor}
 	</button>
 	<input name="wordId" type="hidden" value="{wordId}">
+	<input name="word" type="hidden" value="{word}">
 </form>
 
 <style>

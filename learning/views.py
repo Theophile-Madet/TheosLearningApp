@@ -41,7 +41,10 @@ class SendAnswer(APIView):
         if WordLearnedChecker.is_word_learned(request.user, word):
             LearnedWord.objects.create(user=request.user, word=word)
 
-        return Response(answer == word.gender, status=status.HTTP_200_OK)
+        return Response(
+            WasAnswerCorrectSerializer({"correct": answer == word.gender}).data,
+            status=status.HTTP_200_OK,
+        )
 
 
 class MarkWordAsInvalid(APIView):

@@ -8,7 +8,7 @@ async function fetchNextWord(fetch: FetchAPI) {
 	return await learningApi.learningApiGetNextWordRetrieve();
 }
 
-export const load = (async ({ cookies, fetch }) => {
+export const load = (async ({ fetch }) => {
 	return {
 		wordToGuess: await fetchNextWord(fetch)
 	};
@@ -19,14 +19,17 @@ export const actions = {
 		const data = await request.formData();
 		const answer = (data.get('answer') ?? 'not found') as string;
 		const wordId = (data.get('wordId') ?? -1) as number;
+		const word = data.get('word');
 
 		const learningApi = useApi(LearningApi, fetch, cookies.get('csrftoken') ?? undefined);
-		await learningApi.learningApiSendAnswerCreate({
+		const isCorrect = await learningApi.learningApiSendAnswerCreate({
 			sendAnswerRequest: {
 				wordId: wordId,
 				answer: answer
 			}
 		});
+
+		return { lastWord: word, answerIsCorrect: isCorrect.correct, givenAnswer: answer };
 	},
 
 	markWordAsInvalid: async ({ fetch, request, cookies }) => {
