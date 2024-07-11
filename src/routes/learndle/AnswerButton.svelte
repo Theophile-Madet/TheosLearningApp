@@ -18,7 +18,7 @@
 		class="btn {buttonColor} answer_button d-flex align-items-center justify-content-center"
 		name="answer"
 		value="{buttonValue}">
-		{text} - {buttonColor}
+		{text}
 	</button>
 	<input name="wordId" type="hidden" value="{wordId}">
 	<input name="word" type="hidden" value="{word}">
