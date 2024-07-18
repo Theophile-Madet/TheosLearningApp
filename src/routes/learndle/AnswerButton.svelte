@@ -2,23 +2,36 @@
 
 	import { createEventDispatcher } from 'svelte';
 	import type { Word } from '../../api-client';
+	import { hasAnswered } from './stores';
 
 	export let text: string;
 	export let word: Word;
 	export let buttonValue: string;
-	export let answerGiven: boolean;
-	$: localGiven = answerGiven;
-
-	let clicked = false;
 
 	let buttonColor = 'btn-primary';
-	$: if (localGiven) {
-		if (buttonValue == word.gender) {
-			buttonColor = 'btn-success';
-		} else if (clicked) {
-			buttonColor = 'btn-danger';
+	let clicked = false;
+
+	function determineButtonColor(hasAnswered: Boolean) {
+		if (hasAnswered) {
+			if (buttonValue == word.gender) {
+				return 'btn-success';
+			}
+
+			if (clicked) {
+				return 'btn-danger';
+			}
 		}
+
+		return 'btn-primary';
 	}
+
+	hasAnswered.subscribe((hasAnswered) => {
+		if (!hasAnswered) {
+			clicked = false;
+		}
+
+		buttonColor = determineButtonColor(hasAnswered);
+	});
 
 	const dispatch = createEventDispatcher();
 
@@ -32,7 +45,7 @@
 
 <button on:click={sendAnswer}
 				class="btn {buttonColor} answer_button d-flex align-items-center justify-content-center"
-				disabled="{localGiven}">
+				disabled="{$hasAnswered}">
 	{text}
 </button>
 
