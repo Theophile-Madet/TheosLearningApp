@@ -1,13 +1,50 @@
 <script lang="ts">
-	import { Col, Container, Row } from '@sveltestrap/sveltestrap';
+	import { Button, Col, Container, Row } from '@sveltestrap/sveltestrap';
 	import AnswerButton from './AnswerButton.svelte';
-	import { enhance } from '$app/forms';
-	import type { ActionData, PageData } from '../../../.svelte-kit/types/src/routes/learndle/$types';
+	import type { PageData } from '../../../.svelte-kit/types/src/routes/learndle/$types';
+	import { useApi } from '../../utils/useApi';
+	import { LearningApi } from '../../api-client';
+	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
 
 	export let data: PageData;
-	export let form: ActionData;
 
+	let answerGiven = false;
+	let markInvalidModalOpen = false;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
+
+	function getCookieValue(name: string) {
+		return document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || '';
+	}
+
+	async function sendAnswer(event: CustomEvent) {
+		const learningApi = useApi(LearningApi, fetch, getCookieValue('csrftoken'));
+		answerGiven = true;
+		await learningApi.learningApiSendAnswerCreate({
+			sendAnswerRequest: {
+				wordId: data.wordToGuess.id,
+				answer: event.detail.value
+			}
+		});
+	}
+
+	async function fetchNextWord() {
+		const learningApi = useApi(LearningApi);
+		data.wordToGuess = await learningApi.learningApiGetNextWordRetrieve();
+		answerGiven = false;
+	}
+
+	async function markWordAsInvalid() {
+		const learningApi = useApi(LearningApi, fetch, getCookieValue('csrftoken'));
+		await learningApi.learningApiMarkWordAsInvalidCreate({
+				markWordAsInvalidRequest: {
+					wordId: data.wordToGuess.id
+				}
+			}
+		);
+
+		markInvalidModalOpen = false;
+		await fetchNextWord();
+	}
 </script>
 
 <svelte:head>
@@ -23,39 +60,32 @@
 	</Row>
 	<Row class="mb-4">
 		<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-			{#each Object.entries(textValuePairs) as [text, value]}
-				<AnswerButton text="{text}" buttonValue="{value}"
-											wordId="{data.wordToGuess.id}"
-											word="{data.wordToGuess.word}" />
-			{/each}
+			{#key answerGiven}
+				{#each Object.entries(textValuePairs) as [text, value]}
+					<AnswerButton text="{text}" word="{data.wordToGuess}" buttonValue="{value}" {answerGiven}
+												on:sendAnswer={sendAnswer} />
+				{/each}
+			{/key}
 		</Col>
 	</Row>
 	<Row class="mb-4">
-		<Col class="d-flex justify-content-center">
-			<form method="POST"
-						action="/learndle?/markWordAsInvalid"
-						use:enhance>
-				<button class="btn btn-outline-danger btn-sm d-flex align-items-center justify-content-center">
-					Mark word as invalid
-				</button>
-				<input name="wordId" type="hidden" value="{data.wordToGuess.id}">
-			</form>
+		<Col class="d-flex justify-content-center gap-3">
+			<Button class="d-flex align-items-center justify-content-center"
+							color="danger"
+							size="sm"
+							outline="{true}"
+							on:click={() => {markInvalidModalOpen = true;}}>
+				Mark word as invalid
+			</Button>
+			<Button class="d-flex align-items-center justify-content-center"
+							color="secondary"
+							size="sm"
+							outline="{true}"
+							on:click={fetchNextWord}>
+				Next word
+			</Button>
 		</Col>
 	</Row>
-	{#if form?.lastWord}
-		<Row class="mb-1">
-			<Col>
-				<h1>{form.lastWord}</h1>
-			</Col>
-		</Row>
-		<Row class="mb-1">
-			<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-				{#each Object.entries(textValuePairs) as [text, value]}
-					<AnswerButton text="{text}" buttonValue="{value}"
-												givenAnswer="{form?.givenAnswer}"
-												answerWasCorrect="{form?.answerIsCorrect}" />
-				{/each}
-			</Col>
-		</Row>
-	{/if}
+	<MarkWordAsInvalidConfirmationModal word="{data.wordToGuess}" isOpen="{markInvalidModalOpen}"
+																			on:confirm={markWordAsInvalid} />
 </Container>

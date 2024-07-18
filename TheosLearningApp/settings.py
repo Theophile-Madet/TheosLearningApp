@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+from corsheaders.defaults import default_headers
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +27,7 @@ SECRET_KEY = "django-insecure-%229o*=j9c65lqi8%%p!+3*8o8zpk=11tw_m7oo&c7!ygf*k$7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["http://localhost:5173", "localhost"]
+ALLOWED_HOSTS = ["localhost:5173", "localhost"]
 
 
 # Application definition
@@ -42,12 +44,14 @@ INSTALLED_APPS = [
     "django_extensions",
     "rest_framework",
     "drf_spectacular",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     "learning.middleware.LogResponseMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -140,3 +144,12 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+
+CORS_ORIGIN_WHITELIST = ["http://localhost:5173"]
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_HEADERS = (
+    *default_headers,
+    "X-CSRF-Token",
+)

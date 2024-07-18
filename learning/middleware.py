@@ -10,6 +10,7 @@ class LogRequestMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
+        ic(request.headers)
         return self.get_response(request)
 
 

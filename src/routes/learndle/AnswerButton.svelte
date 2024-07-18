@@ -1,28 +1,40 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+
+	import { createEventDispatcher } from 'svelte';
+	import type { Word } from '../../api-client';
 
 	export let text: string;
+	export let word: Word;
 	export let buttonValue: string;
-	export let wordId: number | undefined = undefined;
-	export let word: string | undefined = undefined;
-	export let givenAnswer: string | undefined = undefined;
-	export let answerWasCorrect: boolean | undefined = undefined;
+	export let answerGiven: boolean;
+	$: localGiven = answerGiven;
 
-	$: buttonColor = buttonValue !== givenAnswer ? 'btn-primary' : (answerWasCorrect ? 'btn-success' : 'btn-danger');
+	let clicked = false;
+
+	let buttonColor = 'btn-primary';
+	$: if (localGiven) {
+		if (buttonValue == word.gender) {
+			buttonColor = 'btn-success';
+		} else if (clicked) {
+			buttonColor = 'btn-danger';
+		}
+	}
+
+	const dispatch = createEventDispatcher();
+
+	function sendAnswer() {
+		clicked = true;
+		dispatch('sendAnswer', {
+			value: buttonValue
+		});
+	}
 </script>
 
-<form method="POST"
-			action="?/answer"
-			use:enhance>
-	<button
-		class="btn {buttonColor} answer_button d-flex align-items-center justify-content-center"
-		name="answer"
-		value="{buttonValue}">
-		{text}
-	</button>
-	<input name="wordId" type="hidden" value="{wordId}">
-	<input name="word" type="hidden" value="{word}">
-</form>
+<button on:click={sendAnswer}
+				class="btn {buttonColor} answer_button d-flex align-items-center justify-content-center"
+				disabled="{localGiven}">
+	{text}
+</button>
 
 <style>
     .answer_button {
