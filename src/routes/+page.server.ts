@@ -1,7 +1,7 @@
-import type { PageServerLoad } from './$types';
-import { useLearningDinoApi } from '../../utils/useLearningDinoApi';
-import type { Actions } from '../../../.svelte-kit/types/src/routes/sverdle/$types';
-import { LearningApi, ResponseError } from '../../learning-dino-api-client';
+import type { PageServerLoad } from '../../.svelte-kit/types/src/routes';
+import { useLearningDinoApi } from '../utils/useLearningDinoApi';
+import type { Actions } from '../../.svelte-kit/types/src/routes/sverdle/$types';
+import { LearningApi, ResponseError } from '../learning-dino-api-client';
 import { redirect } from '@sveltejs/kit';
 
 export const load = (async ({ fetch }) => {

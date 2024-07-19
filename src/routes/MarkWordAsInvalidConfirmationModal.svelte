@@ -2,7 +2,7 @@
 
 	import { createEventDispatcher } from 'svelte';
 	import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from '@sveltestrap/sveltestrap';
-	import type { Word } from '../../learning-dino-api-client';
+	import type { Word } from '../learning-dino-api-client';
 
 	export let word: Word;
 	export let isOpen: boolean;
