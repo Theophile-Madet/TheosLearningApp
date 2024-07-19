@@ -6,6 +6,11 @@ app_name = "learning"
 
 urlpatterns = [
     path(
+        "api/get_csrf_token",
+        views.GetCSRFToken.as_view(),
+        name="get_csrf_token",
+    ),
+    path(
         "api/get_next_word/",
         views.GetNextWord.as_view(),
         name="get_next_word",

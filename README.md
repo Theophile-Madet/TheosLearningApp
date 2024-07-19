@@ -6,8 +6,9 @@
 # Generate API client
 
 ```shell
-python ./manage.py spectacular --file schema.yml;
-openapi-generator-cli generate -i schema.yml -g typescript-fetch -o ./src/api-client;
+python ./manage.py spectacular --file learning-dino-schema.yml;
+openapi-generator-cli generate -i learning-dino-schema.yml -g typescript-fetch -o ./src/learning-dino-api-client;
+openapi-generator-cli generate -i allauth-schema.yml -g typescript-fetch -o ./src/allauth-api-client;
 ```
 
 # Start the server

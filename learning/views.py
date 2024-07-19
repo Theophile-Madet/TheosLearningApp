@@ -1,5 +1,7 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie
 from drf_spectacular.utils import extend_schema
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,6 +16,15 @@ from learning.serializers import (
 )
 from learning.services.WordLearnedChecker import WordLearnedChecker
 from learning.services.WordToLearnPicker import WordToLearnPicker
+
+
+@method_decorator(ensure_csrf_cookie, name="dispatch")
+class GetCSRFToken(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    @extend_schema(responses={200: None})
+    def get(self, request):
+        return Response({"success": "CSRF cookie set"})
 
 
 class GetNextWord(APIView):

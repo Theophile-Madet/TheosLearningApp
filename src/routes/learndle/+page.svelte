@@ -2,22 +2,19 @@
 	import { Button, Col, Container, Row } from '@sveltestrap/sveltestrap';
 	import AnswerButton from './AnswerButton.svelte';
 	import type { PageData } from '../../../.svelte-kit/types/src/routes/learndle/$types';
-	import { useApi } from '../../utils/useApi';
-	import { LearningApi } from '../../api-client';
+	import { useLearningDinoApi } from '../../utils/useLearningDinoApi';
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
 	import { hasAnswered } from './stores';
+	import { getCookieValue } from '../../utils/getCookieValue';
+	import { LearningApi } from '../../learning-dino-api-client';
 
 	export let data: PageData;
 
 	let markInvalidModalOpen = false;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
-	function getCookieValue(name: string) {
-		return document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)')?.pop() || '';
-	}
-
 	async function sendAnswer(event: CustomEvent) {
-		const learningApi = useApi(LearningApi, fetch, getCookieValue('csrftoken'));
+		const learningApi = useLearningDinoApi(LearningApi, fetch, getCookieValue('csrftoken', document));
 		$hasAnswered = true;
 		await learningApi.learningApiSendAnswerCreate({
 			sendAnswerRequest: {
@@ -28,13 +25,13 @@
 	}
 
 	async function fetchNextWord() {
-		const learningApi = useApi(LearningApi);
+		const learningApi = useLearningDinoApi(LearningApi);
 		data.wordToGuess = await learningApi.learningApiGetNextWordRetrieve();
 		$hasAnswered = false;
 	}
 
 	async function markWordAsInvalid() {
-		const learningApi = useApi(LearningApi, fetch, getCookieValue('csrftoken'));
+		const learningApi = useLearningDinoApi(LearningApi, fetch, getCookieValue('csrftoken', document));
 		await learningApi.learningApiMarkWordAsInvalidCreate({
 				markWordAsInvalidRequest: {
 					wordId: data.wordToGuess.id

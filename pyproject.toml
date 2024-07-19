@@ -14,6 +14,7 @@ lxml = "^5.2.2"
 django-extensions = "^3.2.3"
 djangorestframework = "^3.15.2"
 django-cors-headers = "^4.4.0"
+django-allauth = "^0.63.6"
 
 
 [tool.poetry.group.dev.dependencies]

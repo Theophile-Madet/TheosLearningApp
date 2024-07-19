@@ -1,16 +1,22 @@
 import type { PageServerLoad } from './$types';
-import { useApi } from '../../utils/useApi';
-import { type FetchAPI, LearningApi } from '../../api-client';
+import { useLearningDinoApi } from '../../utils/useLearningDinoApi';
 import type { Actions } from '../../../.svelte-kit/types/src/routes/sverdle/$types';
-
-async function fetchNextWord(fetch: FetchAPI) {
-	const learningApi = useApi(LearningApi, fetch);
-	return await learningApi.learningApiGetNextWordRetrieve();
-}
+import { LearningApi, ResponseError } from '../../learning-dino-api-client';
+import { redirect } from '@sveltejs/kit';
 
 export const load = (async ({ fetch }) => {
+	const learningApi = useLearningDinoApi(LearningApi, fetch);
+
+	const word = await learningApi.learningApiGetNextWordRetrieve().then((word) => {
+		return word;
+	}).catch((error: ResponseError) => {
+		if (error.response.status === 403) {
+			redirect(302, '/login');
+		}
+	});
+
 	return {
-		wordToGuess: await fetchNextWord(fetch)
+		wordToGuess: word
 	};
 }) satisfies PageServerLoad;
 
@@ -21,7 +27,7 @@ export const actions = {
 		const wordId = (data.get('wordId') ?? -1) as number;
 		const word = data.get('word');
 
-		const learningApi = useApi(LearningApi, fetch, cookies.get('csrftoken') ?? undefined);
+		const learningApi = useLearningDinoApi(LearningApi, fetch, cookies.get('csrftoken') ?? undefined);
 		const isCorrect = await learningApi.learningApiSendAnswerCreate({
 			sendAnswerRequest: {
 				wordId: wordId,
@@ -36,7 +42,7 @@ export const actions = {
 		const data = await request.formData();
 		const wordId = (data.get('wordId') ?? -1) as number;
 
-		const learningApi = useApi(LearningApi, fetch, cookies.get('csrftoken') ?? undefined);
+		const learningApi = useLearningDinoApi(LearningApi, fetch, cookies.get('csrftoken') ?? undefined);
 		await learningApi.learningApiMarkWordAsInvalidCreate({
 			markWordAsInvalidRequest: {
 				wordId: wordId
