@@ -101,7 +101,7 @@
 			</Button>
 			<Button class="d-flex align-items-center justify-content-center"
 							color="secondary"
-							outline="{true}"
+							outline="{!$hasAnswered}"
 							on:click={fetchNextWord}>
 				Next word
 			</Button>
