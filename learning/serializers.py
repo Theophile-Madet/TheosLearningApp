@@ -20,3 +20,7 @@ class SendAnswerSerializer(serializers.Serializer):
 
 class MarkWordAsInvalidSerializer(serializers.Serializer):
     word_id = serializers.IntegerField()
+
+
+class MarkAnswerAsWrongSerializer(serializers.Serializer):
+    word_id = serializers.IntegerField()

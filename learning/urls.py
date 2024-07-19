@@ -25,4 +25,9 @@ urlpatterns = [
         views.MarkWordAsInvalid.as_view(),
         name="mark_word_as_invalid",
     ),
+    path(
+        "api/mark_answer_as_wrong/",
+        views.MarkAnswerAsWrong.as_view(),
+        name="mark_answer_as_wrong",
+    ),
 ]

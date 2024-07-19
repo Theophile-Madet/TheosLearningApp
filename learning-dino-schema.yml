@@ -28,6 +28,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/Word'
           description: ''
+  /learning/api/mark_answer_as_wrong/:
+    post:
+      operationId: learning_api_mark_answer_as_wrong_create
+      tags:
+        - learning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkAnswerAsWrongRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MarkAnswerAsWrongRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MarkAnswerAsWrongRequest'
+        required: true
+      security:
+        - cookieAuth: [ ]
+      responses:
+        '200':
+          description: No response body
   /learning/api/mark_word_as_invalid/:
     post:
       operationId: learning_api_mark_word_as_invalid_create
@@ -78,6 +100,13 @@ paths:
           description: ''
 components:
   schemas:
+    MarkAnswerAsWrongRequest:
+      type: object
+      properties:
+        word_id:
+          type: integer
+      required:
+        - word_id
     MarkWordAsInvalidRequest:
       type: object
       properties:

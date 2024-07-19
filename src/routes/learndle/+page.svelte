@@ -7,6 +7,7 @@
 	import { hasAnswered } from './stores';
 	import { getCookieValue } from '../../utils/getCookieValue';
 	import { LearningApi } from '../../learning-dino-api-client';
+	import AnswerWasWrongConfirmationModal from './AnswerWasWrongConfirmationModal.svelte';
 
 	export let data: PageData;
 
@@ -14,6 +15,8 @@
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
 	async function sendAnswer(event: CustomEvent) {
+		if (!data.wordToGuess) return;
+
 		const learningApi = useLearningDinoApi(LearningApi, fetch, getCookieValue('csrftoken', document));
 		$hasAnswered = true;
 		await learningApi.learningApiSendAnswerCreate({
@@ -31,9 +34,26 @@
 	}
 
 	async function markWordAsInvalid() {
+		if (!data.wordToGuess) return;
+
 		const learningApi = useLearningDinoApi(LearningApi, fetch, getCookieValue('csrftoken', document));
 		await learningApi.learningApiMarkWordAsInvalidCreate({
 				markWordAsInvalidRequest: {
+					wordId: data.wordToGuess.id
+				}
+			}
+		);
+
+		markInvalidModalOpen = false;
+		await fetchNextWord();
+	}
+
+	async function markAnswerAsWrong() {
+		if (!data.wordToGuess) return;
+
+		const learningApi = useLearningDinoApi(LearningApi, fetch, getCookieValue('csrftoken', document));
+		await learningApi.learningApiMarkAnswerAsWrongCreate({
+				markAnswerAsWrongRequest: {
 					wordId: data.wordToGuess.id
 				}
 			}
@@ -52,7 +72,9 @@
 <Container>
 	<Row class="mb-5">
 		<Col>
-			<h1>{data.wordToGuess.word}</h1>
+			{#if data.wordToGuess}
+				<h1>{data.wordToGuess.word}</h1>
+			{/if}
 		</Col>
 	</Row>
 	<Row class="mb-4">
@@ -67,20 +89,28 @@
 		<Col class="d-flex justify-content-center gap-3">
 			<Button class="d-flex align-items-center justify-content-center"
 							color="danger"
-							size="sm"
 							outline="{true}"
 							on:click={() => {markInvalidModalOpen = true;}}>
-				Mark word as invalid
+				That is not a valid word
+			</Button>
+			<Button class="d-flex align-items-center justify-content-center"
+							color="warning"
+							outline="{true}"
+							on:click={() => {markInvalidModalOpen = true;}}>
+				The answer was wrong
 			</Button>
 			<Button class="d-flex align-items-center justify-content-center"
 							color="secondary"
-							size="sm"
 							outline="{true}"
 							on:click={fetchNextWord}>
 				Next word
 			</Button>
 		</Col>
 	</Row>
-	<MarkWordAsInvalidConfirmationModal word="{data.wordToGuess}" isOpen="{markInvalidModalOpen}"
-																			on:confirm={markWordAsInvalid} />
+	{#if data.wordToGuess}
+		<MarkWordAsInvalidConfirmationModal word="{data.wordToGuess}" isOpen="{markInvalidModalOpen}"
+																				on:confirm={markWordAsInvalid} />
+		<AnswerWasWrongConfirmationModal word="{data.wordToGuess}" isOpen="{markInvalidModalOpen}"
+																		 on:confirm={markAnswerAsWrong} />
+	{/if}
 </Container>

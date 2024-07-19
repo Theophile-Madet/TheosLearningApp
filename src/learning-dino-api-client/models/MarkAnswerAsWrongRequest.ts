@@ -15,30 +15,30 @@
 /**
  *
  * @export
- * @interface MarkWordAsInvalidRequest
+ * @interface MarkAnswerAsWrongRequest
  */
-export interface MarkWordAsInvalidRequest {
+export interface MarkAnswerAsWrongRequest {
 	/**
 	 *
 	 * @type {number}
-	 * @memberof MarkWordAsInvalidRequest
+	 * @memberof MarkAnswerAsWrongRequest
 	 */
 	wordId: number;
 }
 
 /**
- * Check if a given object implements the MarkWordAsInvalidRequest interface.
+ * Check if a given object implements the MarkAnswerAsWrongRequest interface.
  */
-export function instanceOfMarkWordAsInvalidRequest(value: object): value is MarkWordAsInvalidRequest {
+export function instanceOfMarkAnswerAsWrongRequest(value: object): value is MarkAnswerAsWrongRequest {
 	if (!('wordId' in value) || value['wordId'] === undefined) return false;
 	return true;
 }
 
-export function MarkWordAsInvalidRequestFromJSON(json: any): MarkWordAsInvalidRequest {
-	return MarkWordAsInvalidRequestFromJSONTyped(json, false);
+export function MarkAnswerAsWrongRequestFromJSON(json: any): MarkAnswerAsWrongRequest {
+	return MarkAnswerAsWrongRequestFromJSONTyped(json, false);
 }
 
-export function MarkWordAsInvalidRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): MarkWordAsInvalidRequest {
+export function MarkAnswerAsWrongRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): MarkAnswerAsWrongRequest {
 	if (json == null) {
 		return json;
 	}
@@ -48,7 +48,7 @@ export function MarkWordAsInvalidRequestFromJSONTyped(json: any, ignoreDiscrimin
 	};
 }
 
-export function MarkWordAsInvalidRequestToJSON(value?: MarkWordAsInvalidRequest | null): any {
+export function MarkAnswerAsWrongRequestToJSON(value?: MarkAnswerAsWrongRequest | null): any {
 	if (value == null) {
 		return value;
 	}

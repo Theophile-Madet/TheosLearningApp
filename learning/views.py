@@ -7,12 +7,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from content.models import Word
-from learning.models import Result, InvalidWord, LearnedWord
+from learning.models import Result, InvalidWord, LearnedWord, WrongAnswer
 from learning.serializers import (
     WordSerializer,
     WasAnswerCorrectSerializer,
     SendAnswerSerializer,
     MarkWordAsInvalidSerializer,
+    MarkAnswerAsWrongSerializer,
 )
 from learning.services.WordLearnedChecker import WordLearnedChecker
 from learning.services.WordToLearnPicker import WordToLearnPicker
@@ -69,4 +70,18 @@ class MarkWordAsInvalid(APIView):
 
         word = get_object_or_404(Word, id=request_serializer.validated_data["word_id"])
         InvalidWord.objects.create(word=word)
+        return Response(status=status.HTTP_200_OK)
+
+
+class MarkAnswerAsWrong(APIView):
+    @extend_schema(
+        responses={200: None},
+        request=MarkAnswerAsWrongSerializer,
+    )
+    def post(self, request):
+        request_serializer = MarkAnswerAsWrongSerializer(data=request.data)
+        request_serializer.is_valid(raise_exception=True)
+
+        word = get_object_or_404(Word, id=request_serializer.validated_data["word_id"])
+        WrongAnswer.objects.create(word=word)
         return Response(status=status.HTTP_200_OK)

@@ -18,10 +18,10 @@
 </script>
 
 <Modal isOpen={isOpen}>
-	<ModalHeader>Confirm word is invalid?</ModalHeader>
+	<ModalHeader>Confirm answer was wrong?</ModalHeader>
 	<ModalBody>{word.word} - {word.gender} - {word.id}</ModalBody>
 	<ModalFooter>
-		<Button color="secondary" on:click={close}>Cancel</Button>
-		<Button color="danger" on:click={confirm}>Mark as invalid</Button>
+		<Button color="secondary" on:click={close}>Actually it was correct</Button>
+		<Button color="danger" on:click={confirm}>Yes it was wrong</Button>
 	</ModalFooter>
 </Modal>

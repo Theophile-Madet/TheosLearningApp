@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './MarkAnswerAsWrongRequest';
 export * from './MarkWordAsInvalidRequest';
 export * from './SendAnswerRequest';
 export * from './TypeEnum';

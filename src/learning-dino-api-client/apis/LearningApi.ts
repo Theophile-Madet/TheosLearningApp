@@ -14,13 +14,24 @@
 
 
 import * as runtime from '../runtime';
-import type { MarkWordAsInvalidRequest, SendAnswerRequest, WasAnswerCorrect, Word } from '../models/index';
+import type {
+	MarkAnswerAsWrongRequest,
+	MarkWordAsInvalidRequest,
+	SendAnswerRequest,
+	WasAnswerCorrect,
+	Word
+} from '../models/index';
 import {
+	MarkAnswerAsWrongRequestToJSON,
 	MarkWordAsInvalidRequestToJSON,
 	SendAnswerRequestToJSON,
 	WasAnswerCorrectFromJSON,
 	WordFromJSON
 } from '../models/index';
+
+export interface LearningApiMarkAnswerAsWrongCreateRequest {
+	markAnswerAsWrongRequest: MarkAnswerAsWrongRequest;
+}
 
 export interface LearningApiMarkWordAsInvalidCreateRequest {
 	markWordAsInvalidRequest: MarkWordAsInvalidRequest;
@@ -80,6 +91,39 @@ export class LearningApi extends runtime.BaseAPI {
 	async learningApiGetNextWordRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Word> {
 		const response = await this.learningApiGetNextWordRetrieveRaw(initOverrides);
 		return await response.value();
+	}
+
+	/**
+	 */
+	async learningApiMarkAnswerAsWrongCreateRaw(requestParameters: LearningApiMarkAnswerAsWrongCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+		if (requestParameters['markAnswerAsWrongRequest'] == null) {
+			throw new runtime.RequiredError(
+				'markAnswerAsWrongRequest',
+				'Required parameter "markAnswerAsWrongRequest" was null or undefined when calling learningApiMarkAnswerAsWrongCreate().'
+			);
+		}
+
+		const queryParameters: any = {};
+
+		const headerParameters: runtime.HTTPHeaders = {};
+
+		headerParameters['Content-Type'] = 'application/json';
+
+		const response = await this.request({
+			path: `/learning/api/mark_answer_as_wrong/`,
+			method: 'POST',
+			headers: headerParameters,
+			query: queryParameters,
+			body: MarkAnswerAsWrongRequestToJSON(requestParameters['markAnswerAsWrongRequest'])
+		}, initOverrides);
+
+		return new runtime.VoidApiResponse(response);
+	}
+
+	/**
+	 */
+	async learningApiMarkAnswerAsWrongCreate(requestParameters: LearningApiMarkAnswerAsWrongCreateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+		await this.learningApiMarkAnswerAsWrongCreateRaw(requestParameters, initOverrides);
 	}
 
 	/**

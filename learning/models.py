@@ -28,3 +28,10 @@ class InvalidWord(models.Model):
 
     def __str__(self):
         return f"{self.word}"
+
+
+class WrongAnswer(models.Model):
+    word = models.OneToOneField(Word, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.word}"
