@@ -69,6 +69,5 @@ export * from './SocialAccountConfiguration';
 export * from './StatusOK';
 export * from './TOTPAuthenticator';
 export * from './User';
-export * from './UserId';
 export * from './UserSessionsConfiguration';
 export * from './VerifyEmail';

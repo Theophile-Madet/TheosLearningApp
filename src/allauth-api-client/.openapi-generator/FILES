@@ -81,7 +81,6 @@ models/SocialAccountConfiguration.ts
 models/StatusOK.ts
 models/TOTPAuthenticator.ts
 models/User.ts
-models/UserId.ts
 models/UserSessionsConfiguration.ts
 models/VerifyEmail.ts
 models/index.ts

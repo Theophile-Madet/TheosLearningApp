@@ -12,9 +12,6 @@
  * Do not edit the class manually.
  */
 
-import type { UserId } from './UserId';
-import { UserIdFromJSON, UserIdToJSON } from './UserId';
-
 /**
  *
  * @export
@@ -22,11 +19,12 @@ import { UserIdFromJSON, UserIdToJSON } from './UserId';
  */
 export interface User {
 	/**
+	 * The user ID.
 	 *
-	 * @type {UserId}
+	 * @type {number}
 	 * @memberof User
 	 */
-	id?: UserId;
+	id?: number;
 	/**
 	 * The display name for the user.
 	 *
@@ -74,7 +72,7 @@ export function UserFromJSONTyped(json: any, ignoreDiscriminator: boolean): User
 	}
 	return {
 
-		'id': json['id'] == null ? undefined : UserIdFromJSON(json['id']),
+		'id': json['id'] == null ? undefined : json['id'],
 		'display': json['display'] == null ? undefined : json['display'],
 		'hasUsablePassword': json['has_usable_password'] == null ? undefined : json['has_usable_password'],
 		'email': json['email'] == null ? undefined : json['email'],
@@ -88,7 +86,7 @@ export function UserToJSON(value?: User | null): any {
 	}
 	return {
 
-		'id': UserIdToJSON(value['id']),
+		'id': value['id'],
 		'display': value['display'],
 		'has_usable_password': value['hasUsablePassword'],
 		'email': value['email'],

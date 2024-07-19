@@ -2,12 +2,15 @@
 	import { useLearningDinoApi } from '../../utils/useLearningDinoApi';
 	import { getCookieValue } from '../../utils/getCookieValue';
 	import { LearningApi } from '../../learning-dino-api-client';
-	import { AuthenticationAccountApi, type ErrorResponse } from '../../allauth-api-client';
+	import { AuthenticationAccountApi } from '../../allauth-api-client';
 	import { useAllauthApi } from '../../utils/useAllauthApi';
 	import { goto } from '$app/navigation';
+	import { Alert } from '@sveltestrap/sveltestrap';
 
 	let username = '';
 	let password = '';
+
+	let loginError = '';
 
 	async function doLogin() {
 		const learningApi = useLearningDinoApi(LearningApi);
@@ -21,12 +24,11 @@
 				password: password
 			}
 		}).then(() => {
-			console.log('All good, redirect');
 			goto('/learndle');
-		}).catch((error: ErrorResponse) => {
-			console.log(error);
+		}).catch(async (errorResponse) => {
+			const errorContent = await errorResponse.response.json();
+			loginError = errorContent.errors.map((error: any) => error.message).join('\n');
 		});
-
 	}
 </script>
 
@@ -39,6 +41,9 @@
 <div class="text-column">
 	<h1>Login</h1>
 
+	{#if loginError}
+		<Alert color="warning"> {loginError}</Alert>
+	{/if}
 	<form on:submit={doLogin}>
 		<label for="id_username"></label>
 		<input type="text" id="id_username" name="username" placeholder="Username" bind:value={username} />

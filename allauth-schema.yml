@@ -1948,11 +1948,8 @@ components:
         id:
           description: |
             The user ID.
-          oneOf:
-            - type: integer
-              example: 123
-            - type: string
-              example: 89d3f9a0-51a5-49dd-8b97-7536641958e9
+          type: integer
+          example: 123
         display:
           type: string
           description: |
