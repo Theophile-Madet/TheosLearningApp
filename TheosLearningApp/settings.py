@@ -35,7 +35,7 @@ SECRET_KEY = env(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG", cast=bool, default=False)
 
-ALLOWED_HOSTS = ["localhost:5173", "localhost", "173.249.21.164"]
+ALLOWED_HOSTS = ["localhost:5173", "localhost", "learnapi.seriousdino.org"]
 
 
 # Application definition
@@ -155,9 +155,9 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", "http://173.249.21.164:4000"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", "http://learn.seriousdino.org"]
 
-CORS_ORIGIN_WHITELIST = ["http://localhost:5173", "http://173.249.21.164:4000"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:5173", "http://learn.seriousdino.org"]
 
 CORS_ALLOW_CREDENTIALS = True
 
