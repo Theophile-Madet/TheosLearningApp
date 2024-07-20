@@ -6,16 +6,22 @@
 	import { useAllauthApi } from '../../utils/useAllauthApi';
 	import { goto } from '$app/navigation';
 	import { Alert, Button, Container, FormGroup, Input } from '@sveltestrap/sveltestrap';
+	import { onMount } from 'svelte';
 
 	let username = '';
 	let password = '';
 
 	let loginError = '';
 
-	async function doLogin() {
+	onMount(async () => {
 		const learningApi = useLearningDinoApi(LearningApi);
 		await learningApi.learningApiGetCsrfTokenRetrieve();
 
+		console.log('SHOULD HAVE COOKIE: ' + getCookieValue('csrftoken', document));
+	});
+
+	async function doLogin() {
+		console.log('DO LOGIN WITH COOKIE: ' + getCookieValue('csrftoken', document));
 		const authenticationAccountApi = useAllauthApi(AuthenticationAccountApi, fetch, getCookieValue('csrftoken', document));
 		authenticationAccountApi.allauthClientV1AuthLoginPost({
 			client: 'browser',
