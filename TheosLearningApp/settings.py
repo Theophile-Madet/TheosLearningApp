@@ -155,9 +155,9 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", "http://learn.seriousdino.org"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", "http://learnapp.seriousdino.org"]
 
-CORS_ORIGIN_WHITELIST = ["http://localhost:5173", "http://learn.seriousdino.org"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:5173", "http://learnapp.seriousdino.org"]
 
 CORS_ALLOW_CREDENTIALS = True
 
