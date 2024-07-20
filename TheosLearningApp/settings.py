@@ -10,24 +10,32 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
+import environ
 from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-%229o*=j9c65lqi8%%p!+3*8o8zpk=11tw_m7oo&c7!ygf*k$7"
+SECRET_KEY = env(
+    "SECRET_KEY",
+    cast=str,
+    default="django-insecure-_%yo7huz63iq@$71de-ped)ecs)=%@d89&c+88p6zt7_5#(bxq",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG", cast=bool, default=False)
 
-ALLOWED_HOSTS = ["localhost:5173", "localhost"]
+ALLOWED_HOSTS = ["localhost:5173", "localhost", "173.249.21.164"]
 
 
 # Application definition
@@ -147,9 +155,9 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", "http://173.249.21.164:4000"]
 
-CORS_ORIGIN_WHITELIST = ["http://localhost:5173"]
+CORS_ORIGIN_WHITELIST = ["http://localhost:5173", "http://173.249.21.164:4000"]
 
 CORS_ALLOW_CREDENTIALS = True
 

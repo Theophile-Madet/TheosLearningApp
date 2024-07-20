@@ -9,7 +9,7 @@ export const load = (async ({ fetch }) => {
 	const word = await learningApi.learningApiGetNextWordRetrieve().then((word) => {
 		return word;
 	}).catch((error: ResponseError) => {
-		if (error.response?.status === 403) {
+		if (error.response.status === 403) {
 			redirect(302, '/login');
 		}
 	});
