@@ -97,7 +97,7 @@
 			<Button class="d-flex align-items-center justify-content-center"
 							color="warning"
 							outline="{true}"
-							on:click={() => {markInvalidModalOpen = true;}}>
+							on:click={() => {markAnswerWrongModalOpen = true;}}>
 				The answer was wrong
 			</Button>
 			<Button class="d-flex align-items-center justify-content-center"
