@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Col, Container, Row } from '@sveltestrap/sveltestrap';
 	import AnswerButton from './AnswerButton.svelte';
-	import type { PageData } from '../../.svelte-kit/types/src/routes/learndle/$types';
+	import type { PageData } from '../../.svelte-kit/types/src/routes/$types';
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
 	import { hasAnswered } from './stores';
@@ -12,6 +12,7 @@
 	export let data: PageData;
 
 	let markInvalidModalOpen = false;
+	let markAnswerWrongModalOpen = false;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
 	async function sendAnswer(event: CustomEvent) {
@@ -59,7 +60,7 @@
 			}
 		);
 
-		markInvalidModalOpen = false;
+		markAnswerWrongModalOpen = false;
 		await fetchNextWord();
 	}
 </script>
@@ -110,7 +111,7 @@
 	{#if data.wordToGuess}
 		<MarkWordAsInvalidConfirmationModal word="{data.wordToGuess}" isOpen="{markInvalidModalOpen}"
 																				on:confirm={markWordAsInvalid} />
-		<AnswerWasWrongConfirmationModal word="{data.wordToGuess}" isOpen="{markInvalidModalOpen}"
+		<AnswerWasWrongConfirmationModal word="{data.wordToGuess}" isOpen="{markAnswerWrongModalOpen}"
 																		 on:confirm={markAnswerAsWrong} />
 	{/if}
 </Container>
