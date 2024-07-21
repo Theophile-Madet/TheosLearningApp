@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { useLearningDinoApi } from '../../utils/useLearningDinoApi';
-	import { getCookieValue } from '../../utils/getCookieValue';
 	import { LearningApi } from '../../learning-dino-api-client';
 	import { AuthenticationAccountApi } from '../../allauth-api-client';
 	import { useAllauthApi } from '../../utils/useAllauthApi';
 	import { goto } from '$app/navigation';
 	import { Alert, Button, Container, FormGroup, Input } from '@sveltestrap/sveltestrap';
 	import { onMount } from 'svelte';
+	import { csrfToken } from '../stores';
 
 	let username = '';
 	let password = '';
@@ -14,15 +14,15 @@
 	let loginError = '';
 
 	onMount(async () => {
-		const learningApi = useLearningDinoApi(LearningApi);
-		await learningApi.learningApiGetCsrfTokenRetrieve();
+		if ($csrfToken) return;
 
-		console.log('SHOULD HAVE COOKIE: ' + getCookieValue('csrftoken', document));
+		const learningApi = useLearningDinoApi(LearningApi);
+		const token = await learningApi.learningApiGetCsrfTokenRetrieve();
+		$csrfToken = token.csrfToken;
 	});
 
 	async function doLogin() {
-		console.log('DO LOGIN WITH COOKIE: ' + getCookieValue('csrftoken', document));
-		const authenticationAccountApi = useAllauthApi(AuthenticationAccountApi, fetch, getCookieValue('csrftoken', document));
+		const authenticationAccountApi = useAllauthApi(AuthenticationAccountApi, fetch, $csrfToken);
 		authenticationAccountApi.allauthClientV1AuthLoginPost({
 			client: 'browser',
 			login: {

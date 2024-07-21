@@ -4,10 +4,10 @@
 	import type { PageData } from '../../.svelte-kit/types/src/routes/$types';
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
-	import { hasAnswered } from './stores';
-	import { getCookieValue } from '../utils/getCookieValue';
+	import { csrfToken, hasAnswered } from './stores';
 	import { LearningApi } from '../learning-dino-api-client';
 	import AnswerWasWrongConfirmationModal from './AnswerWasWrongConfirmationModal.svelte';
+	import { onMount } from 'svelte';
 
 	export let data: PageData;
 
@@ -15,10 +15,18 @@
 	let markAnswerWrongModalOpen = false;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
+	onMount(async () => {
+		if ($csrfToken) return;
+
+		const learningApi = useLearningDinoApi(LearningApi);
+		const token = await learningApi.learningApiGetCsrfTokenRetrieve();
+		$csrfToken = token.csrfToken;
+	});
+
 	async function sendAnswer(event: CustomEvent) {
 		if (!data.wordToGuess) return;
 
-		const learningApi = useLearningDinoApi(LearningApi, fetch, getCookieValue('csrftoken', document));
+		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		$hasAnswered = true;
 		await learningApi.learningApiSendAnswerCreate({
 			sendAnswerRequest: {
@@ -37,7 +45,7 @@
 	async function markWordAsInvalid() {
 		if (!data.wordToGuess) return;
 
-		const learningApi = useLearningDinoApi(LearningApi, fetch, getCookieValue('csrftoken', document));
+		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		await learningApi.learningApiMarkWordAsInvalidCreate({
 				markWordAsInvalidRequest: {
 					wordId: data.wordToGuess.id
@@ -52,7 +60,7 @@
 	async function markAnswerAsWrong() {
 		if (!data.wordToGuess) return;
 
-		const learningApi = useLearningDinoApi(LearningApi, fetch, getCookieValue('csrftoken', document));
+		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		await learningApi.learningApiMarkAnswerAsWrongCreate({
 				markAnswerAsWrongRequest: {
 					wordId: data.wordToGuess.id

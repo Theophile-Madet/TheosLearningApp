@@ -13,7 +13,11 @@ paths:
         - { }
       responses:
         '200':
-          description: No response body
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CsrfToken'
+          description: ''
   /learning/api/get_next_word/:
     get:
       operationId: learning_api_get_next_word_retrieve
@@ -100,6 +104,13 @@ paths:
           description: ''
 components:
   schemas:
+    CsrfToken:
+      type: object
+      properties:
+        csrf_token:
+          type: string
+      required:
+        - csrf_token
     MarkAnswerAsWrongRequest:
       type: object
       properties:

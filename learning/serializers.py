@@ -24,3 +24,7 @@ class MarkWordAsInvalidSerializer(serializers.Serializer):
 
 class MarkAnswerAsWrongSerializer(serializers.Serializer):
     word_id = serializers.IntegerField()
+
+
+class CsrfTokenSerializer(serializers.Serializer):
+    csrf_token = serializers.CharField()

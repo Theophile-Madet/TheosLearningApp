@@ -15,6 +15,7 @@
 
 import * as runtime from '../runtime';
 import type {
+	CsrfToken,
 	MarkAnswerAsWrongRequest,
 	MarkWordAsInvalidRequest,
 	SendAnswerRequest,
@@ -22,6 +23,7 @@ import type {
 	Word
 } from '../models/index';
 import {
+	CsrfTokenFromJSON,
 	MarkAnswerAsWrongRequestToJSON,
 	MarkWordAsInvalidRequestToJSON,
 	SendAnswerRequestToJSON,
@@ -48,7 +50,7 @@ export class LearningApi extends runtime.BaseAPI {
 
 	/**
 	 */
-	async learningApiGetCsrfTokenRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+	async learningApiGetCsrfTokenRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CsrfToken>> {
 		const queryParameters: any = {};
 
 		const headerParameters: runtime.HTTPHeaders = {};
@@ -60,13 +62,14 @@ export class LearningApi extends runtime.BaseAPI {
 			query: queryParameters
 		}, initOverrides);
 
-		return new runtime.VoidApiResponse(response);
+		return new runtime.JSONApiResponse(response, (jsonValue) => CsrfTokenFromJSON(jsonValue));
 	}
 
 	/**
 	 */
-	async learningApiGetCsrfTokenRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-		await this.learningApiGetCsrfTokenRetrieveRaw(initOverrides);
+	async learningApiGetCsrfTokenRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CsrfToken> {
+		const response = await this.learningApiGetCsrfTokenRetrieveRaw(initOverrides);
+		return await response.value();
 	}
 
 	/**

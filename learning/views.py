@@ -1,3 +1,4 @@
+from django.middleware import csrf
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from drf_spectacular.utils import extend_schema
@@ -14,6 +15,7 @@ from learning.serializers import (
     SendAnswerSerializer,
     MarkWordAsInvalidSerializer,
     MarkAnswerAsWrongSerializer,
+    CsrfTokenSerializer,
 )
 from learning.services.WordLearnedChecker import WordLearnedChecker
 from learning.services.WordToLearnPicker import WordToLearnPicker
@@ -23,9 +25,10 @@ from learning.services.WordToLearnPicker import WordToLearnPicker
 class GetCSRFToken(APIView):
     permission_classes = (permissions.AllowAny,)
 
-    @extend_schema(responses={200: None})
+    @extend_schema(responses={200: CsrfTokenSerializer})
     def get(self, request):
-        return Response({"success": "CSRF cookie set"})
+        token = csrf.get_token(request)
+        return Response(CsrfTokenSerializer(token).data, status=status.HTTP_200_OK)
 
 
 class GetNextWord(APIView):
