@@ -28,7 +28,9 @@ class GetCSRFToken(APIView):
     @extend_schema(responses={200: CsrfTokenSerializer})
     def get(self, request):
         token = csrf.get_token(request)
-        return Response(CsrfTokenSerializer(token).data, status=status.HTTP_200_OK)
+        return Response(
+            CsrfTokenSerializer({"csrf_token": token}).data, status=status.HTTP_200_OK
+        )
 
 
 class GetNextWord(APIView):
