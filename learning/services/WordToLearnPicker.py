@@ -24,13 +24,12 @@ class WordToLearnPicker:
         ).values_list("word__id", flat=True)
         potential_words = (
             Word.objects.order_by("-usage_frequency")
+            .annotate(
+                rank=Window(expression=Rank(), order_by=F("usage_frequency").desc()),
+            )
             .exclude(id__in=learned_words_ids)
             .exclude(id__in=invalid_word_ids)
             .exclude(id__in=words_tried_in_the_last_hours_ids)
-        ).annotate(
-            rank=Window(expression=Rank(), order_by=F("usage_frequency").desc()),
-        )[
-            : LearningConfig.POOL_SIZE
-        ]
+        )[: LearningConfig.POOL_SIZE]
 
         return random.choice(potential_words)
