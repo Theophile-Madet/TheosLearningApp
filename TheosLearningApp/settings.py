@@ -36,7 +36,7 @@ SECRET_KEY = env(
 DEBUG = env("DEBUG", cast=bool, default=False)
 IS_DEV_ENV = env("IS_DEV_ENV", cast=bool, default=False)
 
-ALLOWED_HOSTS = ["learnapp.seriousdino.org:8000"]
+ALLOWED_HOSTS = ["learnapi.seriousdino.org"]
 if IS_DEV_ENV:
     ALLOWED_HOSTS = ["localhost"]
 
