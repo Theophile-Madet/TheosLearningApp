@@ -16,19 +16,19 @@
 import * as runtime from '../runtime';
 import type {
 	CsrfToken,
+	GetNextWord,
 	MarkAnswerAsWrongRequest,
 	MarkWordAsInvalidRequest,
 	SendAnswerRequest,
-	WasAnswerCorrect,
-	Word
+	WasAnswerCorrect
 } from '../models/index';
 import {
 	CsrfTokenFromJSON,
+	GetNextWordFromJSON,
 	MarkAnswerAsWrongRequestToJSON,
 	MarkWordAsInvalidRequestToJSON,
 	SendAnswerRequestToJSON,
-	WasAnswerCorrectFromJSON,
-	WordFromJSON
+	WasAnswerCorrectFromJSON
 } from '../models/index';
 
 export interface LearningApiMarkAnswerAsWrongCreateRequest {
@@ -74,7 +74,7 @@ export class LearningApi extends runtime.BaseAPI {
 
 	/**
 	 */
-	async learningApiGetNextWordRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Word>> {
+	async learningApiGetNextWordRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetNextWord>> {
 		const queryParameters: any = {};
 
 		const headerParameters: runtime.HTTPHeaders = {};
@@ -86,12 +86,12 @@ export class LearningApi extends runtime.BaseAPI {
 			query: queryParameters
 		}, initOverrides);
 
-		return new runtime.JSONApiResponse(response, (jsonValue) => WordFromJSON(jsonValue));
+		return new runtime.JSONApiResponse(response, (jsonValue) => GetNextWordFromJSON(jsonValue));
 	}
 
 	/**
 	 */
-	async learningApiGetNextWordRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Word> {
+	async learningApiGetNextWordRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetNextWord> {
 		const response = await this.learningApiGetNextWordRetrieveRaw(initOverrides);
 		return await response.value();
 	}

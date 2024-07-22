@@ -2,6 +2,8 @@ import datetime
 import random
 
 from django.contrib.auth.models import User
+from django.db.models import Window, F
+from django.db.models.functions import Rank
 from django.utils import timezone
 
 from content.models import Word
@@ -25,6 +27,10 @@ class WordToLearnPicker:
             .exclude(id__in=learned_words_ids)
             .exclude(id__in=invalid_word_ids)
             .exclude(id__in=words_tried_in_the_last_hours_ids)
-                          )[: LearningConfig.POOL_SIZE]
+        ).annotate(
+            rank=Window(expression=Rank(), order_by=F("usage_frequency").desc()),
+        )[
+            : LearningConfig.POOL_SIZE
+        ]
 
         return random.choice(potential_words)

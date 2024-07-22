@@ -10,12 +10,12 @@ from rest_framework.views import APIView
 from content.models import Word
 from learning.models import Result, InvalidWord, LearnedWord, WrongAnswer
 from learning.serializers import (
-    WordSerializer,
     WasAnswerCorrectSerializer,
     SendAnswerSerializer,
     MarkWordAsInvalidSerializer,
     MarkAnswerAsWrongSerializer,
     CsrfTokenSerializer,
+    GetNextWordSerializer,
 )
 from learning.services.WordLearnedChecker import WordLearnedChecker
 from learning.services.WordToLearnPicker import WordToLearnPicker
@@ -35,11 +35,23 @@ class GetCSRFToken(APIView):
 
 class GetNextWord(APIView):
     @extend_schema(
-        responses={200: WordSerializer},
+        responses={200: GetNextWordSerializer},
     )
     def get(self, request):
         word = WordToLearnPicker.pick_next_word_for_user(request.user)
-        return Response(WordSerializer(word).data, status=status.HTTP_200_OK)
+        total_answers = Result.objects.filter(user=request.user, word=word)
+        serializer = GetNextWordSerializer(
+            {
+                "word": word,
+                "rank": word.rank,
+                "nb_answers_total": total_answers.count(),
+                "nb_answers_correct": total_answers.filter(answer=word.gender).count(),
+                "nb_answers_correct_in_a_row": WordLearnedChecker.nb_correct_in_a_row(
+                    request.user, word
+                ),
+            }
+        )
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class SendAnswer(APIView):

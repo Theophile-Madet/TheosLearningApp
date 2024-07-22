@@ -30,7 +30,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Word'
+                $ref: '#/components/schemas/GetNextWord'
           description: ''
   /learning/api/mark_answer_as_wrong/:
     post:
@@ -111,6 +111,25 @@ components:
           type: string
       required:
         - csrf_token
+    GetNextWord:
+      type: object
+      properties:
+        word:
+          $ref: '#/components/schemas/Word'
+        rank:
+          type: integer
+        nb_answers_total:
+          type: integer
+        nb_answers_correct:
+          type: integer
+        nb_answers_correct_in_a_row:
+          type: integer
+      required:
+        - nb_answers_correct
+        - nb_answers_correct_in_a_row
+        - nb_answers_total
+        - rank
+        - word
     MarkAnswerAsWrongRequest:
       type: object
       properties:

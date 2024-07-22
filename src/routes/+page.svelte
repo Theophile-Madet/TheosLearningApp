@@ -11,13 +11,19 @@
 	import DinoButton from '../components/DinoButton.svelte';
 	import { useAllauthApi } from '../utils/useAllauthApi';
 	import { AuthenticationCurrentSessionApi } from '../allauth-api-client';
+	import AboutModal from './AboutModal.svelte';
 
 	let markInvalidModalOpen = false;
 	let markInvalidLoading = false;
 	let markAnswerWrongModalOpen = false;
 	let markAnswerWrongLoading = false;
+	let aboutModalOpen = false;
 	let apiError = '';
 	let currentWord: Word | undefined;
+	let rank: number | undefined;
+	let nbAnswersTotal: number | undefined;
+	let nbAnswersCorrect: number | undefined;
+	let nbAnswersCorrectInARow: number | undefined;
 	let loadingNextWord = false;
 	let logoutLoading = false;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
@@ -50,8 +56,12 @@
 		apiError = '';
 		loadingNextWord = true;
 
-		await learningApi.learningApiGetNextWordRetrieve().then((word) => {
-			currentWord = word;
+		await learningApi.learningApiGetNextWordRetrieve().then((result) => {
+			currentWord = result.word;
+			rank = result.rank;
+			nbAnswersTotal = result.nbAnswersTotal;
+			nbAnswersCorrect = result.nbAnswersCorrect;
+			nbAnswersCorrectInARow = result.nbAnswersCorrectInARow;
 			$hasAnswered = false;
 		}).catch(async (error: ResponseError) => {
 			if (error.response.status === 403) {
@@ -167,6 +177,17 @@
 				{/each}
 			</Col>
 		</Row>
+		<Row class="mb-5">
+			<Col>
+				<p class="text-center">
+					{currentWord.word} is the {rank}th most used noun.
+				</p>
+				<p class="text-center">
+					You've been correct {nbAnswersCorrect} out of {nbAnswersTotal} times in total. You've been
+					correct {nbAnswersCorrectInARow} times in a row.
+				</p>
+			</Col>
+		</Row>
 		<Row class="mb-4">
 			<Col class="d-flex justify-content-center gap-3">
 				<DinoButton
@@ -195,7 +216,12 @@
 				<DinoButton
 					color="secondary"
 					outline="{true}"
-					on:click={logout} text="logout" icon="door-open" loading="{logoutLoading}">
+					on:click={() => {aboutModalOpen = true;}} text="About" icon="question-circle" loading="{logoutLoading}">
+				</DinoButton>
+				<DinoButton
+					color="secondary"
+					outline="{true}"
+					on:click={logout} text="Logout" icon="door-open" loading="{logoutLoading}">
 				</DinoButton>
 			</Col>
 		</Row>
@@ -207,6 +233,7 @@
 																		 on:confirm={markAnswerAsWrong}
 																		 on:cancel={() => {markAnswerWrongModalOpen = false;}} />
 	{/if}
+	<AboutModal isOpen="{aboutModalOpen}" on:cancel={() => {aboutModalOpen = false;}} />
 </Container>
 
 <style>

@@ -9,6 +9,14 @@ class WordSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+class GetNextWordSerializer(serializers.Serializer):
+    word = WordSerializer()
+    rank = serializers.IntegerField()
+    nb_answers_total = serializers.IntegerField()
+    nb_answers_correct = serializers.IntegerField()
+    nb_answers_correct_in_a_row = serializers.IntegerField()
+
+
 class WasAnswerCorrectSerializer(serializers.Serializer):
     correct = serializers.BooleanField()
 

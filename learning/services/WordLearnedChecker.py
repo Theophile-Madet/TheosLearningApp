@@ -13,3 +13,17 @@ class WordLearnedChecker:
         )[: LearningConfig.REPETITIONS_TO_LEARN]
 
         return all([result.answer == word.gender for result in last_results])
+
+    @classmethod
+    def nb_correct_in_a_row(cls, user: User, word: Word) -> int:
+        last_results = Result.objects.filter(user=user, word=word).order_by(
+            "-created_at"
+        )
+        count = 0
+        for result in last_results:
+            if result.answer == word.gender:
+                count += 1
+            else:
+                break
+
+        return count

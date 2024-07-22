@@ -2,6 +2,7 @@ apis/LearningApi.ts
 apis/index.ts
 index.ts
 models/CsrfToken.ts
+models/GetNextWord.ts
 models/MarkAnswerAsWrongRequest.ts
 models/MarkWordAsInvalidRequest.ts
 models/SendAnswerRequest.ts
