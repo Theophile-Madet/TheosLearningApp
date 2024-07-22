@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Alert, Col, Container, Row, Spinner } from '@sveltestrap/sveltestrap';
+	import { Alert, Col, Container, Row, Spinner, Toast, ToastBody, ToastHeader } from '@sveltestrap/sveltestrap';
 	import AnswerButton from './AnswerButton.svelte';
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
@@ -28,6 +28,8 @@
 	let logoutLoading = false;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
+	let toasts: { word: Word, correct: boolean, open: boolean }[] = [];
+
 	onMount(async () => {
 		if (!$csrfToken) {
 			const learningApi = useLearningDinoApi(LearningApi);
@@ -43,12 +45,13 @@
 
 		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		$hasAnswered = true;
-		await learningApi.learningApiSendAnswerCreate({
+		const result = await learningApi.learningApiSendAnswerCreate({
 			sendAnswerRequest: {
 				wordId: currentWord.id,
 				answer: event.detail.value
 			}
 		});
+		toasts = [{ word: currentWord, correct: result.correct, open: true }, ...toasts];
 	}
 
 	async function fetchNextWord() {
@@ -234,6 +237,18 @@
 																		 on:cancel={() => {markAnswerWrongModalOpen = false;}} />
 	{/if}
 	<AboutModal isOpen="{aboutModalOpen}" on:cancel={() => {aboutModalOpen = false;}} />
+	<div class="toast-container top-0 end-0 p-3">
+		{#each toasts as toast (toast.word.id)}
+			<Toast class="text-bg-{toast.correct ? 'success' : 'warning'}" isOpen="{toast.open}" fade="{true}" autohide
+						 on:close={() => {toasts = toasts.filter(otherToast => otherToast.word.id !== toast.word.id)}}
+						 delay="{1000}">
+				<ToastHeader toggle="{() => toast.open = false}">{toast.word.word}</ToastHeader>
+				<ToastBody>
+					{#if toast.correct}Well done!{:else}Whoops!{/if}
+				</ToastBody>
+			</Toast>
+		{/each}
+	</div>
 </Container>
 
 <style>
