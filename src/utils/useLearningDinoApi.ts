@@ -8,7 +8,7 @@ export function useLearningDinoApi<T>(ApiClient: new (configuration: Configurati
 
 	return new ApiClient(
 		new Configuration({
-			basePath: 'http://localhost:8000',
+			basePath: 'http://learnapi.seriousdino.org',
 			// use the FetchAPI from SvelteKit because it contains the cookies and headers
 			// from the browser request
 			// This way, if the user is logged in to the Django server on his browser,
