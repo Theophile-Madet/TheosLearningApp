@@ -23,8 +23,5 @@ python manage.py runserver
 - Import the Bootstrap CSS file locally instead of through a CDN
 - Give feedback on invalid word / wrong answer
 - Give feedback on progress (word learned, 3/7 success?)
-- Sometimes give an already learned word
 - Error report from Shexi : got 3 times the same word in a row
-- Add logout button
-- Fix modals not opening
 - Add loading state to login button and next word
