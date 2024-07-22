@@ -8,11 +8,14 @@
 	import AnswerWasWrongConfirmationModal from './AnswerWasWrongConfirmationModal.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import DinoButton from '../components/DinoButton.svelte';
 
 	let markInvalidModalOpen = false;
+	let markInvalidLoading = false;
 	let markAnswerWrongModalOpen = false;
 	let apiError = '';
 	let currentWord: Word | undefined;
+	let loadingNextWord = false;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
 	onMount(async () => {
@@ -41,8 +44,7 @@
 	async function fetchNextWord() {
 		const learningApi = useLearningDinoApi(LearningApi);
 		apiError = '';
-
-		console.log('Fetch next word');
+		loadingNextWord = true;
 
 		await learningApi.learningApiGetNextWordRetrieve().then((word) => {
 			currentWord = word;
@@ -54,6 +56,8 @@
 			}
 			const errorContent = await error.response.json();
 			apiError = errorContent.errors.map((error: any) => error.message).join('\n');
+		}).finally(() => {
+			loadingNextWord = false;
 		});
 	}
 
@@ -62,6 +66,7 @@
 
 		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		apiError = '';
+		markInvalidLoading = true;
 
 		learningApi.learningApiMarkWordAsInvalidCreate({
 				markWordAsInvalidRequest: {
@@ -69,14 +74,14 @@
 				}
 			}
 		).then(async () => {
-			markInvalidModalOpen = false;
 			await fetchNextWord();
 		}).catch(async (error: ResponseError) => {
 			const errorContent = await error.response.json();
 			apiError = errorContent.errors.map((error: any) => error.message).join('\n');
+		}).finally(() => {
+			markInvalidModalOpen = false;
+			markInvalidLoading = false;
 		});
-
-
 	}
 
 	async function markAnswerAsWrong() {
@@ -144,16 +149,17 @@
 								on:click={() => {markAnswerWrongModalOpen = true;}}>
 					The answer was wrong
 				</Button>
-				<Button class="d-flex align-items-center justify-content-center"
-								color="secondary"
-								outline="{!$hasAnswered}"
-								on:click={fetchNextWord}>
-					Next word
-				</Button>
+				<DinoButton
+					color="secondary"
+					outline="{!$hasAnswered}"
+					on:click={fetchNextWord} text="Next word" loading="{loadingNextWord}">
+				</DinoButton>
 			</Col>
 		</Row>
 		<MarkWordAsInvalidConfirmationModal word="{currentWord}" isOpen="{markInvalidModalOpen}"
-																				on:confirm={markWordAsInvalid} />
+																				on:confirm={markWordAsInvalid}
+																				on:cancel={() => {markInvalidModalOpen = false;}}
+																				loading="{markInvalidLoading}" />
 		<AnswerWasWrongConfirmationModal word="{currentWord}" isOpen="{markAnswerWrongModalOpen}"
 																		 on:confirm={markAnswerAsWrong} />
 	{/if}

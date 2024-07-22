@@ -7,16 +7,18 @@
 	export let color: string;
 	export let disabled: boolean = false;
 	export let icon: string = '';
-	export let type: string | undefined;
+	export let type: string = 'button';
 	export let loading: boolean = false;
+	export let outline: boolean = false;
 </script>
 
 <Button on:click
 				color="{color}"
 				disabled="{disabled || loading}"
-				type="{type}">
+				type="{type}"
+				outline="{outline}">
 	{#if icon && !loading}
-		<Icon name="box-arrow-in-right" />
+		<Icon name="{icon}" />
 	{/if}
 	{#if loading}
 		<Spinner type="border" color="secondary" size="sm" />
