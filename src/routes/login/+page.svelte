@@ -45,7 +45,7 @@
 
 
 <svelte:head>
-	<title>Login</title>
+	<title>Learning Dino - Login</title>
 	<meta name="description" content="Login form" />
 </svelte:head>
 

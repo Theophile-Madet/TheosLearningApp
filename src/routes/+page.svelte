@@ -9,6 +9,8 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import DinoButton from '../components/DinoButton.svelte';
+	import { useAllauthApi } from '../utils/useAllauthApi';
+	import { AuthenticationCurrentSessionApi } from '../allauth-api-client';
 
 	let markInvalidModalOpen = false;
 	let markInvalidLoading = false;
@@ -17,6 +19,7 @@
 	let apiError = '';
 	let currentWord: Word | undefined;
 	let loadingNextWord = false;
+	let logoutLoading = false;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
 	onMount(async () => {
@@ -107,6 +110,31 @@
 			markAnswerWrongLoading = false;
 		});
 	}
+
+	async function logout() {
+		logoutLoading = true;
+
+		const learningApi = useLearningDinoApi(LearningApi);
+		const token = await learningApi.learningApiGetCsrfTokenRetrieve();
+		$csrfToken = token.csrfToken;
+
+		const authenticationAccountApi = useAllauthApi(AuthenticationCurrentSessionApi, fetch, $csrfToken);
+		authenticationAccountApi.allauthClientV1AuthSessionDelete({
+			client: 'browser'
+		}).then(async () => {
+			await goto('/login');
+		}).catch(async (error: ResponseError) => {
+			if (error.response.status === 401) { //401 means the logout was successful
+				await goto('/login');
+				return;
+			}
+
+			const errorContent = await error.response.json();
+			apiError = errorContent.errors.map((error: any) => error.message).join('\n');
+		}).finally(() => {
+			logoutLoading = false;
+		});
+	}
 </script>
 
 <svelte:head>
@@ -159,6 +187,15 @@
 					color="secondary"
 					outline="{!$hasAnswered}"
 					on:click={fetchNextWord} text="Next word" loading="{loadingNextWord}">
+				</DinoButton>
+			</Col>
+		</Row>
+		<Row class="mb-4">
+			<Col class="d-flex justify-content-center gap-3">
+				<DinoButton
+					color="secondary"
+					outline="{true}"
+					on:click={logout} text="logout" icon="door-open" loading="{logoutLoading}">
 				</DinoButton>
 			</Col>
 		</Row>
