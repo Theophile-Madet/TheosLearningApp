@@ -24,9 +24,7 @@ class WordToLearnPicker:
             Word.objects.order_by("-usage_frequency")
             .exclude(id__in=learned_words_ids)
             .exclude(id__in=invalid_word_ids)
-            .exclude(id__in=words_tried_in_the_last_hours_ids)[
-                : LearningConfig.POOL_SIZE
-            ]
-        )
+            .exclude(id__in=words_tried_in_the_last_hours_ids)
+                          )[: LearningConfig.POOL_SIZE]
 
         return random.choice(potential_words)
