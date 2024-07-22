@@ -39,12 +39,12 @@ class GetNextWord(APIView):
         responses={200: GetNextWordSerializer},
     )
     def get(self, request):
-        word = WordToLearnPicker.pick_next_word_for_user(request.user)
+        word, rank = WordToLearnPicker.pick_next_word_for_user(request.user)
         total_answers = Result.objects.filter(user=request.user, word=word)
         serializer = GetNextWordSerializer(
             {
                 "word": word,
-                "rank": word.rank,
+                "rank": rank,
                 "nb_answers_total": total_answers.count(),
                 "nb_answers_correct": total_answers.filter(answer=word.gender).count(),
                 "nb_answers_correct_in_a_row": WordLearnedChecker.nb_correct_in_a_row(
