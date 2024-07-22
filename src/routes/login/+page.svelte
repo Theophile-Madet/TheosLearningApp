@@ -29,8 +29,8 @@
 				username: username,
 				password: password
 			}
-		}).then(() => {
-			goto('/');
+		}).then(async () => {
+			await goto('/');
 		}).catch(async (errorResponse) => {
 			const errorContent = await errorResponse.response.json();
 			loginError = errorContent.errors.map((error: any) => error.message).join('\n');
@@ -50,7 +50,7 @@
 	<div class="dino-login-form">
 		<form on:submit|preventDefault={doLogin}>
 			{#if loginError}
-				<Alert color="warning"> {loginError}</Alert>
+				<Alert color="warning">{loginError}</Alert>
 			{/if}
 			<FormGroup floating label="Username">
 				<Input type="text" name="username" bind:value={username} />

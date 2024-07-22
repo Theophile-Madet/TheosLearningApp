@@ -1,36 +1,38 @@
 <script lang="ts">
-	import { Button, Col, Container, Row } from '@sveltestrap/sveltestrap';
+	import { Alert, Button, Col, Container, Row, Spinner } from '@sveltestrap/sveltestrap';
 	import AnswerButton from './AnswerButton.svelte';
-	import type { PageData } from '../../.svelte-kit/types/src/routes/$types';
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
 	import { csrfToken, hasAnswered } from './stores';
-	import { LearningApi } from '../learning-dino-api-client';
+	import { LearningApi, ResponseError, type Word } from '../learning-dino-api-client';
 	import AnswerWasWrongConfirmationModal from './AnswerWasWrongConfirmationModal.svelte';
 	import { onMount } from 'svelte';
-
-	export let data: PageData;
+	import { goto } from '$app/navigation';
 
 	let markInvalidModalOpen = false;
 	let markAnswerWrongModalOpen = false;
+	let apiError = '';
+	let currentWord: Word | undefined;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
 	onMount(async () => {
-		if ($csrfToken) return;
+		if (!$csrfToken) {
+			const learningApi = useLearningDinoApi(LearningApi);
+			const token = await learningApi.learningApiGetCsrfTokenRetrieve();
+			$csrfToken = token.csrfToken;
+		}
 
-		const learningApi = useLearningDinoApi(LearningApi);
-		const token = await learningApi.learningApiGetCsrfTokenRetrieve();
-		$csrfToken = token.csrfToken;
+		await fetchNextWord();
 	});
 
 	async function sendAnswer(event: CustomEvent) {
-		if (!data.wordToGuess) return;
+		if (!currentWord) return;
 
 		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		$hasAnswered = true;
 		await learningApi.learningApiSendAnswerCreate({
 			sendAnswerRequest: {
-				wordId: data.wordToGuess.id,
+				wordId: currentWord.id,
 				answer: event.detail.value
 			}
 		});
@@ -38,88 +40,121 @@
 
 	async function fetchNextWord() {
 		const learningApi = useLearningDinoApi(LearningApi);
-		data.wordToGuess = await learningApi.learningApiGetNextWordRetrieve();
-		$hasAnswered = false;
+		apiError = '';
+
+		console.log('Fetch next word');
+
+		await learningApi.learningApiGetNextWordRetrieve().then((word) => {
+			currentWord = word;
+			$hasAnswered = false;
+		}).catch(async (error: ResponseError) => {
+			if (error.response.status === 403) {
+				await goto('/login');
+				return;
+			}
+			const errorContent = await error.response.json();
+			apiError = errorContent.errors.map((error: any) => error.message).join('\n');
+		});
 	}
 
 	async function markWordAsInvalid() {
-		if (!data.wordToGuess) return;
+		if (!currentWord) return;
 
 		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
-		await learningApi.learningApiMarkWordAsInvalidCreate({
+		apiError = '';
+
+		learningApi.learningApiMarkWordAsInvalidCreate({
 				markWordAsInvalidRequest: {
-					wordId: data.wordToGuess.id
+					wordId: currentWord.id
 				}
 			}
-		);
+		).then(async () => {
+			markInvalidModalOpen = false;
+			await fetchNextWord();
+		}).catch(async (error: ResponseError) => {
+			const errorContent = await error.response.json();
+			apiError = errorContent.errors.map((error: any) => error.message).join('\n');
+		});
 
-		markInvalidModalOpen = false;
-		await fetchNextWord();
+
 	}
 
 	async function markAnswerAsWrong() {
-		if (!data.wordToGuess) return;
+		if (!currentWord) return;
 
 		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
-		await learningApi.learningApiMarkAnswerAsWrongCreate({
+		apiError = '';
+
+		learningApi.learningApiMarkAnswerAsWrongCreate({
 				markAnswerAsWrongRequest: {
-					wordId: data.wordToGuess.id
+					wordId: currentWord.id
 				}
 			}
-		);
-
-		markAnswerWrongModalOpen = false;
-		await fetchNextWord();
+		).then(async () => {
+			markAnswerWrongModalOpen = false;
+			await fetchNextWord();
+		}).catch(async (error: ResponseError) => {
+			const errorContent = await error.response.json();
+			apiError = errorContent.errors.map((error: any) => error.message).join('\n');
+		});
 	}
 </script>
 
 <svelte:head>
-	<title>Learndle</title>
-	<meta name="description" content="Learndle" />
+	<title>Learning Dino</title>
+	<meta name="description" content="Learning Dino" />
 </svelte:head>
 
 <Container>
-	<Row class="mb-5">
-		<Col>
-			{#if data.wordToGuess}
-				<h1>Welche Artikel hat {data.wordToGuess.word}?</h1>
-			{/if}
-		</Col>
-	</Row>
-	<Row class="mb-4">
-		<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-			{#each Object.entries(textValuePairs) as [text, value]}
-				<AnswerButton text="{text}" word="{data.wordToGuess}" buttonValue="{value}"
-											on:sendAnswer={sendAnswer} />
-			{/each}
-		</Col>
-	</Row>
-	<Row class="mb-4">
-		<Col class="d-flex justify-content-center gap-3">
-			<Button class="d-flex align-items-center justify-content-center"
-							color="danger"
-							outline="{true}"
-							on:click={() => {markInvalidModalOpen = true;}}>
-				That is not a valid word
-			</Button>
-			<Button class="d-flex align-items-center justify-content-center"
-							color="warning"
-							outline="{true}"
-							on:click={() => {markAnswerWrongModalOpen = true;}}>
-				The answer was wrong
-			</Button>
-			<Button class="d-flex align-items-center justify-content-center"
-							color="secondary"
-							outline="{!$hasAnswered}"
-							on:click={fetchNextWord}>
-				Next word
-			</Button>
-		</Col>
-	</Row>
-	{#if data.wordToGuess}
-		<MarkWordAsInvalidConfirmationModal word="{data.wordToGuess}" isOpen="{markInvalidModalOpen}"
+	{#if apiError}
+		<Row class="mb-5">
+			<Alert color="warning">{apiError}</Alert>
+		</Row>
+	{/if}
+	{#if !apiError && !currentWord}
+		<Row class="mb-5 d-flex justify-content-center">
+			<Spinner type="border" color="secondary" />
+		</Row>
+	{/if}
+	{#if currentWord}
+		<Row class="mb-5">
+			<Col>
+				<h1>Welche Artikel hat {currentWord.word}?</h1>
+			</Col>
+		</Row>
+		<Row class="mb-4">
+			<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+				{#each Object.entries(textValuePairs) as [text, value]}
+					<AnswerButton text="{text}" word="{currentWord}" buttonValue="{value}"
+												on:sendAnswer={sendAnswer} />
+				{/each}
+			</Col>
+		</Row>
+		<Row class="mb-4">
+			<Col class="d-flex justify-content-center gap-3">
+				<Button class="d-flex align-items-center justify-content-center"
+								color="danger"
+								outline="{true}"
+								on:click={() => {markInvalidModalOpen = true;}}>
+					That is not a valid word
+				</Button>
+				<Button class="d-flex align-items-center justify-content-center"
+								color="warning"
+								outline="{true}"
+								on:click={() => {markAnswerWrongModalOpen = true;}}>
+					The answer was wrong
+				</Button>
+				<Button class="d-flex align-items-center justify-content-center"
+								color="secondary"
+								outline="{!$hasAnswered}"
+								on:click={fetchNextWord}>
+					Next word
+				</Button>
+			</Col>
+		</Row>
+		<MarkWordAsInvalidConfirmationModal word="{currentWord}" isOpen="{markInvalidModalOpen}"
 																				on:confirm={markWordAsInvalid} />
-		<AnswerWasWrongConfirmationModal word="{data.wordToGuess}" isOpen="{markAnswerWrongModalOpen}"
+		<AnswerWasWrongConfirmationModal word="{currentWord}" isOpen="{markAnswerWrongModalOpen}"
 																		 on:confirm={markAnswerAsWrong} />
 	{/if}
 </Container>

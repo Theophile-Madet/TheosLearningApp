@@ -23,3 +23,4 @@ python manage.py runserver
 - Import the Bootstrap CSS file locally instead of through a CDN
 - Give feedback on invalid word / wrong answer
 - Give feedback on progress (word learned, 3/7 success?)
+- Sometimes give an already learned word

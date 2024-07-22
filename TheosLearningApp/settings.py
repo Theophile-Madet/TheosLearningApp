@@ -34,8 +34,11 @@ SECRET_KEY = env(
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG", cast=bool, default=False)
+IS_DEV_ENV = env("IS_DEV_ENV", cast=bool, default=False)
 
-ALLOWED_HOSTS = ["localhost:5173", "localhost", "learnapi.seriousdino.org"]
+ALLOWED_HOSTS = ["learnapp.seriousdino.org:8000"]
+if IS_DEV_ENV:
+    ALLOWED_HOSTS = ["localhost"]
 
 
 # Application definition
@@ -155,16 +158,13 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}
 
-CSRF_TRUSTED_ORIGINS = ["http://localhost:5173", "https://learnapp.seriousdino.org"]
-
-CORS_ORIGIN_WHITELIST = ["http://localhost:5173", "https://learnapp.seriousdino.org"]
+CSRF_TRUSTED_ORIGINS = ["https://learnapp.seriousdino.org"]
+CORS_ORIGIN_WHITELIST = ["https://learnapp.seriousdino.org"]
+if IS_DEV_ENV:
+    CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
+    CORS_ORIGIN_WHITELIST = ["http://localhost:5173"]
 
 CORS_ALLOW_CREDENTIALS = True
-
-CORS_ALLOW_HEADERS = (
-    *default_headers,
-    "X-CSRF-Token",
-)
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
