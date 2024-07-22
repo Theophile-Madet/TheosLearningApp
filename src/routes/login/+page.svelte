@@ -4,13 +4,14 @@
 	import { AuthenticationAccountApi } from '../../allauth-api-client';
 	import { useAllauthApi } from '../../utils/useAllauthApi';
 	import { goto } from '$app/navigation';
-	import { Alert, Button, Container, FormGroup, Input } from '@sveltestrap/sveltestrap';
+	import { Alert, Container, FormGroup, Input } from '@sveltestrap/sveltestrap';
 	import { onMount } from 'svelte';
 	import { csrfToken } from '../stores';
+	import DinoButton from '../../components/DinoButton.svelte';
 
 	let username = '';
 	let password = '';
-
+	let loading = false;
 	let loginError = '';
 
 	onMount(async () => {
@@ -22,6 +23,8 @@
 	});
 
 	async function doLogin() {
+		loading = true;
+
 		const authenticationAccountApi = useAllauthApi(AuthenticationAccountApi, fetch, $csrfToken);
 		authenticationAccountApi.allauthClientV1AuthLoginPost({
 			client: 'browser',
@@ -34,6 +37,8 @@
 		}).catch(async (errorResponse) => {
 			const errorContent = await errorResponse.response.json();
 			loginError = errorContent.errors.map((error: any) => error.message).join('\n');
+		}).finally(() => {
+			loading = false;
 		});
 	}
 </script>
@@ -59,7 +64,7 @@
 				<Input type="password" name="password" bind:value={password} />
 			</FormGroup>
 			<div class="button-center">
-				<Button color="primary" type="submit">Login</Button>
+				<DinoButton color="primary" type="submit" text="Login" icon="box-arrow-in-right" loading="{loading}" />
 			</div>
 
 		</form>

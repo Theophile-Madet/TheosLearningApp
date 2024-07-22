@@ -1,6 +1,7 @@
 <script>
 	import Header from './Header.svelte';
 	import './styles.css';
+	import { Styles } from '@sveltestrap/sveltestrap';
 </script>
 
 <div class="app">
@@ -34,3 +35,5 @@
         justify-content: center;
     }
 </style>
+
+<Styles />
