@@ -12,7 +12,9 @@ class WordLearnedChecker:
             "-created_at"
         )[: LearningConfig.REPETITIONS_TO_LEARN]
 
-        return all([result.answer == word.gender for result in last_results])
+        return len(last_results) >= LearningConfig.REPETITIONS_TO_LEARN and all(
+            [result.answer == word.gender for result in last_results]
+        )
 
     @classmethod
     def nb_correct_in_a_row(cls, user: User, word: Word) -> int:
