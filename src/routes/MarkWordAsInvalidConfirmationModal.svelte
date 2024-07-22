@@ -21,7 +21,13 @@
 
 <Modal isOpen={isOpen} toggle="{() => {cancel()}}">
 	<ModalHeader>Confirm word is invalid?</ModalHeader>
-	<ModalBody>{word.word} - {word.gender} - {word.id}</ModalBody>
+	<ModalBody>
+		<ul>
+			<li>Word: {word.word}</li>
+			<li>Gender: {word.gender}</li>
+			<li>ID: {word.id}</li>
+		</ul>
+	</ModalBody>
 	<ModalFooter>
 		<DinoButton color="secondary" on:click={cancel} text="Cancel" icon="x-circle" />
 		<DinoButton color="danger" on:click={confirm} loading="{loading}" text="Mark as invalid" icon="bookmark-x" />

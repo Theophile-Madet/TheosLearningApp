@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Alert, Button, Col, Container, Row, Spinner } from '@sveltestrap/sveltestrap';
+	import { Alert, Col, Container, Row, Spinner } from '@sveltestrap/sveltestrap';
 	import AnswerButton from './AnswerButton.svelte';
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
@@ -13,6 +13,7 @@
 	let markInvalidModalOpen = false;
 	let markInvalidLoading = false;
 	let markAnswerWrongModalOpen = false;
+	let markAnswerWrongLoading = false;
 	let apiError = '';
 	let currentWord: Word | undefined;
 	let loadingNextWord = false;
@@ -89,6 +90,7 @@
 
 		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		apiError = '';
+		markAnswerWrongLoading = true;
 
 		learningApi.learningApiMarkAnswerAsWrongCreate({
 				markAnswerAsWrongRequest: {
@@ -101,6 +103,8 @@
 		}).catch(async (error: ResponseError) => {
 			const errorContent = await error.response.json();
 			apiError = errorContent.errors.map((error: any) => error.message).join('\n');
+		}).finally(() => {
+			markAnswerWrongLoading = false;
 		});
 	}
 </script>
@@ -137,18 +141,20 @@
 		</Row>
 		<Row class="mb-4">
 			<Col class="d-flex justify-content-center gap-3">
-				<Button class="d-flex align-items-center justify-content-center"
-								color="danger"
-								outline="{true}"
-								on:click={() => {markInvalidModalOpen = true;}}>
-					That is not a valid word
-				</Button>
-				<Button class="d-flex align-items-center justify-content-center"
-								color="warning"
-								outline="{true}"
-								on:click={() => {markAnswerWrongModalOpen = true;}}>
-					The answer was wrong
-				</Button>
+				<DinoButton
+					color="danger"
+					outline="{true}"
+					on:click={() => {markInvalidModalOpen = true;}}
+					text="That is not a valid word"
+					loading="{markInvalidLoading}"
+					icon="cone-striped" />
+				<DinoButton
+					color="warning"
+					outline="{true}"
+					on:click={() => {markAnswerWrongModalOpen = true;}}
+					text="The answer was wrong"
+					loading="{markAnswerWrongLoading}"
+					icon="cone-striped" />
 				<DinoButton
 					color="secondary"
 					outline="{!$hasAnswered}"
@@ -161,7 +167,8 @@
 																				on:cancel={() => {markInvalidModalOpen = false;}}
 																				loading="{markInvalidLoading}" />
 		<AnswerWasWrongConfirmationModal word="{currentWord}" isOpen="{markAnswerWrongModalOpen}"
-																		 on:confirm={markAnswerAsWrong} />
+																		 on:confirm={markAnswerAsWrong}
+																		 on:cancel={() => {markAnswerWrongModalOpen = false;}} />
 	{/if}
 </Container>
 

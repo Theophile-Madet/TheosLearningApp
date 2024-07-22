@@ -1,27 +1,35 @@
 <script lang="ts">
 
 	import { createEventDispatcher } from 'svelte';
-	import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from '@sveltestrap/sveltestrap';
+	import { Modal, ModalBody, ModalFooter, ModalHeader } from '@sveltestrap/sveltestrap';
 	import type { Word } from '../learning-dino-api-client';
+	import DinoButton from '../components/DinoButton.svelte';
 
 	export let word: Word;
 	export let isOpen: boolean;
+	let loading: boolean;
 	const dispatch = createEventDispatcher();
 
 	function confirm() {
 		dispatch('confirm');
 	}
 
-	function close() {
-		isOpen = false;
+	function cancel() {
+		dispatch('cancel');
 	}
 </script>
 
-<Modal isOpen={isOpen}>
+<Modal isOpen={isOpen} toggle="{() => {cancel()}}">
 	<ModalHeader>Confirm answer was wrong?</ModalHeader>
-	<ModalBody>{word.word} - {word.gender} - {word.id}</ModalBody>
+	<ModalBody>
+		<ul>
+			<li>Word: {word.word}</li>
+			<li>Gender: {word.gender}</li>
+			<li>ID: {word.id}</li>
+		</ul>
+	</ModalBody>
 	<ModalFooter>
-		<Button color="secondary" on:click={close}>Actually it was correct</Button>
-		<Button color="danger" on:click={confirm}>Yes it was wrong</Button>
+		<DinoButton color="secondary" on:click={cancel} text="Actually it was correct" icon="x-circle" />
+		<DinoButton color="danger" on:click={confirm} text="Yes it was wrong" icon="bug" loading="{loading}" />
 	</ModalFooter>
 </Modal>
