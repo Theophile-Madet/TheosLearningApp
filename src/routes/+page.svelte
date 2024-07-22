@@ -4,7 +4,7 @@
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
 	import { csrfToken, hasAnswered } from './stores';
-	import { LearningApi, ResponseError, type Word } from '../learning-dino-api-client';
+	import { LearningApi, ResponseError, type WasAnswerCorrect, type Word } from '../learning-dino-api-client';
 	import AnswerWasWrongConfirmationModal from './AnswerWasWrongConfirmationModal.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -28,7 +28,11 @@
 	let logoutLoading = false;
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
-	let toasts: { word: Word, correct: boolean, open: boolean }[] = [];
+	let toasts: { word: Word, open: boolean, bodyText: string, color: string }[] = [];
+
+	let small_positive_header = ['Nice!', 'Good!', 'Correct!', 'Yes!'];
+	let big_positive_header = ['Well done!', 'Yeah!', 'Woohoo!'];
+	let negative_header = ['Whoops!', 'Nope!', 'Maybe next time...'];
 
 	onMount(async () => {
 		if (!$csrfToken) {
@@ -51,7 +55,24 @@
 				answer: event.detail.value
 			}
 		});
-		toasts = [{ word: currentWord, correct: result.correct, open: true }, ...toasts];
+		toasts = [{
+			word: currentWord,
+			bodyText: getToastBody(result),
+			open: true,
+			color: getToastColor(result)
+		}, ...toasts];
+	}
+
+	function getToastColor(result: WasAnswerCorrect) {
+		if (result.learned) return 'success';
+		if (result.correct) return 'light';
+		return 'warning';
+	}
+
+	function getToastBody(result: WasAnswerCorrect) {
+		if (result.learned) return getRandomElement(big_positive_header);
+		if (result.correct) return getRandomElement(small_positive_header) + ' ' + result.nbAnswersCorrectInARow + '/' + result.repetitionsToLearn;
+		return getRandomElement(negative_header);
 	}
 
 	async function fetchNextWord() {
@@ -148,6 +169,10 @@
 			logoutLoading = false;
 		});
 	}
+
+	function getRandomElement(array: any[]) {
+		return array[Math.floor(Math.random() * array.length)];
+	}
 </script>
 
 <svelte:head>
@@ -239,13 +264,11 @@
 	<AboutModal isOpen="{aboutModalOpen}" on:cancel={() => {aboutModalOpen = false;}} />
 	<div class="toast-container top-0 end-0 p-3">
 		{#each toasts as toast (toast.word.id)}
-			<Toast class="text-bg-{toast.correct ? 'success' : 'warning'}" isOpen="{toast.open}" fade="{true}" autohide
+			<Toast class="text-bg-{toast.color}" isOpen="{toast.open}" fade="{true}" autohide
 						 on:close={() => {toasts = toasts.filter(otherToast => otherToast.word.id !== toast.word.id)}}
-						 delay="{1000}">
+						 delay="{5000}">
 				<ToastHeader toggle="{() => toast.open = false}">{toast.word.word}</ToastHeader>
-				<ToastBody>
-					{#if toast.correct}Well done!{:else}Whoops!{/if}
-				</ToastBody>
+				<ToastBody>{toast.bodyText}</ToastBody>
 			</Toast>
 		{/each}
 	</div>

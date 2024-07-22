@@ -170,8 +170,17 @@ components:
       properties:
         correct:
           type: boolean
+        learned:
+          type: boolean
+        nb_answers_correct_in_a_row:
+          type: integer
+        repetitions_to_learn:
+          type: integer
       required:
         - correct
+        - learned
+        - nb_answers_correct_in_a_row
+        - repetitions_to_learn
     Word:
       type: object
       properties:

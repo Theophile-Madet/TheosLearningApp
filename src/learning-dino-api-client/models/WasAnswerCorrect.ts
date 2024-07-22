@@ -24,6 +24,24 @@ export interface WasAnswerCorrect {
 	 * @memberof WasAnswerCorrect
 	 */
 	correct: boolean;
+	/**
+	 *
+	 * @type {boolean}
+	 * @memberof WasAnswerCorrect
+	 */
+	learned: boolean;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof WasAnswerCorrect
+	 */
+	nbAnswersCorrectInARow: number;
+	/**
+	 *
+	 * @type {number}
+	 * @memberof WasAnswerCorrect
+	 */
+	repetitionsToLearn: number;
 }
 
 /**
@@ -31,6 +49,9 @@ export interface WasAnswerCorrect {
  */
 export function instanceOfWasAnswerCorrect(value: object): value is WasAnswerCorrect {
 	if (!('correct' in value) || value['correct'] === undefined) return false;
+	if (!('learned' in value) || value['learned'] === undefined) return false;
+	if (!('nbAnswersCorrectInARow' in value) || value['nbAnswersCorrectInARow'] === undefined) return false;
+	if (!('repetitionsToLearn' in value) || value['repetitionsToLearn'] === undefined) return false;
 	return true;
 }
 
@@ -44,7 +65,10 @@ export function WasAnswerCorrectFromJSONTyped(json: any, ignoreDiscriminator: bo
 	}
 	return {
 
-		'correct': json['correct']
+		'correct': json['correct'],
+		'learned': json['learned'],
+		'nbAnswersCorrectInARow': json['nb_answers_correct_in_a_row'],
+		'repetitionsToLearn': json['repetitions_to_learn']
 	};
 }
 
@@ -54,7 +78,10 @@ export function WasAnswerCorrectToJSON(value?: WasAnswerCorrect | null): any {
 	}
 	return {
 
-		'correct': value['correct']
+		'correct': value['correct'],
+		'learned': value['learned'],
+		'nb_answers_correct_in_a_row': value['nbAnswersCorrectInARow'],
+		'repetitions_to_learn': value['repetitionsToLearn']
 	};
 }
 

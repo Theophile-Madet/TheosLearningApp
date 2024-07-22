@@ -19,6 +19,9 @@ class GetNextWordSerializer(serializers.Serializer):
 
 class WasAnswerCorrectSerializer(serializers.Serializer):
     correct = serializers.BooleanField()
+    learned = serializers.BooleanField()
+    nb_answers_correct_in_a_row = serializers.IntegerField()
+    repetitions_to_learn = serializers.IntegerField()
 
 
 class SendAnswerSerializer(serializers.Serializer):

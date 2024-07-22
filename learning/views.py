@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from content.models import Word
+from learning.apps import LearningConfig
 from learning.models import Result, InvalidWord, LearnedWord, WrongAnswer
 from learning.serializers import (
     WasAnswerCorrectSerializer,
@@ -67,11 +68,22 @@ class SendAnswer(APIView):
         word = get_object_or_404(Word, id=request_serializer.validated_data["word_id"])
         Result.objects.create(answer=answer, word=word, user=request.user)
 
+        learned = False
         if WordLearnedChecker.is_word_learned(request.user, word):
+            learned = True
             LearnedWord.objects.create(user=request.user, word=word)
 
         return Response(
-            WasAnswerCorrectSerializer({"correct": answer == word.gender}).data,
+            WasAnswerCorrectSerializer(
+                {
+                    "correct": answer == word.gender,
+                    "learned": learned,
+                    "nb_answers_correct_in_a_row": WordLearnedChecker.nb_correct_in_a_row(
+                        request.user, word
+                    ),
+                    "repetitions_to_learn": LearningConfig.REPETITIONS_TO_LEARN,
+                }
+            ).data,
             status=status.HTTP_200_OK,
         )
 

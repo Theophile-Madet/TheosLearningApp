@@ -15,18 +15,18 @@
 
 import * as runtime from '../runtime';
 import type {
-	AllauthClientV1AccountAuthenticatorsGet200Response,
-	AllauthClientV1AccountAuthenticatorsRecoveryCodesGet200Response,
-	AllauthClientV1AccountAuthenticatorsTotpGet200Response,
-	AllauthClientV1AccountAuthenticatorsTotpPostRequest,
-	AllauthClientV1AuthPasswordRequestPost200Response
+    AllauthClientV1AccountAuthenticatorsGet200Response,
+    AllauthClientV1AccountAuthenticatorsRecoveryCodesGet200Response,
+    AllauthClientV1AccountAuthenticatorsTotpGet200Response,
+    AllauthClientV1AccountAuthenticatorsTotpPostRequest,
+    AllauthClientV1AuthPasswordRequestPost200Response
 } from '../models/index';
 import {
-	AllauthClientV1AccountAuthenticatorsGet200ResponseFromJSON,
-	AllauthClientV1AccountAuthenticatorsRecoveryCodesGet200ResponseFromJSON,
-	AllauthClientV1AccountAuthenticatorsTotpGet200ResponseFromJSON,
-	AllauthClientV1AccountAuthenticatorsTotpPostRequestToJSON,
-	AllauthClientV1AuthPasswordRequestPost200ResponseFromJSON
+    AllauthClientV1AccountAuthenticatorsGet200ResponseFromJSON,
+    AllauthClientV1AccountAuthenticatorsRecoveryCodesGet200ResponseFromJSON,
+    AllauthClientV1AccountAuthenticatorsTotpGet200ResponseFromJSON,
+    AllauthClientV1AccountAuthenticatorsTotpPostRequestToJSON,
+    AllauthClientV1AuthPasswordRequestPost200ResponseFromJSON
 } from '../models/index';
 
 export interface AllauthClientV1AccountAuthenticatorsGetRequest {
