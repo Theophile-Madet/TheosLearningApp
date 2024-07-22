@@ -266,7 +266,7 @@
 		{#each toasts as toast (toast.word.id)}
 			<Toast class="text-bg-{toast.color}" isOpen="{toast.open}" fade="{true}" autohide
 						 on:close={() => {toasts = toasts.filter(otherToast => otherToast.word.id !== toast.word.id)}}
-						 delay="{5000}">
+						 delay="{1500}">
 				<ToastHeader toggle="{() => toast.open = false}">{toast.word.word}</ToastHeader>
 				<ToastBody>{toast.bodyText}</ToastBody>
 			</Toast>
