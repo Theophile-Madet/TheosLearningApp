@@ -52,7 +52,9 @@
 <style>
     .answer_button {
         --bs-btn-font-size: 2rem;
-        width: 200px;
+        width: 100%;
+        max-width: 40%;
+        min-width: 20%;
         height: 100px;
     }
 </style>
