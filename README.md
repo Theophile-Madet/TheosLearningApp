@@ -1,7 +1,14 @@
 # Sources
 
+## German words
+
 - Wiktionary, word details (noun or verb, gender...) : https://dumps.wikimedia.org/dewiktionary/latest/
 - Uni Leipzig, words listed by frequency : https://wortschatz.uni-leipzig.de/en/download/German
+
+## Pokemon names
+
+- https://docs.google.com/spreadsheets/d/1Eo6oWs4RA5M4c0r9M8FXJniOyhpmNmrnULabkP8kbL8/edit?gid=0#gid=0
+- https://github.com/lgreski/pokemonData/blob/master/Pokemon.csv
 
 # Generate API client
 

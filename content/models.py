@@ -15,3 +15,38 @@ class Word(models.Model):
 
     def __str__(self):
         return f"{self.word}, {self.gender}, {self.usage_frequency}"
+
+
+class Pokemon(models.Model):
+    class Meta:
+        indexes = [models.Index(fields=["id_from_csv"])]
+
+    id_from_csv = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.id_from_csv
+
+
+class Language(models.Model):
+    short_name = models.CharField(max_length=100)
+    full_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.short_name
+
+
+class PokemonName(models.Model):
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["language", "pokemon"],
+                name="only_one_pokemon_name_per_language",
+            )
+        ]
+
+    name = models.CharField(max_length=100)
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name="names")
+
+    def __str__(self):
+        return f"{self.name}, {self.pokemon}, {self.language}"
