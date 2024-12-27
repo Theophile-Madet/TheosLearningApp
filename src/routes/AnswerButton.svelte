@@ -1,8 +1,8 @@
 <script lang="ts">
 
 	import { createEventDispatcher } from 'svelte';
-	import type { Word } from '../../api-client';
 	import { hasAnswered } from './stores';
+	import type { Word } from '../learning-dino-api-client';
 
 	export let text: string;
 	export let word: Word;
