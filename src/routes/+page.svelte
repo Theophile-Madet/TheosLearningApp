@@ -4,7 +4,13 @@
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
 	import { csrfToken, hasAnswered } from './stores';
-	import { LearningApi, ResponseError, type WasAnswerCorrect, type Word } from '../learning-dino-api-client';
+	import {
+		LearningApi,
+		QuestionTypeEnum,
+		ResponseError,
+		type WasAnswerCorrect,
+		type Word
+	} from '../learning-dino-api-client';
 	import AnswerWasWrongConfirmationModal from './AnswerWasWrongConfirmationModal.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
@@ -41,7 +47,7 @@
 			$csrfToken = token.csrfToken;
 		}
 
-		await fetchNextWord();
+		await fetchNextQuestion();
 	});
 
 	async function sendAnswer(event: CustomEvent) {
@@ -75,17 +81,31 @@
 		return getRandomElement(negative_header);
 	}
 
-	async function fetchNextWord() {
+	async function fetchNextQuestion() {
 		const learningApi = useLearningDinoApi(LearningApi);
 		apiError = '';
 		loadingNextWord = true;
 
-		await learningApi.learningApiGetNextWordRetrieve().then((result) => {
-			currentWord = result.word;
-			rank = result.rank;
-			nbAnswersTotal = result.nbAnswersTotal;
-			nbAnswersCorrect = result.nbAnswersCorrect;
-			nbAnswersCorrectInARow = result.nbAnswersCorrectInARow;
+		await learningApi.learningApiGetNextQuestionRetrieve().then((result) => {
+			switch (result.questionType) {
+				case QuestionTypeEnum.GermanWord:
+					if (!result.germanWordContent) {
+						alert('Missing question content');
+						console.error('Missing question content');
+						console.log(result);
+						break;
+					}
+					currentWord = result.germanWordContent.word;
+					rank = result.germanWordContent.rank;
+					break;
+				case QuestionTypeEnum.PokemonName:
+					alert('Pokemon questions not done yet');
+					console.log('Pokemon questions not done yet');
+			}
+
+			nbAnswersTotal = result.stats.nbAnswersTotal;
+			nbAnswersCorrect = result.stats.nbAnswersCorrect;
+			nbAnswersCorrectInARow = result.stats.nbAnswersCorrectInARow;
 			$hasAnswered = false;
 		}).catch(async (error: ResponseError) => {
 			if (error.response.status === 403) {
@@ -112,7 +132,7 @@
 				}
 			}
 		).then(async () => {
-			await fetchNextWord();
+			await fetchNextQuestion();
 		}).catch(async (error: ResponseError) => {
 			const errorContent = await error.response.json();
 			apiError = errorContent.errors.map((error: any) => error.message).join('\n');
@@ -136,7 +156,7 @@
 			}
 		).then(async () => {
 			markAnswerWrongModalOpen = false;
-			await fetchNextWord();
+			await fetchNextQuestion();
 		}).catch(async (error: ResponseError) => {
 			const errorContent = await error.response.json();
 			apiError = errorContent.errors.map((error: any) => error.message).join('\n');
@@ -235,7 +255,7 @@
 				<DinoButton
 					color="secondary"
 					outline="{!$hasAnswered}"
-					on:click={fetchNextWord} text="Next word" loading="{loadingNextWord}">
+					on:click={fetchNextQuestion} text="Next word" loading="{loadingNextWord}">
 				</DinoButton>
 			</Col>
 		</Row>

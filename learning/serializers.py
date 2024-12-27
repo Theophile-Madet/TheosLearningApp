@@ -1,3 +1,5 @@
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from content.models import Word
@@ -9,12 +11,9 @@ class WordSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class GetNextWordSerializer(serializers.Serializer):
+class GermanWordQuestionContentSerializer(serializers.Serializer):
     word = WordSerializer()
     rank = serializers.IntegerField()
-    nb_answers_total = serializers.IntegerField()
-    nb_answers_correct = serializers.IntegerField()
-    nb_answers_correct_in_a_row = serializers.IntegerField()
 
 
 class WasAnswerCorrectSerializer(serializers.Serializer):
@@ -39,3 +38,29 @@ class MarkAnswerAsWrongSerializer(serializers.Serializer):
 
 class CsrfTokenSerializer(serializers.Serializer):
     csrf_token = serializers.CharField()
+
+
+class QuestionStatsSerializer(serializers.Serializer):
+    nb_answers_total = serializers.IntegerField()
+    nb_answers_correct = serializers.IntegerField()
+    nb_answers_correct_in_a_row = serializers.IntegerField()
+
+
+class PokemonNameQuestionContentSerializer(serializers.Serializer):
+    given_name = serializers.CharField()
+    given_language_id = serializers.IntegerField()
+    given_language_name = serializers.CharField()
+    expected_name = serializers.CharField()
+    expected_language_id = serializers.IntegerField()
+    expected_language_name = serializers.CharField()
+
+
+class QuestionSerializer(serializers.Serializer):
+    class Type(models.TextChoices):
+        POKEMON_NAME = "pokemon_name", _("Pokemon name")
+        GERMAN_WORD = "german_word", _("German word")
+
+    question_type = serializers.ChoiceField(choices=Type)
+    german_word_content = GermanWordQuestionContentSerializer(allow_null=True)
+    pokemon_name_content = PokemonNameQuestionContentSerializer(allow_null=True)
+    stats = QuestionStatsSerializer()

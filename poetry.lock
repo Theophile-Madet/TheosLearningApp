@@ -813,7 +813,18 @@ files = [
     { file = "uritemplate-4.1.1.tar.gz", hash = "sha256:4346edfc5c3b79f694bccd6d6099a322bbeb628dbf2cd86eea55a456ce5124f0" },
 ]
 
+[[package]]
+name = "verbose-csrf-middleware"
+version = "1.0.4"
+description = "Verbatim copy of Django's CSRF middleware, but with more verbose error messages."
+optional = false
+python-versions = ">=3.8"
+files = [
+    { file = "verbose_csrf_middleware-1.0.4-py3-none-any.whl", hash = "sha256:778901ab1845b8a7c8db204b90b0db8fc74752ee58c3605603e2f02a113a04da" },
+    { file = "verbose_csrf_middleware-1.0.4.tar.gz", hash = "sha256:1a8b5930b7069b4946d63adab19293422c2515578fa7d84b0b49ca5776bbfcb8" },
+]
+
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "97faec0902d72c429a62bb38cdaa7db2785c4ccfc5dd6d1baf7437f8b6597163"
+content-hash = "67f2a7b4a7f9e29cc420e236cce3367ab763d187e7f20c2c14b3a2fab7430288"

@@ -16,7 +16,9 @@ from learning.serializers import (
     MarkWordAsInvalidSerializer,
     MarkAnswerAsWrongSerializer,
     CsrfTokenSerializer,
-    GetNextWordSerializer,
+    GermanWordQuestionContentSerializer,
+    QuestionSerializer,
+    QuestionStatsSerializer,
 )
 from learning.services.WordLearnedChecker import WordLearnedChecker
 from learning.services.WordToLearnPicker import WordToLearnPicker
@@ -34,22 +36,33 @@ class GetCSRFToken(APIView):
         )
 
 
-class GetNextWord(APIView):
+class GetNextQuestion(APIView):
     @extend_schema(
-        responses={200: GetNextWordSerializer},
+        responses={200: QuestionSerializer},
     )
     def get(self, request):
         word, rank = WordToLearnPicker.pick_next_word_for_user(request.user)
         total_answers = Result.objects.filter(user=request.user, word=word)
-        serializer = GetNextWordSerializer(
+        word_question_serializer = GermanWordQuestionContentSerializer(
             {
                 "word": word,
                 "rank": rank,
+            }
+        )
+        stats_serializer = QuestionStatsSerializer(
+            {
                 "nb_answers_total": total_answers.count(),
                 "nb_answers_correct": total_answers.filter(answer=word.gender).count(),
                 "nb_answers_correct_in_a_row": WordLearnedChecker.nb_correct_in_a_row(
                     request.user, word
                 ),
+            }
+        )
+        serializer = QuestionSerializer(
+            {
+                "question_type": QuestionSerializer.Type.GERMAN_WORD,
+                "german_word_content": word_question_serializer.data,
+                "stats": stats_serializer.data,
             }
         )
         return Response(serializer.data, status=status.HTTP_200_OK)

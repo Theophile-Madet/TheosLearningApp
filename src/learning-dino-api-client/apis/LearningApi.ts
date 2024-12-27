@@ -16,17 +16,19 @@
 import * as runtime from '../runtime';
 import type {
 	CsrfToken,
-	GetNextWord,
+	GermanWordQuestionContent,
 	MarkAnswerAsWrongRequest,
 	MarkWordAsInvalidRequest,
+	Question,
 	SendAnswerRequest,
 	WasAnswerCorrect
 } from '../models/index';
 import {
 	CsrfTokenFromJSON,
-	GetNextWordFromJSON,
+	GermanWordQuestionContentFromJSON,
 	MarkAnswerAsWrongRequestToJSON,
 	MarkWordAsInvalidRequestToJSON,
+	QuestionFromJSON,
 	SendAnswerRequestToJSON,
 	WasAnswerCorrectFromJSON
 } from '../models/index';
@@ -74,7 +76,31 @@ export class LearningApi extends runtime.BaseAPI {
 
 	/**
 	 */
-	async learningApiGetNextWordRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GetNextWord>> {
+	async learningApiGetNextQuestionRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Question>> {
+		const queryParameters: any = {};
+
+		const headerParameters: runtime.HTTPHeaders = {};
+
+		const response = await this.request({
+			path: `/learning/api/get_next_question/`,
+			method: 'GET',
+			headers: headerParameters,
+			query: queryParameters
+		}, initOverrides);
+
+		return new runtime.JSONApiResponse(response, (jsonValue) => QuestionFromJSON(jsonValue));
+	}
+
+	/**
+	 */
+	async learningApiGetNextQuestionRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Question> {
+		const response = await this.learningApiGetNextQuestionRetrieveRaw(initOverrides);
+		return await response.value();
+	}
+
+	/**
+	 */
+	async learningApiGetNextWordRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GermanWordQuestionContent>> {
 		const queryParameters: any = {};
 
 		const headerParameters: runtime.HTTPHeaders = {};
@@ -86,12 +112,12 @@ export class LearningApi extends runtime.BaseAPI {
 			query: queryParameters
 		}, initOverrides);
 
-		return new runtime.JSONApiResponse(response, (jsonValue) => GetNextWordFromJSON(jsonValue));
+		return new runtime.JSONApiResponse(response, (jsonValue) => GermanWordQuestionContentFromJSON(jsonValue));
 	}
 
 	/**
 	 */
-	async learningApiGetNextWordRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GetNextWord> {
+	async learningApiGetNextWordRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GermanWordQuestionContent> {
 		const response = await this.learningApiGetNextWordRetrieveRaw(initOverrides);
 		return await response.value();
 	}

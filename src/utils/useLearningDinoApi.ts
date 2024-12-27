@@ -3,7 +3,7 @@ import { Configuration as Configuration, type FetchAPI, type HTTPHeaders } from 
 export function useLearningDinoApi<T>(ApiClient: new (configuration: Configuration) => T, fetch?: FetchAPI, csrfToken?: string): T {
 	const headers: HTTPHeaders = {};
 	if (csrfToken) {
-		headers['x-csrftoken'] = csrfToken;
+		headers['X-Csrftoken'] = csrfToken;
 	}
 
 	return new ApiClient(

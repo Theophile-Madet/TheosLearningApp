@@ -2,9 +2,13 @@ apis/LearningApi.ts
 apis/index.ts
 index.ts
 models/CsrfToken.ts
-models/GetNextWord.ts
+models/GermanWordQuestionContent.ts
 models/MarkAnswerAsWrongRequest.ts
 models/MarkWordAsInvalidRequest.ts
+models/PokemonNameQuestionContent.ts
+models/Question.ts
+models/QuestionStats.ts
+models/QuestionTypeEnum.ts
 models/SendAnswerRequest.ts
 models/TypeEnum.ts
 models/WasAnswerCorrect.ts

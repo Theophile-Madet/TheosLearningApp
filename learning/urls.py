@@ -11,9 +11,9 @@ urlpatterns = [
         name="get_csrf_token",
     ),
     path(
-        "api/get_next_word/",
-        views.GetNextWord.as_view(),
-        name="get_next_word",
+        "api/get_next_question/",
+        views.GetNextQuestion.as_view(),
+        name="get_next_question",
     ),
     path(
         "api/send_answer/",

@@ -18,6 +18,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/CsrfToken'
           description: ''
+  /learning/api/get_next_question/:
+    get:
+      operationId: learning_api_get_next_question_retrieve
+      tags:
+        - learning
+      security:
+        - cookieAuth: [ ]
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Question'
+          description: ''
   /learning/api/get_next_word/:
     get:
       operationId: learning_api_get_next_word_retrieve
@@ -30,7 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetNextWord'
+                $ref: '#/components/schemas/GermanWordQuestionContent'
           description: ''
   /learning/api/mark_answer_as_wrong/:
     post:
@@ -111,23 +125,14 @@ components:
           type: string
       required:
         - csrf_token
-    GetNextWord:
+    GermanWordQuestionContent:
       type: object
       properties:
         word:
           $ref: '#/components/schemas/Word'
         rank:
           type: integer
-        nb_answers_total:
-          type: integer
-        nb_answers_correct:
-          type: integer
-        nb_answers_correct_in_a_row:
-          type: integer
       required:
-        - nb_answers_correct
-        - nb_answers_correct_in_a_row
-        - nb_answers_total
         - rank
         - word
     MarkAnswerAsWrongRequest:
@@ -144,6 +149,69 @@ components:
           type: integer
       required:
         - word_id
+    PokemonNameQuestionContent:
+      type: object
+      properties:
+        given_name:
+          type: string
+        given_language_id:
+          type: integer
+        given_language_name:
+          type: string
+        expected_name:
+          type: string
+        expected_language_id:
+          type: integer
+        expected_language_name:
+          type: string
+      required:
+        - expected_language_id
+        - expected_language_name
+        - expected_name
+        - given_language_id
+        - given_language_name
+        - given_name
+    Question:
+      type: object
+      properties:
+        question_type:
+          $ref: '#/components/schemas/QuestionTypeEnum'
+        german_word_content:
+          allOf:
+            - $ref: '#/components/schemas/GermanWordQuestionContent'
+          nullable: true
+        pokemon_name_content:
+          allOf:
+            - $ref: '#/components/schemas/PokemonNameQuestionContent'
+          nullable: true
+        stats:
+          $ref: '#/components/schemas/QuestionStats'
+      required:
+        - german_word_content
+        - pokemon_name_content
+        - question_type
+        - stats
+    QuestionStats:
+      type: object
+      properties:
+        nb_answers_total:
+          type: integer
+        nb_answers_correct:
+          type: integer
+        nb_answers_correct_in_a_row:
+          type: integer
+      required:
+        - nb_answers_correct
+        - nb_answers_correct_in_a_row
+        - nb_answers_total
+    QuestionTypeEnum:
+      enum:
+        - pokemon_name
+        - german_word
+      type: string
+      description: |-
+        * `pokemon_name` - pokemon_name
+        * `german_word` - german_word
     SendAnswerRequest:
       type: object
       properties:

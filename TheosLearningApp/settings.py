@@ -40,7 +40,6 @@ ALLOWED_HOSTS = ["learnapi.seriousdino.org"]
 if IS_DEV_ENV:
     ALLOWED_HOSTS = ["localhost"]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -67,7 +66,14 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+]
+
+if IS_DEV_ENV:
+    MIDDLEWARE.append("verbose_csrf_middleware.CsrfViewMiddleware")
+else:
+    MIDDLEWARE.append("django.middleware.csrf.CsrfViewMiddleware")
+
+MIDDLEWARE += [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -159,10 +165,11 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}
 
 CSRF_TRUSTED_ORIGINS = ["https://learnapp.seriousdino.org"]
-CORS_ORIGIN_WHITELIST = ["https://learnapp.seriousdino.org"]
+CORS_ALLOWED_ORIGINS = ["https://learnapp.seriousdino.org"]
 if IS_DEV_ENV:
-    CSRF_TRUSTED_ORIGINS = ["http://localhost:5173"]
-    CORS_ORIGIN_WHITELIST = ["http://localhost:5173"]
+    CSRF_TRUSTED_ORIGINS = ["http://localhost:5174"]
+    CORS_ALLOWED_ORIGINS = ["http://localhost"]
+    CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
 

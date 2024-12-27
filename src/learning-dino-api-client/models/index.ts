@@ -1,9 +1,13 @@
 /* tslint:disable */
 /* eslint-disable */
 export * from './CsrfToken';
-export * from './GetNextWord';
+export * from './GermanWordQuestionContent';
 export * from './MarkAnswerAsWrongRequest';
 export * from './MarkWordAsInvalidRequest';
+export * from './PokemonNameQuestionContent';
+export * from './Question';
+export * from './QuestionStats';
+export * from './QuestionTypeEnum';
 export * from './SendAnswerRequest';
 export * from './TypeEnum';
 export * from './WasAnswerCorrect';
