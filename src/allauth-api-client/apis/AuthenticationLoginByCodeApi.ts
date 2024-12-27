@@ -14,8 +14,25 @@
 
 
 import * as runtime from '../runtime';
-import type { AuthenticatedResponse, ConfirmLoginCode, RequestLoginCode } from '../models/index';
-import { AuthenticatedResponseFromJSON, ConfirmLoginCodeToJSON, RequestLoginCodeToJSON } from '../models/index';
+import type {
+	AuthenticatedResponse,
+	AuthenticationResponse,
+	ConfirmLoginCode,
+	ErrorResponse,
+	RequestLoginCode
+} from '../models/index';
+import {
+	AuthenticatedResponseFromJSON,
+	AuthenticatedResponseToJSON,
+	AuthenticationResponseFromJSON,
+	AuthenticationResponseToJSON,
+	ConfirmLoginCodeFromJSON,
+	ConfirmLoginCodeToJSON,
+	ErrorResponseFromJSON,
+	ErrorResponseToJSON,
+	RequestLoginCodeFromJSON,
+	RequestLoginCodeToJSON
+} from '../models/index';
 
 export interface AllauthClientV1AuthCodeConfirmPostRequest {
 	client: AllauthClientV1AuthCodeConfirmPostClientEnum;

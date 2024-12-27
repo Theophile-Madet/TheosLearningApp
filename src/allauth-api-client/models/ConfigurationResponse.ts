@@ -12,10 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { ConfigurationResponseData } from './ConfigurationResponseData';
-import { ConfigurationResponseDataFromJSON, ConfigurationResponseDataToJSON } from './ConfigurationResponseData';
+import {
+	ConfigurationResponseDataFromJSON,
+	ConfigurationResponseDataFromJSONTyped,
+	ConfigurationResponseDataToJSON
+} from './ConfigurationResponseData';
 import type { StatusOK } from './StatusOK';
-import { StatusOKFromJSON, StatusOKToJSON } from './StatusOK';
+import {
+	StatusOKFromJSON,
+	StatusOKFromJSONTyped,
+	StatusOKToJSON
+} from './StatusOK';
 
 /**
  *

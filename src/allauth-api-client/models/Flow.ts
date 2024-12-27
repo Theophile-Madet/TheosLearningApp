@@ -12,8 +12,13 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { Provider } from './Provider';
-import { ProviderFromJSON, ProviderToJSON } from './Provider';
+import {
+	ProviderFromJSON,
+	ProviderFromJSONTyped,
+	ProviderToJSON
+} from './Provider';
 
 /**
  *

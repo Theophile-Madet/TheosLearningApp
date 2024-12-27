@@ -47,6 +47,7 @@ class QuestionStatsSerializer(serializers.Serializer):
 
 
 class PokemonNameQuestionContentSerializer(serializers.Serializer):
+    pokemon_id = serializers.IntegerField()
     given_name = serializers.CharField()
     given_language_id = serializers.IntegerField()
     given_language_name = serializers.CharField()

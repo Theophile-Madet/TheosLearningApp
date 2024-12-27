@@ -12,10 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { User } from './User';
-import { UserFromJSON, UserToJSON } from './User';
+import {
+	UserFromJSON,
+	UserFromJSONTyped,
+	UserToJSON
+} from './User';
 import type { AuthenticationMethod } from './AuthenticationMethod';
-import { AuthenticationMethodFromJSON, AuthenticationMethodToJSON } from './AuthenticationMethod';
+import {
+	AuthenticationMethodFromJSON,
+	AuthenticationMethodFromJSONTyped,
+	AuthenticationMethodToJSON
+} from './AuthenticationMethod';
 
 /**
  *

@@ -14,8 +14,19 @@
 
 
 import * as runtime from '../runtime';
-import type { AuthenticatedResponse } from '../models/index';
-import { AuthenticatedResponseFromJSON } from '../models/index';
+import type {
+	AuthenticatedResponse,
+	AuthenticationResponse,
+	SessionGoneResponse
+} from '../models/index';
+import {
+	AuthenticatedResponseFromJSON,
+	AuthenticatedResponseToJSON,
+	AuthenticationResponseFromJSON,
+	AuthenticationResponseToJSON,
+	SessionGoneResponseFromJSON,
+	SessionGoneResponseToJSON
+} from '../models/index';
 
 export interface AllauthClientV1AuthSessionDeleteRequest {
 	client: AllauthClientV1AuthSessionDeleteClientEnum;

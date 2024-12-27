@@ -16,7 +16,10 @@
 import * as runtime from '../runtime';
 import type {
 	AuthenticatedResponse,
+	AuthenticationResponse,
 	EmailVerificationInfo,
+	ErrorResponse,
+	ForbiddenResponse,
 	Login,
 	Reauthenticate,
 	Signup,
@@ -24,10 +27,22 @@ import type {
 } from '../models/index';
 import {
 	AuthenticatedResponseFromJSON,
+	AuthenticatedResponseToJSON,
+	AuthenticationResponseFromJSON,
+	AuthenticationResponseToJSON,
 	EmailVerificationInfoFromJSON,
+	EmailVerificationInfoToJSON,
+	ErrorResponseFromJSON,
+	ErrorResponseToJSON,
+	ForbiddenResponseFromJSON,
+	ForbiddenResponseToJSON,
+	LoginFromJSON,
 	LoginToJSON,
+	ReauthenticateFromJSON,
 	ReauthenticateToJSON,
+	SignupFromJSON,
 	SignupToJSON,
+	VerifyEmailFromJSON,
 	VerifyEmailToJSON
 } from '../models/index';
 

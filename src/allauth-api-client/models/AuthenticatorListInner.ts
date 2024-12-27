@@ -15,12 +15,14 @@
 import type { RecoveryCodesAuthenticator } from './RecoveryCodesAuthenticator';
 import {
 	instanceOfRecoveryCodesAuthenticator,
+	RecoveryCodesAuthenticatorFromJSON,
 	RecoveryCodesAuthenticatorFromJSONTyped,
 	RecoveryCodesAuthenticatorToJSON
 } from './RecoveryCodesAuthenticator';
 import type { TOTPAuthenticator } from './TOTPAuthenticator';
 import {
 	instanceOfTOTPAuthenticator,
+	TOTPAuthenticatorFromJSON,
 	TOTPAuthenticatorFromJSONTyped,
 	TOTPAuthenticatorToJSON
 } from './TOTPAuthenticator';

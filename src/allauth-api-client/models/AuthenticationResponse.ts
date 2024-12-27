@@ -12,10 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { AuthenticationResponseData } from './AuthenticationResponseData';
-import { AuthenticationResponseDataFromJSON, AuthenticationResponseDataToJSON } from './AuthenticationResponseData';
+import {
+	AuthenticationResponseDataFromJSON,
+	AuthenticationResponseDataFromJSONTyped,
+	AuthenticationResponseDataToJSON
+} from './AuthenticationResponseData';
 import type { AuthenticationMeta } from './AuthenticationMeta';
-import { AuthenticationMetaFromJSON, AuthenticationMetaToJSON } from './AuthenticationMeta';
+import {
+	AuthenticationMetaFromJSON,
+	AuthenticationMetaFromJSONTyped,
+	AuthenticationMetaToJSON
+} from './AuthenticationMeta';
 
 /**
  * An authentication related response.

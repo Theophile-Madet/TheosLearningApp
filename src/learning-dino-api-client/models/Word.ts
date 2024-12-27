@@ -12,8 +12,13 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { TypeEnum } from './TypeEnum';
-import { TypeEnumFromJSON, TypeEnumToJSON } from './TypeEnum';
+import {
+	TypeEnumFromJSON,
+	TypeEnumFromJSONTyped,
+	TypeEnumToJSON
+} from './TypeEnum';
 
 /**
  *

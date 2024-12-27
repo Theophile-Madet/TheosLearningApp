@@ -14,13 +14,15 @@
 
 import type { AuthenticationResponse } from './AuthenticationResponse';
 import {
+	instanceOfAuthenticationResponse,
+	AuthenticationResponseFromJSON,
 	AuthenticationResponseFromJSONTyped,
-	AuthenticationResponseToJSON,
-	instanceOfAuthenticationResponse
+	AuthenticationResponseToJSON
 } from './AuthenticationResponse';
 import type { ReauthenticationResponse } from './ReauthenticationResponse';
 import {
 	instanceOfReauthenticationResponse,
+	ReauthenticationResponseFromJSON,
 	ReauthenticationResponseFromJSONTyped,
 	ReauthenticationResponseToJSON
 } from './ReauthenticationResponse';

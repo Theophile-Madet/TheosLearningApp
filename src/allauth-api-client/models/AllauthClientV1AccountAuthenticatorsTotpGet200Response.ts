@@ -12,10 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { TOTPAuthenticator } from './TOTPAuthenticator';
-import { TOTPAuthenticatorFromJSON, TOTPAuthenticatorToJSON } from './TOTPAuthenticator';
+import {
+	TOTPAuthenticatorFromJSON,
+	TOTPAuthenticatorFromJSONTyped,
+	TOTPAuthenticatorToJSON
+} from './TOTPAuthenticator';
 import type { StatusOK } from './StatusOK';
-import { StatusOKFromJSON, StatusOKToJSON } from './StatusOK';
+import {
+	StatusOKFromJSON,
+	StatusOKFromJSONTyped,
+	StatusOKToJSON
+} from './StatusOK';
 
 /**
  *

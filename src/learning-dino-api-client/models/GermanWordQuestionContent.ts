@@ -12,8 +12,13 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { Word } from './Word';
-import { WordFromJSON, WordToJSON } from './Word';
+import {
+	WordFromJSON,
+	WordFromJSONTyped,
+	WordToJSON
+} from './Word';
 
 /**
  *

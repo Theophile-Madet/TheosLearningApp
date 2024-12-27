@@ -14,11 +14,32 @@
 
 
 import * as runtime from '../runtime';
-import type { AuthenticatedResponse, Process, ProviderSignup, ProviderToken } from '../models/index';
+import type {
+	AuthenticatedResponse,
+	AuthenticationResponse,
+	ConflictResponse,
+	ErrorResponse,
+	ForbiddenResponse,
+	Process,
+	ProviderSignup,
+	ProviderToken
+} from '../models/index';
 import {
 	AuthenticatedResponseFromJSON,
+	AuthenticatedResponseToJSON,
+	AuthenticationResponseFromJSON,
+	AuthenticationResponseToJSON,
+	ConflictResponseFromJSON,
+	ConflictResponseToJSON,
+	ErrorResponseFromJSON,
+	ErrorResponseToJSON,
+	ForbiddenResponseFromJSON,
+	ForbiddenResponseToJSON,
+	ProcessFromJSON,
 	ProcessToJSON,
+	ProviderSignupFromJSON,
 	ProviderSignupToJSON,
+	ProviderTokenFromJSON,
 	ProviderTokenToJSON
 } from '../models/index';
 

@@ -12,8 +12,13 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { AuthenticationMeta } from './AuthenticationMeta';
-import { AuthenticationMetaFromJSON, AuthenticationMetaToJSON } from './AuthenticationMeta';
+import {
+	AuthenticationMetaFromJSON,
+	AuthenticationMetaFromJSONTyped,
+	AuthenticationMetaToJSON
+} from './AuthenticationMeta';
 
 /**
  * The session is expired or invalid.

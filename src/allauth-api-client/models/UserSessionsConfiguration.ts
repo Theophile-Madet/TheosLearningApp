@@ -12,6 +12,8 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
+
 /**
  * Configuration of the Django `allauth.usersessions` app.
  *

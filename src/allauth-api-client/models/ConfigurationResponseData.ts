@@ -12,14 +12,31 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { UserSessionsConfiguration } from './UserSessionsConfiguration';
-import { UserSessionsConfigurationFromJSON, UserSessionsConfigurationToJSON } from './UserSessionsConfiguration';
+import {
+	UserSessionsConfigurationFromJSON,
+	UserSessionsConfigurationFromJSONTyped,
+	UserSessionsConfigurationToJSON
+} from './UserSessionsConfiguration';
 import type { AccountConfiguration } from './AccountConfiguration';
-import { AccountConfigurationFromJSON, AccountConfigurationToJSON } from './AccountConfiguration';
+import {
+	AccountConfigurationFromJSON,
+	AccountConfigurationFromJSONTyped,
+	AccountConfigurationToJSON
+} from './AccountConfiguration';
 import type { SocialAccountConfiguration } from './SocialAccountConfiguration';
-import { SocialAccountConfigurationFromJSON, SocialAccountConfigurationToJSON } from './SocialAccountConfiguration';
+import {
+	SocialAccountConfigurationFromJSON,
+	SocialAccountConfigurationFromJSONTyped,
+	SocialAccountConfigurationToJSON
+} from './SocialAccountConfiguration';
 import type { MFAConfiguration } from './MFAConfiguration';
-import { MFAConfigurationFromJSON, MFAConfigurationToJSON } from './MFAConfiguration';
+import {
+	MFAConfigurationFromJSON,
+	MFAConfigurationFromJSONTyped,
+	MFAConfigurationToJSON
+} from './MFAConfiguration';
 
 /**
  *

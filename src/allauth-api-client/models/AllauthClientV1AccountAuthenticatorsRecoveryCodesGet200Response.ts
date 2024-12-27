@@ -12,13 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { SensitiveRecoveryCodesAuthenticator } from './SensitiveRecoveryCodesAuthenticator';
 import {
 	SensitiveRecoveryCodesAuthenticatorFromJSON,
+	SensitiveRecoveryCodesAuthenticatorFromJSONTyped,
 	SensitiveRecoveryCodesAuthenticatorToJSON
 } from './SensitiveRecoveryCodesAuthenticator';
 import type { StatusOK } from './StatusOK';
-import { StatusOKFromJSON, StatusOKToJSON } from './StatusOK';
+import {
+	StatusOKFromJSON,
+	StatusOKFromJSONTyped,
+	StatusOKToJSON
+} from './StatusOK';
 
 /**
  *

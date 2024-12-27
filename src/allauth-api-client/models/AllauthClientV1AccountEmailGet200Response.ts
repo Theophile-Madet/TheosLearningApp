@@ -12,10 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { StatusOK } from './StatusOK';
-import { StatusOKFromJSON, StatusOKToJSON } from './StatusOK';
+import {
+	StatusOKFromJSON,
+	StatusOKFromJSONTyped,
+	StatusOKToJSON
+} from './StatusOK';
 import type { EmailAddress } from './EmailAddress';
-import { EmailAddressFromJSON, EmailAddressToJSON } from './EmailAddress';
+import {
+	EmailAddressFromJSON,
+	EmailAddressFromJSONTyped,
+	EmailAddressToJSON
+} from './EmailAddress';
 
 /**
  *

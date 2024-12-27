@@ -12,12 +12,20 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
+
 /**
  *
  * @export
  * @interface PokemonNameQuestionContent
  */
 export interface PokemonNameQuestionContent {
+	/**
+	 *
+	 * @type {number}
+	 * @memberof PokemonNameQuestionContent
+	 */
+	pokemonId: number;
 	/**
 	 *
 	 * @type {string}
@@ -60,6 +68,7 @@ export interface PokemonNameQuestionContent {
  * Check if a given object implements the PokemonNameQuestionContent interface.
  */
 export function instanceOfPokemonNameQuestionContent(value: object): value is PokemonNameQuestionContent {
+	if (!('pokemonId' in value) || value['pokemonId'] === undefined) return false;
 	if (!('givenName' in value) || value['givenName'] === undefined) return false;
 	if (!('givenLanguageId' in value) || value['givenLanguageId'] === undefined) return false;
 	if (!('givenLanguageName' in value) || value['givenLanguageName'] === undefined) return false;
@@ -79,6 +88,7 @@ export function PokemonNameQuestionContentFromJSONTyped(json: any, ignoreDiscrim
 	}
 	return {
 
+		'pokemonId': json['pokemon_id'],
 		'givenName': json['given_name'],
 		'givenLanguageId': json['given_language_id'],
 		'givenLanguageName': json['given_language_name'],
@@ -94,6 +104,7 @@ export function PokemonNameQuestionContentToJSON(value?: PokemonNameQuestionCont
 	}
 	return {
 
+		'pokemon_id': value['pokemonId'],
 		'given_name': value['givenName'],
 		'given_language_id': value['givenLanguageId'],
 		'given_language_name': value['givenLanguageName'],

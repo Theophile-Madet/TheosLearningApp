@@ -14,8 +14,13 @@
 
 
 import * as runtime from '../runtime';
-import type { ConfigurationResponse } from '../models/index';
-import { ConfigurationResponseFromJSON } from '../models/index';
+import type {
+	ConfigurationResponse
+} from '../models/index';
+import {
+	ConfigurationResponseFromJSON,
+	ConfigurationResponseToJSON
+} from '../models/index';
 
 export interface AllauthClientV1ConfigGetRequest {
 	client: AllauthClientV1ConfigGetClientEnum;

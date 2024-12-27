@@ -12,8 +12,13 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { AuthenticatorType } from './AuthenticatorType';
-import { AuthenticatorTypeFromJSON, AuthenticatorTypeToJSON } from './AuthenticatorType';
+import {
+	AuthenticatorTypeFromJSON,
+	AuthenticatorTypeFromJSONTyped,
+	AuthenticatorTypeToJSON
+} from './AuthenticatorType';
 
 /**
  * Configuration of the Django `allauth.mfa` app.

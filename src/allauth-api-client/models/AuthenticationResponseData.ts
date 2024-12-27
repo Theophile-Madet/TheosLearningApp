@@ -12,8 +12,13 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { Flow } from './Flow';
-import { FlowFromJSON, FlowToJSON } from './Flow';
+import {
+	FlowFromJSON,
+	FlowFromJSONTyped,
+	FlowToJSON
+} from './Flow';
 
 /**
  *

@@ -18,14 +18,25 @@ import type {
 	AllauthClientV1AuthPasswordRequestPost200Response,
 	AllauthClientV1AuthPasswordResetGet200Response,
 	AuthenticatedResponse,
+	AuthenticationResponse,
+	ErrorResponse,
 	RequestPassword,
 	ResetPassword
 } from '../models/index';
 import {
 	AllauthClientV1AuthPasswordRequestPost200ResponseFromJSON,
+	AllauthClientV1AuthPasswordRequestPost200ResponseToJSON,
 	AllauthClientV1AuthPasswordResetGet200ResponseFromJSON,
+	AllauthClientV1AuthPasswordResetGet200ResponseToJSON,
 	AuthenticatedResponseFromJSON,
+	AuthenticatedResponseToJSON,
+	AuthenticationResponseFromJSON,
+	AuthenticationResponseToJSON,
+	ErrorResponseFromJSON,
+	ErrorResponseToJSON,
+	RequestPasswordFromJSON,
 	RequestPasswordToJSON,
+	ResetPasswordFromJSON,
 	ResetPasswordToJSON
 } from '../models/index';
 

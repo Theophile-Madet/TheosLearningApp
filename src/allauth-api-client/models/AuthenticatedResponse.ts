@@ -12,12 +12,25 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { Authenticated } from './Authenticated';
-import { AuthenticatedFromJSON, AuthenticatedToJSON } from './Authenticated';
+import {
+	AuthenticatedFromJSON,
+	AuthenticatedFromJSONTyped,
+	AuthenticatedToJSON
+} from './Authenticated';
 import type { AuthenticationMeta } from './AuthenticationMeta';
-import { AuthenticationMetaFromJSON, AuthenticationMetaToJSON } from './AuthenticationMeta';
+import {
+	AuthenticationMetaFromJSON,
+	AuthenticationMetaFromJSONTyped,
+	AuthenticationMetaToJSON
+} from './AuthenticationMeta';
 import type { StatusOK } from './StatusOK';
-import { StatusOKFromJSON, StatusOKToJSON } from './StatusOK';
+import {
+	StatusOKFromJSON,
+	StatusOKFromJSONTyped,
+	StatusOKToJSON
+} from './StatusOK';
 
 /**
  *

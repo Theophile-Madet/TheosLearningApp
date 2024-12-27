@@ -12,11 +12,13 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type {
 	AllauthClientV1AccountAuthenticatorsTotpGet404ResponseMeta
 } from './AllauthClientV1AccountAuthenticatorsTotpGet404ResponseMeta';
 import {
 	AllauthClientV1AccountAuthenticatorsTotpGet404ResponseMetaFromJSON,
+	AllauthClientV1AccountAuthenticatorsTotpGet404ResponseMetaFromJSONTyped,
 	AllauthClientV1AccountAuthenticatorsTotpGet404ResponseMetaToJSON
 } from './AllauthClientV1AccountAuthenticatorsTotpGet404ResponseMeta';
 

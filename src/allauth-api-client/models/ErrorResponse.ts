@@ -12,8 +12,13 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { ErrorResponseErrorsInner } from './ErrorResponseErrorsInner';
-import { ErrorResponseErrorsInnerFromJSON, ErrorResponseErrorsInnerToJSON } from './ErrorResponseErrorsInner';
+import {
+	ErrorResponseErrorsInnerFromJSON,
+	ErrorResponseErrorsInnerFromJSONTyped,
+	ErrorResponseErrorsInnerToJSON
+} from './ErrorResponseErrorsInner';
 
 /**
  *

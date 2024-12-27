@@ -12,15 +12,21 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type {
 	AllauthClientV1AuthPasswordResetGet200ResponseData
 } from './AllauthClientV1AuthPasswordResetGet200ResponseData';
 import {
 	AllauthClientV1AuthPasswordResetGet200ResponseDataFromJSON,
+	AllauthClientV1AuthPasswordResetGet200ResponseDataFromJSONTyped,
 	AllauthClientV1AuthPasswordResetGet200ResponseDataToJSON
 } from './AllauthClientV1AuthPasswordResetGet200ResponseData';
 import type { StatusOK } from './StatusOK';
-import { StatusOKFromJSON, StatusOKToJSON } from './StatusOK';
+import {
+	StatusOKFromJSON,
+	StatusOKFromJSONTyped,
+	StatusOKToJSON
+} from './StatusOK';
 
 /**
  *

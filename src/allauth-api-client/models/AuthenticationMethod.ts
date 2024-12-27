@@ -14,25 +14,29 @@
 
 import type { AuthenticatedByThirdPartyProvider } from './AuthenticatedByThirdPartyProvider';
 import {
+	instanceOfAuthenticatedByThirdPartyProvider,
+	AuthenticatedByThirdPartyProviderFromJSON,
 	AuthenticatedByThirdPartyProviderFromJSONTyped,
-	AuthenticatedByThirdPartyProviderToJSON,
-	instanceOfAuthenticatedByThirdPartyProvider
+	AuthenticatedByThirdPartyProviderToJSON
 } from './AuthenticatedByThirdPartyProvider';
 import type { AuthenticatedByUsernameEmailLogin } from './AuthenticatedByUsernameEmailLogin';
 import {
+	instanceOfAuthenticatedByUsernameEmailLogin,
+	AuthenticatedByUsernameEmailLoginFromJSON,
 	AuthenticatedByUsernameEmailLoginFromJSONTyped,
-	AuthenticatedByUsernameEmailLoginToJSON,
-	instanceOfAuthenticatedByUsernameEmailLogin
+	AuthenticatedByUsernameEmailLoginToJSON
 } from './AuthenticatedByUsernameEmailLogin';
 import type { ReAuthenticatedBy2FA } from './ReAuthenticatedBy2FA';
 import {
 	instanceOfReAuthenticatedBy2FA,
+	ReAuthenticatedBy2FAFromJSON,
 	ReAuthenticatedBy2FAFromJSONTyped,
 	ReAuthenticatedBy2FAToJSON
 } from './ReAuthenticatedBy2FA';
 import type { ReauthenticatedByPassword } from './ReauthenticatedByPassword';
 import {
 	instanceOfReauthenticatedByPassword,
+	ReauthenticatedByPasswordFromJSON,
 	ReauthenticatedByPasswordFromJSONTyped,
 	ReauthenticatedByPasswordToJSON
 } from './ReauthenticatedByPassword';

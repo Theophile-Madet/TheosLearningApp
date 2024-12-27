@@ -32,20 +32,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Question'
           description: ''
-  /learning/api/get_next_word/:
-    get:
-      operationId: learning_api_get_next_word_retrieve
-      tags:
-        - learning
-      security:
-        - cookieAuth: [ ]
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GermanWordQuestionContent'
-          description: ''
   /learning/api/mark_answer_as_wrong/:
     post:
       operationId: learning_api_mark_answer_as_wrong_create
@@ -152,6 +138,8 @@ components:
     PokemonNameQuestionContent:
       type: object
       properties:
+        pokemon_id:
+          type: integer
         given_name:
           type: string
         given_language_id:
@@ -171,6 +159,7 @@ components:
         - given_language_id
         - given_language_name
         - given_name
+        - pokemon_id
     Question:
       type: object
       properties:

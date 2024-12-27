@@ -16,7 +16,6 @@
 import * as runtime from '../runtime';
 import type {
 	CsrfToken,
-	GermanWordQuestionContent,
 	MarkAnswerAsWrongRequest,
 	MarkWordAsInvalidRequest,
 	Question,
@@ -25,12 +24,17 @@ import type {
 } from '../models/index';
 import {
 	CsrfTokenFromJSON,
-	GermanWordQuestionContentFromJSON,
+	CsrfTokenToJSON,
+	MarkAnswerAsWrongRequestFromJSON,
 	MarkAnswerAsWrongRequestToJSON,
+	MarkWordAsInvalidRequestFromJSON,
 	MarkWordAsInvalidRequestToJSON,
 	QuestionFromJSON,
+	QuestionToJSON,
+	SendAnswerRequestFromJSON,
 	SendAnswerRequestToJSON,
-	WasAnswerCorrectFromJSON
+	WasAnswerCorrectFromJSON,
+	WasAnswerCorrectToJSON
 } from '../models/index';
 
 export interface LearningApiMarkAnswerAsWrongCreateRequest {
@@ -95,30 +99,6 @@ export class LearningApi extends runtime.BaseAPI {
 	 */
 	async learningApiGetNextQuestionRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Question> {
 		const response = await this.learningApiGetNextQuestionRetrieveRaw(initOverrides);
-		return await response.value();
-	}
-
-	/**
-	 */
-	async learningApiGetNextWordRetrieveRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<GermanWordQuestionContent>> {
-		const queryParameters: any = {};
-
-		const headerParameters: runtime.HTTPHeaders = {};
-
-		const response = await this.request({
-			path: `/learning/api/get_next_word/`,
-			method: 'GET',
-			headers: headerParameters,
-			query: queryParameters
-		}, initOverrides);
-
-		return new runtime.JSONApiResponse(response, (jsonValue) => GermanWordQuestionContentFromJSON(jsonValue));
-	}
-
-	/**
-	 */
-	async learningApiGetNextWordRetrieve(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<GermanWordQuestionContent> {
-		const response = await this.learningApiGetNextWordRetrieveRaw(initOverrides);
 		return await response.value();
 	}
 

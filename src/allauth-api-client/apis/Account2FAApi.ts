@@ -15,18 +15,38 @@
 
 import * as runtime from '../runtime';
 import type {
-    AllauthClientV1AccountAuthenticatorsGet200Response,
-    AllauthClientV1AccountAuthenticatorsRecoveryCodesGet200Response,
-    AllauthClientV1AccountAuthenticatorsTotpGet200Response,
-    AllauthClientV1AccountAuthenticatorsTotpPostRequest,
-    AllauthClientV1AuthPasswordRequestPost200Response
+	AllauthClientV1AccountAuthenticatorsGet200Response,
+	AllauthClientV1AccountAuthenticatorsRecoveryCodesGet200Response,
+	AllauthClientV1AccountAuthenticatorsRecoveryCodesGet404Response,
+	AllauthClientV1AccountAuthenticatorsTotpGet200Response,
+	AllauthClientV1AccountAuthenticatorsTotpGet404Response,
+	AllauthClientV1AccountAuthenticatorsTotpPostRequest,
+	AllauthClientV1AuthPasswordRequestPost200Response,
+	AuthenticationResponse,
+	ErrorResponse,
+	SessionGoneResponse
 } from '../models/index';
 import {
-    AllauthClientV1AccountAuthenticatorsGet200ResponseFromJSON,
-    AllauthClientV1AccountAuthenticatorsRecoveryCodesGet200ResponseFromJSON,
-    AllauthClientV1AccountAuthenticatorsTotpGet200ResponseFromJSON,
-    AllauthClientV1AccountAuthenticatorsTotpPostRequestToJSON,
-    AllauthClientV1AuthPasswordRequestPost200ResponseFromJSON
+	AllauthClientV1AccountAuthenticatorsGet200ResponseFromJSON,
+	AllauthClientV1AccountAuthenticatorsGet200ResponseToJSON,
+	AllauthClientV1AccountAuthenticatorsRecoveryCodesGet200ResponseFromJSON,
+	AllauthClientV1AccountAuthenticatorsRecoveryCodesGet200ResponseToJSON,
+	AllauthClientV1AccountAuthenticatorsRecoveryCodesGet404ResponseFromJSON,
+	AllauthClientV1AccountAuthenticatorsRecoveryCodesGet404ResponseToJSON,
+	AllauthClientV1AccountAuthenticatorsTotpGet200ResponseFromJSON,
+	AllauthClientV1AccountAuthenticatorsTotpGet200ResponseToJSON,
+	AllauthClientV1AccountAuthenticatorsTotpGet404ResponseFromJSON,
+	AllauthClientV1AccountAuthenticatorsTotpGet404ResponseToJSON,
+	AllauthClientV1AccountAuthenticatorsTotpPostRequestFromJSON,
+	AllauthClientV1AccountAuthenticatorsTotpPostRequestToJSON,
+	AllauthClientV1AuthPasswordRequestPost200ResponseFromJSON,
+	AllauthClientV1AuthPasswordRequestPost200ResponseToJSON,
+	AuthenticationResponseFromJSON,
+	AuthenticationResponseToJSON,
+	ErrorResponseFromJSON,
+	ErrorResponseToJSON,
+	SessionGoneResponseFromJSON,
+	SessionGoneResponseToJSON
 } from '../models/index';
 
 export interface AllauthClientV1AccountAuthenticatorsGetRequest {

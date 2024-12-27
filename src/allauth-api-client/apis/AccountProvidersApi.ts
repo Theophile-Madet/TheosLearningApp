@@ -16,11 +16,16 @@
 import * as runtime from '../runtime';
 import type {
 	AllauthClientV1AccountProvidersDeleteRequest,
-	AllauthClientV1AccountProvidersGet200Response
+	AllauthClientV1AccountProvidersGet200Response,
+	ErrorResponse
 } from '../models/index';
 import {
+	AllauthClientV1AccountProvidersDeleteRequestFromJSON,
 	AllauthClientV1AccountProvidersDeleteRequestToJSON,
-	AllauthClientV1AccountProvidersGet200ResponseFromJSON
+	AllauthClientV1AccountProvidersGet200ResponseFromJSON,
+	AllauthClientV1AccountProvidersGet200ResponseToJSON,
+	ErrorResponseFromJSON,
+	ErrorResponseToJSON
 } from '../models/index';
 
 export interface AllauthClientV1AccountProvidersDeleteOperationRequest {

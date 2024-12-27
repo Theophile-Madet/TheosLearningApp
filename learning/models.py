@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from content.models import Word
+from content.models import Word, Pokemon, Language
 
 
 class Result(models.Model):
@@ -35,3 +35,22 @@ class WrongAnswer(models.Model):
 
     def __str__(self):
         return f"{self.word}"
+
+
+class LearnedPokemonName(models.Model):
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "pokemon", "given_language", "expected_language"],
+                name="unique_learned_pokemon_per_user",
+            )
+        ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
+    given_language = models.ForeignKey(
+        Language, on_delete=models.CASCADE, related_name="dummy1"
+    )
+    expected_language = models.ForeignKey(
+        Language, on_delete=models.CASCADE, related_name="dummy2"
+    )

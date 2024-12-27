@@ -14,8 +14,22 @@
 
 
 import * as runtime from '../runtime';
-import type { AuthenticatedResponse, MFAAuthenticate } from '../models/index';
-import { AuthenticatedResponseFromJSON, MFAAuthenticateToJSON } from '../models/index';
+import type {
+	AuthenticatedResponse,
+	AuthenticationResponse,
+	ErrorResponse,
+	MFAAuthenticate
+} from '../models/index';
+import {
+	AuthenticatedResponseFromJSON,
+	AuthenticatedResponseToJSON,
+	AuthenticationResponseFromJSON,
+	AuthenticationResponseToJSON,
+	ErrorResponseFromJSON,
+	ErrorResponseToJSON,
+	MFAAuthenticateFromJSON,
+	MFAAuthenticateToJSON
+} from '../models/index';
 
 export interface AllauthClientV1Auth2faAuthenticatePostRequest {
 	client: AllauthClientV1Auth2faAuthenticatePostClientEnum;

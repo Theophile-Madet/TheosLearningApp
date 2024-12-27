@@ -17,14 +17,30 @@ import * as runtime from '../runtime';
 import type {
 	AllauthClientV1AccountEmailGet200Response,
 	AllauthClientV1AccountEmailPatchRequest,
+	AllauthClientV1AccountEmailPost401Response,
 	AllauthClientV1AccountEmailPutRequest,
-	AllauthClientV1AuthPasswordRequestPost200Response
+	AllauthClientV1AuthPasswordRequestPost200Response,
+	AuthenticationResponse,
+	ErrorResponse,
+	ForbiddenResponse
 } from '../models/index';
 import {
 	AllauthClientV1AccountEmailGet200ResponseFromJSON,
+	AllauthClientV1AccountEmailGet200ResponseToJSON,
+	AllauthClientV1AccountEmailPatchRequestFromJSON,
 	AllauthClientV1AccountEmailPatchRequestToJSON,
+	AllauthClientV1AccountEmailPost401ResponseFromJSON,
+	AllauthClientV1AccountEmailPost401ResponseToJSON,
+	AllauthClientV1AccountEmailPutRequestFromJSON,
 	AllauthClientV1AccountEmailPutRequestToJSON,
-	AllauthClientV1AuthPasswordRequestPost200ResponseFromJSON
+	AllauthClientV1AuthPasswordRequestPost200ResponseFromJSON,
+	AllauthClientV1AuthPasswordRequestPost200ResponseToJSON,
+	AuthenticationResponseFromJSON,
+	AuthenticationResponseToJSON,
+	ErrorResponseFromJSON,
+	ErrorResponseToJSON,
+	ForbiddenResponseFromJSON,
+	ForbiddenResponseToJSON
 } from '../models/index';
 
 export interface AllauthClientV1AccountEmailDeleteRequest {

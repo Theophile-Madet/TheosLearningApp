@@ -12,10 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { Authenticated } from './Authenticated';
-import { AuthenticatedFromJSON, AuthenticatedToJSON } from './Authenticated';
+import {
+	AuthenticatedFromJSON,
+	AuthenticatedFromJSONTyped,
+	AuthenticatedToJSON
+} from './Authenticated';
 import type { AuthenticatedMeta } from './AuthenticatedMeta';
-import { AuthenticatedMetaFromJSON, AuthenticatedMetaToJSON } from './AuthenticatedMeta';
+import {
+	AuthenticatedMetaFromJSON,
+	AuthenticatedMetaFromJSONTyped,
+	AuthenticatedMetaToJSON
+} from './AuthenticatedMeta';
 
 /**
  * A response indicating reauthentication is required.

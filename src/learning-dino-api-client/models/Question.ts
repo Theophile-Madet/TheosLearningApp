@@ -12,14 +12,31 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { PokemonNameQuestionContent } from './PokemonNameQuestionContent';
-import { PokemonNameQuestionContentFromJSON, PokemonNameQuestionContentToJSON } from './PokemonNameQuestionContent';
+import {
+	PokemonNameQuestionContentFromJSON,
+	PokemonNameQuestionContentFromJSONTyped,
+	PokemonNameQuestionContentToJSON
+} from './PokemonNameQuestionContent';
 import type { GermanWordQuestionContent } from './GermanWordQuestionContent';
-import { GermanWordQuestionContentFromJSON, GermanWordQuestionContentToJSON } from './GermanWordQuestionContent';
+import {
+	GermanWordQuestionContentFromJSON,
+	GermanWordQuestionContentFromJSONTyped,
+	GermanWordQuestionContentToJSON
+} from './GermanWordQuestionContent';
 import type { QuestionStats } from './QuestionStats';
-import { QuestionStatsFromJSON, QuestionStatsToJSON } from './QuestionStats';
+import {
+	QuestionStatsFromJSON,
+	QuestionStatsFromJSONTyped,
+	QuestionStatsToJSON
+} from './QuestionStats';
 import type { QuestionTypeEnum } from './QuestionTypeEnum';
-import { QuestionTypeEnumFromJSON, QuestionTypeEnumToJSON } from './QuestionTypeEnum';
+import {
+	QuestionTypeEnumFromJSON,
+	QuestionTypeEnumFromJSONTyped,
+	QuestionTypeEnumToJSON
+} from './QuestionTypeEnum';
 
 /**
  *

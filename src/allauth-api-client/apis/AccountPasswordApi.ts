@@ -14,8 +14,19 @@
 
 
 import * as runtime from '../runtime';
-import type { AllauthClientV1AccountPasswordChangePostRequest } from '../models/index';
-import { AllauthClientV1AccountPasswordChangePostRequestToJSON } from '../models/index';
+import type {
+	AllauthClientV1AccountPasswordChangePostRequest,
+	AuthenticationResponse,
+	ErrorResponse
+} from '../models/index';
+import {
+	AllauthClientV1AccountPasswordChangePostRequestFromJSON,
+	AllauthClientV1AccountPasswordChangePostRequestToJSON,
+	AuthenticationResponseFromJSON,
+	AuthenticationResponseToJSON,
+	ErrorResponseFromJSON,
+	ErrorResponseToJSON
+} from '../models/index';
 
 export interface AllauthClientV1AccountPasswordChangePostOperationRequest {
 	client: AllauthClientV1AccountPasswordChangePostClientEnum;

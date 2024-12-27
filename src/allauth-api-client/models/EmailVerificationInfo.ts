@@ -12,12 +12,25 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { EmailVerificationInfoMeta } from './EmailVerificationInfoMeta';
-import { EmailVerificationInfoMetaFromJSON, EmailVerificationInfoMetaToJSON } from './EmailVerificationInfoMeta';
+import {
+	EmailVerificationInfoMetaFromJSON,
+	EmailVerificationInfoMetaFromJSONTyped,
+	EmailVerificationInfoMetaToJSON
+} from './EmailVerificationInfoMeta';
 import type { EmailVerificationInfoData } from './EmailVerificationInfoData';
-import { EmailVerificationInfoDataFromJSON, EmailVerificationInfoDataToJSON } from './EmailVerificationInfoData';
+import {
+	EmailVerificationInfoDataFromJSON,
+	EmailVerificationInfoDataFromJSONTyped,
+	EmailVerificationInfoDataToJSON
+} from './EmailVerificationInfoData';
 import type { StatusOK } from './StatusOK';
-import { StatusOKFromJSON, StatusOKToJSON } from './StatusOK';
+import {
+	StatusOKFromJSON,
+	StatusOKFromJSONTyped,
+	StatusOKToJSON
+} from './StatusOK';
 
 /**
  *

@@ -12,10 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { StatusOK } from './StatusOK';
-import { StatusOKFromJSON, StatusOKToJSON } from './StatusOK';
+import {
+	StatusOKFromJSON,
+	StatusOKFromJSONTyped,
+	StatusOKToJSON
+} from './StatusOK';
 import type { Session } from './Session';
-import { SessionFromJSON, SessionToJSON } from './Session';
+import {
+	SessionFromJSON,
+	SessionFromJSONTyped,
+	SessionToJSON
+} from './Session';
 
 /**
  *

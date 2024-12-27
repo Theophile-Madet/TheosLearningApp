@@ -12,10 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { AuthenticatorListInner } from './AuthenticatorListInner';
-import { AuthenticatorListInnerFromJSON, AuthenticatorListInnerToJSON } from './AuthenticatorListInner';
+import {
+	AuthenticatorListInnerFromJSON,
+	AuthenticatorListInnerFromJSONTyped,
+	AuthenticatorListInnerToJSON
+} from './AuthenticatorListInner';
 import type { StatusOK } from './StatusOK';
-import { StatusOKFromJSON, StatusOKToJSON } from './StatusOK';
+import {
+	StatusOKFromJSON,
+	StatusOKFromJSONTyped,
+	StatusOKToJSON
+} from './StatusOK';
 
 /**
  *

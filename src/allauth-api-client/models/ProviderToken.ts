@@ -12,10 +12,19 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { ProviderTokenToken } from './ProviderTokenToken';
-import { ProviderTokenTokenFromJSON, ProviderTokenTokenToJSON } from './ProviderTokenToken';
+import {
+	ProviderTokenTokenFromJSON,
+	ProviderTokenTokenFromJSONTyped,
+	ProviderTokenTokenToJSON
+} from './ProviderTokenToken';
 import type { Process } from './Process';
-import { ProcessFromJSON, ProcessToJSON } from './Process';
+import {
+	ProcessFromJSON,
+	ProcessFromJSONTyped,
+	ProcessToJSON
+} from './Process';
 
 /**
  *

@@ -14,8 +14,13 @@
 
 
 import * as runtime from '../runtime';
-import type { AllauthClientV1SessionsGet200Response } from '../models/index';
-import { AllauthClientV1SessionsGet200ResponseFromJSON } from '../models/index';
+import type {
+	AllauthClientV1SessionsGet200Response
+} from '../models/index';
+import {
+	AllauthClientV1SessionsGet200ResponseFromJSON,
+	AllauthClientV1SessionsGet200ResponseToJSON
+} from '../models/index';
 
 export interface AllauthClientV1SessionsDeleteRequest {
 	client: AllauthClientV1SessionsDeleteClientEnum;
