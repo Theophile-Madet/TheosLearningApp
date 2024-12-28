@@ -27,7 +27,7 @@ export interface AllauthClientV1ConfigGetRequest {
 }
 
 /**
- *
+ * 
  */
 export class ConfigurationApi extends runtime.BaseAPI {
 

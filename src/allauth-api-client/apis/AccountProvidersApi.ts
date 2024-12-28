@@ -40,7 +40,7 @@ export interface AllauthClientV1AccountProvidersGetRequest {
 }
 
 /**
- *
+ * 
  */
 export class AccountProvidersApi extends runtime.BaseAPI {
 

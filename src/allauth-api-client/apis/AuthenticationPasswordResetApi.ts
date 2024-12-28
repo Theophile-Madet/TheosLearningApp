@@ -56,7 +56,7 @@ export interface AllauthClientV1AuthPasswordResetPostRequest {
 }
 
 /**
- *
+ * 
  */
 export class AuthenticationPasswordResetApi extends runtime.BaseAPI {
 

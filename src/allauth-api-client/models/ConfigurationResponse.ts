@@ -27,7 +27,7 @@ import {
 } from './StatusOK';
 
 /**
- *
+ * 
  * @export
  * @interface ConfigurationResponse
  */

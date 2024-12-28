@@ -74,7 +74,7 @@ export interface AllauthClientV1AuthSignupPostRequest {
 }
 
 /**
- *
+ * 
  */
 export class AuthenticationAccountApi extends runtime.BaseAPI {
 

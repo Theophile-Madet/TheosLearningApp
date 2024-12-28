@@ -23,7 +23,7 @@ import {
 } from './AllauthClientV1AccountAuthenticatorsTotpGet404ResponseMeta';
 
 /**
- *
+ * 
  * @export
  * @interface AllauthClientV1AccountAuthenticatorsTotpGet404Response
  */

@@ -8,7 +8,7 @@ from django.utils import timezone
 
 from content.models import Word
 from learning.apps import LearningConfig
-from learning.models import LearnedWord, InvalidWord, Result, WrongAnswer
+from learning.models import LearnedWord, InvalidWord, GermanWordResult, WrongAnswer
 
 
 class WordToLearnPicker:
@@ -35,7 +35,7 @@ class WordToLearnPicker:
         learned_words_ids = LearnedWord.objects.filter(user=user).values_list(
             "word__id", flat=True
         )
-        words_tried_in_the_last_hours_ids = Result.objects.filter(
+        words_tried_in_the_last_hours_ids = GermanWordResult.objects.filter(
             user=user,
             created_at__gte=timezone.now() - datetime.timedelta(hours=8),
         ).values_list("word__id", flat=True)

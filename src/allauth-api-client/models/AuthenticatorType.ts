@@ -15,7 +15,7 @@
 
 /**
  * The type of authenticator.
- *
+ * 
  * @export
  */
 export const AuthenticatorType = {

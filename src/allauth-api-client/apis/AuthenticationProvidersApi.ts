@@ -61,7 +61,7 @@ export interface AllauthClientV1AuthProviderTokenPostRequest {
 }
 
 /**
- *
+ * 
  */
 export class AuthenticationProvidersApi extends runtime.BaseAPI {
 

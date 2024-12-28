@@ -22,7 +22,7 @@ import {
 
 /**
  * Configuration of the Django `allauth.socialaccount` app.
- *
+ * 
  * @export
  * @interface SocialAccountConfiguration
  */

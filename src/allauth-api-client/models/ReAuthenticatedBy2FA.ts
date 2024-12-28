@@ -21,7 +21,7 @@ import {
 } from './AuthenticatorType';
 
 /**
- *
+ * 
  * @export
  * @interface ReAuthenticatedBy2FA
  */

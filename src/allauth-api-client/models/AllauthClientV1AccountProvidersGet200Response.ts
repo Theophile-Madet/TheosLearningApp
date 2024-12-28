@@ -27,7 +27,7 @@ import {
 } from './StatusOK';
 
 /**
- *
+ * 
  * @export
  * @interface AllauthClientV1AccountProvidersGet200Response
  */

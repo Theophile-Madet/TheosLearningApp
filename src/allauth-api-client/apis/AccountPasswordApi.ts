@@ -35,7 +35,7 @@ export interface AllauthClientV1AccountPasswordChangePostOperationRequest {
 }
 
 /**
- *
+ * 
  */
 export class AccountPasswordApi extends runtime.BaseAPI {
 

@@ -23,9 +23,21 @@ class WasAnswerCorrectSerializer(serializers.Serializer):
     repetitions_to_learn = serializers.IntegerField()
 
 
-class SendAnswerSerializer(serializers.Serializer):
+class SendAnswerGermanWordSerializer(serializers.Serializer):
     word_id = serializers.IntegerField()
     answer = serializers.CharField()
+
+
+class SendAnswerPokemonNameSerializer(serializers.Serializer):
+    pokemon_id = serializers.IntegerField()
+    answer = serializers.CharField()
+    expected_language_id = serializers.IntegerField()
+    given_language_id = serializers.IntegerField()
+
+
+class WasAnswerCorrectPokemonNameSerializer(serializers.Serializer):
+    was_correct_given_language = WasAnswerCorrectSerializer()
+    was_correct_expected_language = WasAnswerCorrectSerializer(allow_null=True)
 
 
 class MarkWordAsInvalidSerializer(serializers.Serializer):

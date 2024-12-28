@@ -28,7 +28,7 @@ import {
 
 /**
  * A response indicating reauthentication is required.
- *
+ * 
  * @export
  * @interface ReauthenticationResponse
  */

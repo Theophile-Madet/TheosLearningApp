@@ -27,7 +27,7 @@ import {
 } from './Session';
 
 /**
- *
+ * 
  * @export
  * @interface AllauthClientV1SessionsGet200Response
  */

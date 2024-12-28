@@ -73,7 +73,7 @@ export interface AllauthClientV1AccountEmailPutOperationRequest {
 }
 
 /**
- *
+ * 
  */
 export class AccountEmailApi extends runtime.BaseAPI {
 

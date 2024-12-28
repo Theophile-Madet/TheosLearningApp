@@ -21,7 +21,7 @@ import {
 } from './Flow';
 
 /**
- *
+ * 
  * @export
  * @interface AuthenticationResponseData
  */

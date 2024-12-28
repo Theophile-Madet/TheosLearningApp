@@ -13,9 +13,8 @@
  */
 
 import { mapValues } from '../runtime';
-
 /**
- *
+ * 
  * @export
  * @interface BaseAuthenticator
  */

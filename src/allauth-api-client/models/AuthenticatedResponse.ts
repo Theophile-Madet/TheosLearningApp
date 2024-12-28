@@ -33,7 +33,7 @@ import {
 } from './StatusOK';
 
 /**
- *
+ * 
  * @export
  * @interface AuthenticatedResponse
  */

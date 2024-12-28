@@ -29,7 +29,7 @@ import {
 
 /**
  * @type AllauthClientV1AccountEmailPost401Response
- *
+ * 
  * @export
  */
 export type AllauthClientV1AccountEmailPost401Response = AuthenticationResponse | ReauthenticationResponse;

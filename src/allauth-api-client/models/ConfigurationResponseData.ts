@@ -39,7 +39,7 @@ import {
 } from './MFAConfiguration';
 
 /**
- *
+ * 
  * @export
  * @interface ConfigurationResponseData
  */

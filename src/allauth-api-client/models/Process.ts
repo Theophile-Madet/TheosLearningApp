@@ -20,7 +20,7 @@
  * account exists, a signup will occur. If set to `connect`, the provider
  * account will be connected to the list of provider accounts for the
  * currently authenticated user.
- *
+ * 
  * @export
  */
 export const Process = {

@@ -22,7 +22,7 @@ import {
 
 /**
  * The session is expired or invalid.
- *
+ * 
  * @export
  * @interface SessionGoneResponse
  */

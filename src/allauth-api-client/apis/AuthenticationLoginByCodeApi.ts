@@ -45,7 +45,7 @@ export interface AllauthClientV1AuthCodeRequestPostRequest {
 }
 
 /**
- *
+ * 
  */
 export class AuthenticationLoginByCodeApi extends runtime.BaseAPI {
 

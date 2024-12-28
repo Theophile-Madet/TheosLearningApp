@@ -39,7 +39,7 @@ export interface AllauthClientV1AuthSessionGetRequest {
 }
 
 /**
- *
+ * 
  */
 export class AuthenticationCurrentSessionApi extends runtime.BaseAPI {
 

@@ -11,10 +11,17 @@ from rest_framework.views import APIView
 
 from content.models import Word, PokemonName, Language
 from learning.apps import LearningConfig
-from learning.models import Result, InvalidWord, LearnedWord, WrongAnswer
+from learning.models import (
+    InvalidWord,
+    LearnedWord,
+    WrongAnswer,
+    GermanWordResult,
+    PokemonNameResult,
+    LearnedPokemonName,
+)
 from learning.serializers import (
     WasAnswerCorrectSerializer,
-    SendAnswerSerializer,
+    SendAnswerGermanWordSerializer,
     MarkWordAsInvalidSerializer,
     MarkAnswerAsWrongSerializer,
     CsrfTokenSerializer,
@@ -22,9 +29,14 @@ from learning.serializers import (
     QuestionSerializer,
     QuestionStatsSerializer,
     PokemonNameQuestionContentSerializer,
+    SendAnswerPokemonNameSerializer,
+    WasAnswerCorrectPokemonNameSerializer,
 )
 from learning.services.german_words.word_learned_checker import WordLearnedChecker
 from learning.services.german_words.word_to_learn_picker import WordToLearnPicker
+from learning.services.pokemon_names.pokemon_name_learned_checker import (
+    PokemonNameLearnedChecker,
+)
 from learning.services.pokemon_names.pokemon_picker import PokemonPicker
 from learning.services.question_type_picker import QuestionTypePicker
 
@@ -103,7 +115,7 @@ class GetNextQuestion(APIView):
     @staticmethod
     def build_german_word_question_serializer(request):
         word, rank = WordToLearnPicker.pick_next_word_for_user(request.user)
-        total_answers = Result.objects.filter(user=request.user, word=word)
+        total_answers = GermanWordResult.objects.filter(user=request.user, word=word)
         word_question_serializer = GermanWordQuestionContentSerializer(
             {
                 "word": word,
@@ -128,18 +140,18 @@ class GetNextQuestion(APIView):
         )
 
 
-class SendAnswer(APIView):
+class SendAnswerGermanWord(APIView):
     @extend_schema(
         responses={200: WasAnswerCorrectSerializer},
-        request=SendAnswerSerializer,
+        request=SendAnswerGermanWordSerializer,
     )
     def post(self, request):
-        request_serializer = SendAnswerSerializer(data=request.data)
+        request_serializer = SendAnswerGermanWordSerializer(data=request.data)
         request_serializer.is_valid(raise_exception=True)
 
         answer = request_serializer.validated_data["answer"]
         word = get_object_or_404(Word, id=request_serializer.validated_data["word_id"])
-        Result.objects.create(answer=answer, word=word, user=request.user)
+        GermanWordResult.objects.create(answer=answer, word=word, user=request.user)
 
         learned = False
         if WordLearnedChecker.is_word_learned(request.user, word):
@@ -159,6 +171,89 @@ class SendAnswer(APIView):
             ).data,
             status=status.HTTP_200_OK,
         )
+
+
+class SendAnswerPokemonName(APIView):
+    @extend_schema(
+        responses={200: WasAnswerCorrectSerializer},
+        request=SendAnswerPokemonNameSerializer,
+    )
+    def post(self, request):
+        request_serializer = SendAnswerPokemonNameSerializer(data=request.data)
+        request_serializer.is_valid(raise_exception=True)
+
+        given_answer = request_serializer.validated_data["answer"]
+        pokemon_id = request_serializer.validated_data["pokemon_id"]
+        expected_language_id = request_serializer.validated_data["expected_language_id"]
+        given_language_id = request_serializer.validated_data["given_language_id"]
+
+        was_correct_data_expected_language = (
+            self.create_result_and_check_learned_status(
+                pokemon_id=pokemon_id,
+                language_id=expected_language_id,
+                given_answer=given_answer,
+                user=request.user,
+            )
+        )
+
+        was_correct_data_given_language = None
+        if was_correct_data_expected_language["correct"]:
+            was_correct_data_given_language = (
+                self.create_result_and_check_learned_status(
+                    pokemon_id=pokemon_id,
+                    language_id=given_language_id,
+                    given_answer=PokemonName.objects.get(
+                        pokemon=pokemon_id, language=given_language_id
+                    ).name,
+                    user=request.user,
+                )
+            )
+
+        return Response(
+            WasAnswerCorrectPokemonNameSerializer(
+                {
+                    "was_correct_given_language": was_correct_data_given_language,
+                    "was_correct_expected_language": was_correct_data_expected_language,
+                }
+            ).data,
+            status=status.HTTP_200_OK,
+        )
+
+    @staticmethod
+    def create_result_and_check_learned_status(
+            pokemon_id, language_id, given_answer, user
+    ):
+        PokemonNameResult.objects.create(
+            answer=given_answer,
+            pokemon_id=pokemon_id,
+            language_id=language_id,
+            user=user,
+        )
+
+        learned = False
+        if PokemonNameLearnedChecker.is_pokemon_name_learned(
+                user, pokemon_id, language_id
+        ):
+            learned = True
+            LearnedPokemonName.objects.create(
+                user=user, pokemon_id=pokemon_id, language_id=language_id
+            )
+
+        correct_answer = PokemonName.objects.get(
+            pokemon_id=pokemon_id,
+            language_id=language_id,
+        ).name
+
+        return WasAnswerCorrectSerializer(
+            {
+                "correct": given_answer == correct_answer,
+                "learned": learned,
+                "nb_answers_correct_in_a_row": PokemonNameLearnedChecker.nb_correct_in_a_row(
+                    user=user, pokemon_id=pokemon_id, language_id=language_id
+                ),
+                "repetitions_to_learn": LearningConfig.REPETITIONS_TO_LEARN,
+            }
+        ).data
 
 
 class MarkWordAsInvalid(APIView):

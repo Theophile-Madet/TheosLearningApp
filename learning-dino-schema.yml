@@ -76,22 +76,48 @@ paths:
       responses:
         '200':
           description: No response body
-  /learning/api/send_answer/:
+  /learning/api/send_answer_german_word/:
     post:
-      operationId: learning_api_send_answer_create
+      operationId: learning_api_send_answer_german_word_create
       tags:
         - learning
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SendAnswerRequest'
+              $ref: '#/components/schemas/SendAnswerGermanWordRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/SendAnswerRequest'
+              $ref: '#/components/schemas/SendAnswerGermanWordRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/SendAnswerRequest'
+              $ref: '#/components/schemas/SendAnswerGermanWordRequest'
+        required: true
+      security:
+        - cookieAuth: [ ]
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WasAnswerCorrect'
+          description: ''
+  /learning/api/send_answer_pokemon_name/:
+    post:
+      operationId: learning_api_send_answer_pokemon_name_create
+      tags:
+        - learning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendAnswerPokemonNameRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendAnswerPokemonNameRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendAnswerPokemonNameRequest'
         required: true
       security:
         - cookieAuth: [ ]
@@ -201,7 +227,7 @@ components:
       description: |-
         * `pokemon_name` - pokemon_name
         * `german_word` - german_word
-    SendAnswerRequest:
+    SendAnswerGermanWordRequest:
       type: object
       properties:
         word_id:
@@ -212,6 +238,23 @@ components:
       required:
         - answer
         - word_id
+    SendAnswerPokemonNameRequest:
+      type: object
+      properties:
+        pokemon_id:
+          type: integer
+        answer:
+          type: string
+          minLength: 1
+        expected_language_id:
+          type: integer
+        given_language_id:
+          type: integer
+      required:
+        - answer
+        - expected_language_id
+        - given_language_id
+        - pokemon_id
     TypeEnum:
       enum:
         - noun

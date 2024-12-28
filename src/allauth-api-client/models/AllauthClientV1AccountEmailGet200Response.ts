@@ -27,7 +27,7 @@ import {
 } from './EmailAddress';
 
 /**
- *
+ * 
  * @export
  * @interface AllauthClientV1AccountEmailGet200Response
  */

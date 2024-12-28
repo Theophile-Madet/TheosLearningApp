@@ -13,10 +13,9 @@
  */
 
 import { mapValues } from '../runtime';
-
 /**
  * The token.
- *
+ * 
  * @export
  * @interface ProviderTokenToken
  */

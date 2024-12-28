@@ -29,7 +29,7 @@ import {
 
 /**
  * @type AuthenticatorListInner
- *
+ * 
  * @export
  */
 export type AuthenticatorListInner = RecoveryCodesAuthenticator | TOTPAuthenticator;

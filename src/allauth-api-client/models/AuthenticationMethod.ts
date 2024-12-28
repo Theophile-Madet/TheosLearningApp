@@ -43,7 +43,7 @@ import {
 
 /**
  * @type AuthenticationMethod
- *
+ * 
  * @export
  */
 export type AuthenticationMethod =

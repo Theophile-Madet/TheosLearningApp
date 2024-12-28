@@ -31,7 +31,7 @@ export interface AllauthClientV1SessionsGetRequest {
 }
 
 /**
- *
+ * 
  */
 export class SessionsApi extends runtime.BaseAPI {
 

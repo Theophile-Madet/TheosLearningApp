@@ -27,7 +27,7 @@ import {
 } from './AuthenticationMethod';
 
 /**
- *
+ * 
  * @export
  * @interface Authenticated
  */

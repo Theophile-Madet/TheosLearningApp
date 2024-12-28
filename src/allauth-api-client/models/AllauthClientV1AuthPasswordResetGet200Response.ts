@@ -29,7 +29,7 @@ import {
 } from './StatusOK';
 
 /**
- *
+ * 
  * @export
  * @interface AllauthClientV1AuthPasswordResetGet200Response
  */

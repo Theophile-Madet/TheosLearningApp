@@ -14,7 +14,7 @@
 
 
 /**
- *
+ * 
  * @export
  */
 export const StatusOK = {

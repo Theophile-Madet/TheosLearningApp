@@ -21,7 +21,7 @@ import {
 } from './User';
 
 /**
- *
+ * 
  * @export
  * @interface AllauthClientV1AuthPasswordResetGet200ResponseData
  */

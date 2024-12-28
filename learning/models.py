@@ -4,9 +4,28 @@ from django.db import models
 from content.models import Word, Pokemon, Language
 
 
-class Result(models.Model):
+class GermanWordResult(models.Model):
+    class Meta:
+        indexes = [models.Index(fields=["created_at"])]
+
     created_at = models.DateTimeField(auto_now_add=True)
     word = models.ForeignKey(Word, on_delete=models.CASCADE)
+    answer = models.CharField(max_length=10)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+
+class PokemonNameResult(models.Model):
+    class Meta:
+        indexes = [models.Index(fields=["created_at"])]
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
+    given_language = models.ForeignKey(
+        Language, on_delete=models.CASCADE, related_name="results_as_given_language"
+    )
+    expected_language = models.ForeignKey(
+        Language, on_delete=models.CASCADE, related_name="results_as_expected_language"
+    )
     answer = models.CharField(max_length=10)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -41,16 +60,11 @@ class LearnedPokemonName(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=["user", "pokemon", "given_language", "expected_language"],
+                fields=["user", "pokemon", "language"],
                 name="unique_learned_pokemon_per_user",
             )
         ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
-    given_language = models.ForeignKey(
-        Language, on_delete=models.CASCADE, related_name="dummy1"
-    )
-    expected_language = models.ForeignKey(
-        Language, on_delete=models.CASCADE, related_name="dummy2"
-    )
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)

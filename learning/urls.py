@@ -16,9 +16,9 @@ urlpatterns = [
         name="get_next_question",
     ),
     path(
-        "api/send_answer/",
-        views.SendAnswer.as_view(),
-        name="send_answer",
+        "api/send_answer_german_word/",
+        views.SendAnswerGermanWord.as_view(),
+        name="send_answer_german_word",
     ),
     path(
         "api/mark_word_as_invalid/",
@@ -29,5 +29,10 @@ urlpatterns = [
         "api/mark_answer_as_wrong/",
         views.MarkAnswerAsWrong.as_view(),
         name="mark_answer_as_wrong",
+    ),
+    path(
+        "api/send_answer_pokemon_name/",
+        views.SendAnswerPokemonName.as_view(),
+        name="send_answer_pokemon_name",
     ),
 ]

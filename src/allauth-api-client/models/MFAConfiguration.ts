@@ -22,7 +22,7 @@ import {
 
 /**
  * Configuration of the Django `allauth.mfa` app.
- *
+ * 
  * @export
  * @interface MFAConfiguration
  */

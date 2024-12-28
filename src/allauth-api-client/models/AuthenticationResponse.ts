@@ -28,7 +28,7 @@ import {
 
 /**
  * An authentication related response.
- *
+ * 
  * @export
  * @interface AuthenticationResponse
  */

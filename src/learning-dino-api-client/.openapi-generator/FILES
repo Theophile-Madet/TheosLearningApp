@@ -9,7 +9,8 @@ models/PokemonNameQuestionContent.ts
 models/Question.ts
 models/QuestionStats.ts
 models/QuestionTypeEnum.ts
-models/SendAnswerRequest.ts
+models/SendAnswerGermanWordRequest.ts
+models/SendAnswerPokemonNameRequest.ts
 models/TypeEnum.ts
 models/WasAnswerCorrect.ts
 models/Word.ts

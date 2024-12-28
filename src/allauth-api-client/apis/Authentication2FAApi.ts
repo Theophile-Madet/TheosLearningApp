@@ -43,7 +43,7 @@ export interface AllauthClientV1Auth2faReauthenticatePostRequest {
 }
 
 /**
- *
+ * 
  */
 export class Authentication2FAApi extends runtime.BaseAPI {
 

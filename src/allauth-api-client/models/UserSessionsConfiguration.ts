@@ -13,10 +13,9 @@
  */
 
 import { mapValues } from '../runtime';
-
 /**
  * Configuration of the Django `allauth.usersessions` app.
- *
+ * 
  * @export
  * @interface UserSessionsConfiguration
  */

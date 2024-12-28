@@ -81,7 +81,7 @@ export interface AllauthClientV1AccountAuthenticatorsTotpPostOperationRequest {
 }
 
 /**
- *
+ * 
  */
 export class Account2FAApi extends runtime.BaseAPI {
 
