@@ -11,7 +11,10 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-data_sources/
 db.sqlite3
 
 **/__pycache__
+
+/data_sources/deu_news_2023_1M-words.txt
+/data_sources/dictionary-de.xml
+/data_sources/parsed_dictionary_without_frequency.json

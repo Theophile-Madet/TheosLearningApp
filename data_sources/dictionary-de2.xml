@@ -1,0 +1,88 @@
+<mediawiki xmlns="http://www.mediawiki.org/xml/export-0.10/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					 xsi:schemaLocation="http://www.mediawiki.org/xml/export-0.10/ http://www.mediawiki.org/xml/export-0.10.xsd"
+					 version="0.10" xml:lang="de">
+	<page>
+		<title>Betonblock</title>
+		<ns>0</ns>
+		<id>1312478</id>
+		<revision>
+			<id>9786873</id>
+			<parentid>9763272</parentid>
+			<timestamp>2023-03-27T20:21:07Z</timestamp>
+			<contributor>
+				<username>DerbethBot</username>
+				<id>8318</id>
+			</contributor>
+			<minor />
+			<comment>+ Audio De-Betonblock2.ogg</comment>
+			<model>wikitext</model>
+			<format>text/x-wiki</format>
+			<text bytes="2069" xml:space="preserve">== Betonblock({{ Sprache|Deutsch }}) ==
+=== {{ Wortart|Substantiv|Deutsch }}, {{ m }} ===
+
+				{{ Deutsch Substantiv Übersicht
+					|Genus=m
+					|Nominativ Singular=Betonblock
+					|Nominativ Plural 1=Betonblöcke
+					|Nominativ Plural 2=Betonblocks
+					|Genitiv Singular=Betonblocks
+					|Genitiv Singular*=Betonblockes
+					|Genitiv Plural 1=Betonblöcke
+					|Genitiv Plural 2=Betonblocks
+					|Dativ Singular=Betonblock
+					|Dativ Plural 1= Betonblöcken
+					|Dativ Plural 2=Betonblocks
+					|Akkusativ Singular=Betonblock
+					|Akkusativ Plural 1=Betonblöcke
+					|Akkusativ Plural 2=Betonblocks
+					}}
+
+				{{ Worttrennung }}
+				:Be·ton·block, {{ Pl.1 }} Be·ton·blö·cke, {{ Pl.1 }} Be·ton·blocks
+
+				{{ Aussprache }}
+				:{{ IPA }} {{ Lautschrift|beˈtɔŋˌblɔk }}, ''auch:'' {{ Lautschrift|beˈtɔ̃ːˌblɔk}}, ''österreichisch vorwiegend, süddeutsch auch'' {{ Lautschrift|beˈtoːnˌblɔk }}
+				:{{ Hörbeispiele }} {{ Audio|De-Betonblock.ogg}}, {{ Audio|De-Betonblock2.ogg}}
+
+				{{ Bedeutungen }}
+				:[1] ''nur Plural 1:'' großes Stück fest verbundenen Materials aus Beton, ungefähr quaderförmig
+:[2] Häuserkomplex aus Beton, der nicht von Straßen durchschnitten wird
+
+				{{ Herkunft }}
+				:[[Determinativkompositum]], zusammengesetzt aus den [[Substantiv]]en ''[[Beton]]'' und ''[[Block]]''
+
+				{{ Synonyme }}
+				:[1] Betonstein
+:[2] Betonklotz
+
+				{{ Beispiele }}
+				:[1] ''Betonblöcke'' erlauben schnellen Auf- und Abbau von Betonwänden.
+:[2] Die neu gebauten Sozialwohnungen am Stadtrand bestanden aus mehreren ''Betonblocks''.
+
+				{{ Wortbildungen }}
+				:[[Betonblockstein]]
+
+==== {{ Übersetzungen }} ====
+				{{ Ü-Tabelle|1|G=großes Stück fest verbundenen Materials aus Beton, ungefähr quaderförmig|Ü-Liste=
+					*{{ en }}: {{ Ü|en|concrete block}}
+				*{{ fr }}: {{ Ü|fr|bloc de béton}}
+				*{{ it }}: {{ Ü|it|blocco di cemento}}
+				*{{ es }}: {{ Ü|es|bloque de hormigón}}
+				}}
+				{{ Ü-Tabelle|2|G=Häuserkomplex aus Beton, der nicht von Straßen durchschnitten wird|Ü-Liste=
+					*{{ en }}: {{ Ü|en| }}
+				*{{ fr }}: {{ Ü|fr| }}
+				*{{ it }}: {{ Ü|it| }}
+				*{{ es }}: {{ Ü|es| }}
+				}}
+
+				{{ Referenzen }}
+				:[*] {{ Wikipedia-Suche }}
+				:[(1, 2)] {{ Ref-DWDS }}
+				:[*] {{ Ref-OWID|elexiko|171976|Betonblock}}
+				:[1, 2] {{ Ref-Duden }}
+				:[*] {{ Ref-UniLeipzig }}</text>
+			<sha1>0l8o57fgq1132ey3uz0hajgv2fjd07j</sha1>
+		</revision>
+	</page>
+</mediawiki>
