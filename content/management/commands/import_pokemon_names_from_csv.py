@@ -10,6 +10,10 @@ class Command(BaseCommand):
         "Import pokemon names from a csv file downloaded from "
         "https://docs.google.com/spreadsheets/d/1Eo6oWs4RA5M4c0r9M8FXJniOyhpmNmrnULabkP8kbL8/edit?gid=0#gid=0"
     )
+    # There is a type in the source gdoc at the time of writing: replace "Houndoor" (wrong) with "Houndour" (correct)
+    # Tailow -> Taillow
+    # Minum -> Minun
+    # And a few others. The file that is in this repo has been fixed
     FILE_NAME = "data_sources/pokemon-names-translations.csv"
 
     def __init__(self, *args, **options):
@@ -23,11 +27,11 @@ class Command(BaseCommand):
 
     def process_file(self, reader):
         pokemons_from_file_by_csv_id = {}
-        must_header_line_processed = True
+        must_process_header_line = True
         for row in reader:
-            if must_header_line_processed:
+            if must_process_header_line:
                 self.process_header_row(row)
-                must_header_line_processed = False
+                must_process_header_line = False
                 continue
 
             csv_id = row[0]

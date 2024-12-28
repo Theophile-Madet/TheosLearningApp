@@ -22,9 +22,10 @@ class Pokemon(models.Model):
         indexes = [models.Index(fields=["id_from_csv"])]
 
     id_from_csv = models.CharField(max_length=100)
+    generation = models.IntegerField()
 
     def __str__(self):
-        return self.id_from_csv
+        return f"{self.id_from_csv} ({self.generation}th gen)"
 
 
 class Language(models.Model):

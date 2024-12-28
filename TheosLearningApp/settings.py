@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "accounts",
     "content",
     "learning",
+    "pokemon_names",
     "django_extensions",
     "rest_framework",
     "drf_spectacular",
