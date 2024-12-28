@@ -13,6 +13,7 @@ models/SendAnswerGermanWordRequest.ts
 models/SendAnswerPokemonNameRequest.ts
 models/TypeEnum.ts
 models/WasAnswerCorrect.ts
+models/WasAnswerCorrectPokemonName.ts
 models/Word.ts
 models/index.ts
 runtime.ts

@@ -20,12 +20,7 @@ class PokemonNameResult(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
-    given_language = models.ForeignKey(
-        Language, on_delete=models.CASCADE, related_name="results_as_given_language"
-    )
-    expected_language = models.ForeignKey(
-        Language, on_delete=models.CASCADE, related_name="results_as_expected_language"
-    )
+    language = models.ForeignKey(Language, on_delete=models.CASCADE)
     answer = models.CharField(max_length=10)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

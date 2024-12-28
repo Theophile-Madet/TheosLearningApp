@@ -12,4 +12,5 @@ export * from './SendAnswerGermanWordRequest';
 export * from './SendAnswerPokemonNameRequest';
 export * from './TypeEnum';
 export * from './WasAnswerCorrect';
+export * from './WasAnswerCorrectPokemonName';
 export * from './Word';

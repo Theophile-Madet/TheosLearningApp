@@ -126,7 +126,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/WasAnswerCorrect'
+                $ref: '#/components/schemas/WasAnswerCorrectPokemonName'
           description: ''
 components:
   schemas:
@@ -281,6 +281,18 @@ components:
         - learned
         - nb_answers_correct_in_a_row
         - repetitions_to_learn
+    WasAnswerCorrectPokemonName:
+      type: object
+      properties:
+        was_correct_given_language:
+          allOf:
+            - $ref: '#/components/schemas/WasAnswerCorrect'
+          nullable: true
+        was_correct_expected_language:
+          $ref: '#/components/schemas/WasAnswerCorrect'
+      required:
+        - was_correct_expected_language
+        - was_correct_given_language
     Word:
       type: object
       properties:

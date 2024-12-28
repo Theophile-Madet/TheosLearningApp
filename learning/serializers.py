@@ -36,8 +36,8 @@ class SendAnswerPokemonNameSerializer(serializers.Serializer):
 
 
 class WasAnswerCorrectPokemonNameSerializer(serializers.Serializer):
-    was_correct_given_language = WasAnswerCorrectSerializer()
-    was_correct_expected_language = WasAnswerCorrectSerializer(allow_null=True)
+    was_correct_given_language = WasAnswerCorrectSerializer(allow_null=True)
+    was_correct_expected_language = WasAnswerCorrectSerializer()
 
 
 class MarkWordAsInvalidSerializer(serializers.Serializer):

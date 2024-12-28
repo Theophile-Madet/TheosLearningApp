@@ -175,7 +175,7 @@ class SendAnswerGermanWord(APIView):
 
 class SendAnswerPokemonName(APIView):
     @extend_schema(
-        responses={200: WasAnswerCorrectSerializer},
+        responses={200: WasAnswerCorrectPokemonNameSerializer},
         request=SendAnswerPokemonNameSerializer,
     )
     def post(self, request):
@@ -221,7 +221,7 @@ class SendAnswerPokemonName(APIView):
 
     @staticmethod
     def create_result_and_check_learned_status(
-            pokemon_id, language_id, given_answer, user
+        pokemon_id, language_id, given_answer, user
     ):
         PokemonNameResult.objects.create(
             answer=given_answer,
@@ -232,7 +232,7 @@ class SendAnswerPokemonName(APIView):
 
         learned = False
         if PokemonNameLearnedChecker.is_pokemon_name_learned(
-                user, pokemon_id, language_id
+            user, pokemon_id, language_id
         ):
             learned = True
             LearnedPokemonName.objects.create(

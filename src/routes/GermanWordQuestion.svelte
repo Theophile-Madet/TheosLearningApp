@@ -1,7 +1,7 @@
 <script lang="ts">
 
 	import { apiError, csrfToken, hasAnswered } from './stores';
-	import { LearningApi, ResponseError, type WasAnswerCorrect, type Word } from '../learning-dino-api-client';
+	import { LearningApi, ResponseError, type Word } from '../learning-dino-api-client';
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import AnswerWasWrongConfirmationModal from './AnswerWasWrongConfirmationModal.svelte';
 	import DinoButton from '../components/DinoButton.svelte';
@@ -9,6 +9,7 @@
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
 	import { Col, Row, Toast, ToastBody, ToastHeader } from '@sveltestrap/sveltestrap';
 	import { createEventDispatcher } from 'svelte';
+	import { getToastBody, getToastColor } from '../utils/toastUtils';
 
 	export let word: Word;
 	export let rank: number;
@@ -22,41 +23,26 @@
 	const dispatch = createEventDispatcher();
 
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
-	let small_positive_header = ['Nice!', 'Good!', 'Correct!', 'Yes!'];
-	let big_positive_header = ['Well done!', 'Yeah!', 'Woohoo!'];
-	let negative_header = ['Whoops!', 'Nope!', 'Maybe next time...'];
 
-	function getRandomElement(array: any[]) {
-		return array[Math.floor(Math.random() * array.length)];
-	}
 
 	async function sendAnswer(event: CustomEvent) {
 		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		$hasAnswered = true;
-		const result = await learningApi.learningApiSendAnswerCreate({
-			sendAnswerRequest: {
+		learningApi.learningApiSendAnswerGermanWordCreate({
+			sendAnswerGermanWordRequest: {
 				wordId: word.id,
 				answer: event.detail.value
 			}
+		}).then((result) => {
+			toasts = [{
+				word: word,
+				bodyText: getToastBody(result),
+				open: true,
+				color: getToastColor(result)
+			}, ...toasts];
+		}).catch((err: Error) => {
+			alert('Not implemented must do catch ' + err);
 		});
-		toasts = [{
-			word: word,
-			bodyText: getToastBody(result),
-			open: true,
-			color: getToastColor(result)
-		}, ...toasts];
-	}
-
-	function getToastColor(result: WasAnswerCorrect) {
-		if (result.learned) return 'success';
-		if (result.correct) return 'light';
-		return 'warning';
-	}
-
-	function getToastBody(result: WasAnswerCorrect) {
-		if (result.learned) return getRandomElement(big_positive_header);
-		if (result.correct) return getRandomElement(small_positive_header) + ' ' + result.nbAnswersCorrectInARow + '/' + result.repetitionsToLearn;
-		return getRandomElement(negative_header);
 	}
 
 	async function markWordAsInvalid() {
