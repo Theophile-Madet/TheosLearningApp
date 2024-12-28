@@ -118,7 +118,7 @@
 <Row class="mb-5">
 	<Col>
 		<p class="text-center">
-			{word} is the {rank}th most used noun.
+			{word.word} is the {rank}th most used noun.
 		</p>
 	</Col>
 </Row>
@@ -141,7 +141,7 @@
 		<DinoButton
 			color="secondary"
 			outline="{!$hasAnswered}"
-			on:click={() => {dispatch("fetchNextQuestion")}} text="Next word">
+			on:click={() => {dispatch("fetchNextQuestion")}} text="Next question">
 		</DinoButton>
 	</Col>
 </Row>

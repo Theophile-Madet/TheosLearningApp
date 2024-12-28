@@ -167,7 +167,7 @@ SPECTACULAR_SETTINGS = {"COMPONENT_SPLIT_REQUEST": True}
 CSRF_TRUSTED_ORIGINS = ["https://learnapp.seriousdino.org"]
 CORS_ALLOWED_ORIGINS = ["https://learnapp.seriousdino.org"]
 if IS_DEV_ENV:
-    CSRF_TRUSTED_ORIGINS = ["http://localhost:5174"]
+    CSRF_TRUSTED_ORIGINS = ["http://localhost:5174", "http://localhost:5173"]
     CORS_ALLOWED_ORIGINS = ["http://localhost"]
     CORS_ALLOW_ALL_ORIGINS = True
 

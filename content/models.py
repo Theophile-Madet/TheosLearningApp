@@ -32,7 +32,7 @@ class Language(models.Model):
     full_name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.short_name
+        return f"{self.full_name} ({self.short_name})"
 
 
 class PokemonName(models.Model):
