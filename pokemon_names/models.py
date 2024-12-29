@@ -7,8 +7,10 @@ from content.models import Language
 class PokemonEnabledLanguage(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
+    enabled = models.BooleanField()
 
 
 class PokemonEnabledGeneration(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     generation = models.IntegerField()
+    enabled = models.BooleanField()

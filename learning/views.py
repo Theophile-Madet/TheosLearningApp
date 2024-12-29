@@ -5,6 +5,7 @@ from django.middleware import csrf
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from drf_spectacular.utils import extend_schema
+from icecream import ic
 from rest_framework import status, permissions
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -38,6 +39,7 @@ from learning.serializers import (
 )
 from learning.services.german_words.word_learned_checker import WordLearnedChecker
 from learning.services.german_words.word_to_learn_picker import WordToLearnPicker
+from learning.services.options_manager import OptionsManager
 from learning.services.pokemon_names.pokemon_name_learned_checker import (
     PokemonNameLearnedChecker,
 )
@@ -293,9 +295,19 @@ class GetOptions(APIView):
         responses={200: OptionsSerializer},
     )
     def get(self, request):
+        options_by_group = {}
+        for provider in OptionsManager.option_providers:
+            for user_option in provider():
+                if user_option.group_name not in options_by_group.keys():
+                    options_by_group[user_option.group_name] = []
+
+                options_by_group[user_option.group_name].append(user_option)
+
+        ic(options_by_group)
+
         groups = [
             self.build_option_group_data(request.user, group_name, options_in_group)
-            for group_name, options_in_group in LearningConfig.user_options.items()
+            for group_name, options_in_group in options_by_group.items()
         ]
 
         serializer = OptionsSerializer({"groups": groups})
@@ -305,14 +317,13 @@ class GetOptions(APIView):
     @classmethod
     def build_option_group_data(cls, user: User, group_name, options_in_group):
         options = [
-            cls.build_option_data(user, user_option)
-            for user_option in options_in_group.values()
+            cls.build_option_data(user, user_option) for user_option in options_in_group
         ]
 
         return OptionGroupSerializer({"name": group_name, "options": options}).data
 
     @staticmethod
-    def build_option_data(user: User, user_option: LearningConfig.UserOption):
+    def build_option_data(user: User, user_option: OptionsManager.UserOption):
         is_enabled = user_option.get_handler(user, user_option)
         if is_enabled is None:
             is_enabled = user_option.default_value

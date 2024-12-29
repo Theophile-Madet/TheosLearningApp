@@ -39,8 +39,8 @@
 				<Spinner type="border" color="secondary" />
 			{:else}
 				{#each option_groups as group}
-					<h2>{group.name}</h2>
-					<div>
+					<h3>{group.name}</h3>
+					<div class="mb-2">
 						{#each group.options as option}
 							<Input type="switch" id="{option.key}" label="{option.displayName}" checked="{option.isEnabled}" />
 						{/each}
