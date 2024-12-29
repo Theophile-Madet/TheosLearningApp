@@ -35,4 +35,9 @@ urlpatterns = [
         views.SendAnswerPokemonName.as_view(),
         name="send_answer_pokemon_name",
     ),
+    path(
+        "api/get_options/",
+        views.GetOptions.as_view(),
+        name="get_options",
+    ),
 ]

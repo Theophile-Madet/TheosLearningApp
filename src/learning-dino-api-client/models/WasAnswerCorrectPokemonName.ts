@@ -12,8 +12,13 @@
  * Do not edit the class manually.
  */
 
+import { mapValues } from '../runtime';
 import type { WasAnswerCorrect } from './WasAnswerCorrect';
-import { WasAnswerCorrectFromJSON, WasAnswerCorrectToJSON } from './WasAnswerCorrect';
+import {
+	WasAnswerCorrectFromJSON,
+	WasAnswerCorrectFromJSONTyped,
+	WasAnswerCorrectToJSON
+} from './WasAnswerCorrect';
 
 /**
  *

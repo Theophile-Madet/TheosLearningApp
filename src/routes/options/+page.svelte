@@ -1,89 +1,60 @@
 <script lang="ts">
 	import { useLearningDinoApi } from '../../utils/useLearningDinoApi';
-	import { LearningApi } from '../../learning-dino-api-client';
-	import { AuthenticationAccountApi } from '../../allauth-api-client';
-	import { useAllauthApi } from '../../utils/useAllauthApi';
-	import { goto } from '$app/navigation';
-	import { Alert, Container, FormGroup, Input } from '@sveltestrap/sveltestrap';
+	import { LearningApi, type OptionGroup } from '../../learning-dino-api-client';
+	import { Col, Container, Input, Row, Spinner } from '@sveltestrap/sveltestrap';
 	import { onMount } from 'svelte';
-	import { csrfToken } from '../stores';
-	import DinoButton from '../../components/DinoButton.svelte';
 
-	let username = '';
-	let password = '';
-	let loading = false;
-	let loginError = '';
+	let option_groups: OptionGroup[] = [];
+	let optionsLoading = true;
 
 	onMount(async () => {
-		if ($csrfToken) return;
-
 		const learningApi = useLearningDinoApi(LearningApi);
-		const token = await learningApi.learningApiGetCsrfTokenRetrieve();
-		$csrfToken = token.csrfToken;
-	});
-
-	async function doLogin() {
-		loading = true;
-
-		const authenticationAccountApi = useAllauthApi(AuthenticationAccountApi, fetch, $csrfToken);
-		authenticationAccountApi.allauthClientV1AuthLoginPost({
-			client: 'browser',
-			login: {
-				username: username,
-				password: password
-			}
-		}).then(async () => {
-			await goto('/');
-		}).catch(async (errorResponse) => {
-			const errorContent = await errorResponse.response.json();
-			loginError = errorContent.errors.map((error: any) => error.message).join('\n');
+		learningApi.learningApiGetOptionsRetrieve().then((options) => {
+			option_groups = options.groups;
+		}).catch((error) => {
+			alert('Error not implemented');
+			console.error(error);
 		}).finally(() => {
-			loading = false;
+			optionsLoading = false;
 		});
-	}
+
+	});
 </script>
 
 
 <svelte:head>
-	<title>Learning Dino - Login</title>
-	<meta name="description" content="Login form" />
+	<title>Learning Dino - Options</title>
+	<meta name="description" content="User options" />
 </svelte:head>
 
 <Container>
-	<h1>Login</h1>
-
-	<div class="dino-login-form">
-		<form on:submit|preventDefault={doLogin}>
-			{#if loginError}
-				<Alert color="warning">{loginError}</Alert>
+	<Row>
+		<Col>
+			<h1>Options</h1>
+		</Col>
+	</Row>
+	<Row>
+		<Col>
+			{#if optionsLoading}
+				<Spinner type="border" color="secondary" />
+			{:else}
+				{#each option_groups as group}
+					<h2>{group.name}</h2>
+					<div>
+						{#each group.options as option}
+							<Input type="switch" id="{option.key}" label="{option.displayName}" checked="{option.isEnabled}" />
+						{/each}
+					</div>
+				{/each}
 			{/if}
-			<FormGroup floating label="Username">
-				<Input type="text" name="username" bind:value={username} />
-			</FormGroup>
-			<FormGroup floating label="Password">
-				<Input type="password" name="password" bind:value={password} />
-			</FormGroup>
-			<div class="button-center">
-				<DinoButton color="primary" type="submit" text="Login" icon="box-arrow-in-right" loading="{loading}" />
-			</div>
 
-		</form>
-	</div>
+		</Col>
+	</Row>
 </Container>
 
 <style>
     h1 {
         text-align: center;
         margin-bottom: 3vh;
-    }
-
-    .dino-login-form {
-        display: flex;
-        justify-content: center;
-    }
-
-    .button-center {
-        display: flex;
-        justify-content: center;
     }
 </style>

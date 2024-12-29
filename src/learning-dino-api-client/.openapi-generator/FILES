@@ -5,6 +5,9 @@ models/CsrfToken.ts
 models/GermanWordQuestionContent.ts
 models/MarkAnswerAsWrongRequest.ts
 models/MarkWordAsInvalidRequest.ts
+models/Option.ts
+models/OptionGroup.ts
+models/Options.ts
 models/PokemonNameQuestionContent.ts
 models/Question.ts
 models/QuestionStats.ts

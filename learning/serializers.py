@@ -77,3 +77,18 @@ class QuestionSerializer(serializers.Serializer):
     german_word_content = GermanWordQuestionContentSerializer(allow_null=True)
     pokemon_name_content = PokemonNameQuestionContentSerializer(allow_null=True)
     stats = QuestionStatsSerializer()
+
+
+class OptionSerializer(serializers.Serializer):
+    key = serializers.CharField()
+    display_name = serializers.CharField()
+    is_enabled = serializers.BooleanField()
+
+
+class OptionGroupSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    options = OptionSerializer(many=True)
+
+
+class OptionsSerializer(serializers.Serializer):
+    groups = OptionGroupSerializer(many=True)

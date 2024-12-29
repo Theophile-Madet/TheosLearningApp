@@ -63,3 +63,16 @@ class LearnedPokemonName(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
     language = models.ForeignKey(Language, on_delete=models.CASCADE)
+
+
+class EnabledContent(models.Model):
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "content_key"], name="unique_enabled_content_per_user"
+            )
+        ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content_key = models.CharField(max_length=100)
+    enabled = models.BooleanField()

@@ -1,5 +1,6 @@
 import random
 
+from django.contrib.auth.models import User
 from django.middleware import csrf
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -31,6 +32,9 @@ from learning.serializers import (
     PokemonNameQuestionContentSerializer,
     SendAnswerPokemonNameSerializer,
     WasAnswerCorrectPokemonNameSerializer,
+    OptionsSerializer,
+    OptionGroupSerializer,
+    OptionSerializer,
 )
 from learning.services.german_words.word_learned_checker import WordLearnedChecker
 from learning.services.german_words.word_to_learn_picker import WordToLearnPicker
@@ -282,3 +286,40 @@ class MarkAnswerAsWrong(APIView):
         word = get_object_or_404(Word, id=request_serializer.validated_data["word_id"])
         WrongAnswer.objects.create(word=word)
         return Response(status=status.HTTP_200_OK)
+
+
+class GetOptions(APIView):
+    @extend_schema(
+        responses={200: OptionsSerializer},
+    )
+    def get(self, request):
+        groups = [
+            self.build_option_group_data(request.user, group_name, options_in_group)
+            for group_name, options_in_group in LearningConfig.user_options.items()
+        ]
+
+        serializer = OptionsSerializer({"groups": groups})
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    @classmethod
+    def build_option_group_data(cls, user: User, group_name, options_in_group):
+        options = [
+            cls.build_option_data(user, user_option)
+            for user_option in options_in_group.values()
+        ]
+
+        return OptionGroupSerializer({"name": group_name, "options": options}).data
+
+    @staticmethod
+    def build_option_data(user: User, user_option: LearningConfig.UserOption):
+        is_enabled = user_option.get_handler(user, user_option)
+        if is_enabled is None:
+            is_enabled = user_option.default_value
+        return OptionSerializer(
+            {
+                "key": user_option.key,
+                "display_name": user_option.display_name,
+                "is_enabled": is_enabled,
+            }
+        ).data

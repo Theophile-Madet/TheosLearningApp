@@ -160,7 +160,12 @@
 			<DinoButton
 				color="secondary"
 				outline="{true}"
-				on:click={() => {aboutModalOpen = true;}} text="About" icon="question-circle" loading="{logoutLoading}">
+				on:click={() => {aboutModalOpen = true;}} text="About" icon="question-circle">
+			</DinoButton>
+			<DinoButton
+				color="secondary"
+				outline="{true}"
+				on:click={async () => {await goto("/options")}} text="Options" icon="settings">
 			</DinoButton>
 			<DinoButton
 				color="secondary"
