@@ -4,6 +4,8 @@
 	import { Col, Container, Input, Row, Spinner } from '@sveltestrap/sveltestrap';
 	import { onMount } from 'svelte';
 	import { csrfToken } from '../stores';
+	import DinoButton from '../../components/DinoButton.svelte';
+	import { goto } from '$app/navigation';
 
 	let option_groups: OptionGroup[] = [];
 	let optionsLoading = true;
@@ -56,6 +58,20 @@
 		</Col>
 	</Row>
 	<Row>
+		<Col class="d-flex justify-content-center">
+			<DinoButton
+				color="secondary"
+				outline="{true}"
+				on:click={async () => {await goto("/")}} text="Back to game" icon="settings">
+			</DinoButton>
+		</Col>
+	</Row>
+	<Row>
+		<Col class="d-flex justify-content-center">
+			Changes are saved immediately
+		</Col>
+	</Row>
+	<Row>
 		<Col>
 			{#if optionsLoading}
 				<Spinner type="border" color="secondary" />
@@ -70,7 +86,6 @@
 					</div>
 				{/each}
 			{/if}
-
 		</Col>
 	</Row>
 </Container>

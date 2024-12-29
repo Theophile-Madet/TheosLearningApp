@@ -31,11 +31,19 @@ class GenerationOptionsProvider:
     ):
         from pokemon_names.models import PokemonEnabledGeneration
 
-        PokemonEnabledGeneration.objects.update_or_create(
+        enabled_generation = PokemonEnabledGeneration.objects.filter(
             user=user,
             generation=cls.option_key_to_generation_number(user_option.key),
-            enabled=enabled,
-        )
+        ).first()
+        if enabled_generation:
+            enabled_generation.enabled = enabled
+            enabled_generation.save()
+        else:
+            PokemonEnabledGeneration.objects.create(
+                user=user,
+                generation=cls.option_key_to_generation_number(user_option.key),
+                enabled=enabled,
+            )
 
     @classmethod
     def is_generation_enabled(
@@ -79,3 +87,13 @@ class GenerationOptionsProvider:
     @staticmethod
     def option_key_to_generation_number(key: str):
         return int(key.split("_")[-1])
+
+    @classmethod
+    def get_enabled_generation(cls, user):
+        enabled_generations = []
+        for user_option in cls.provide_generation_options():
+            if OptionsManager.is_option_enabled(user, user_option):
+                enabled_generations.append(
+                    cls.option_key_to_generation_number(user_option.key)
+                )
+        return enabled_generations

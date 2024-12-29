@@ -11,7 +11,7 @@ class LanguageOptionsProvider:
                 update_handler=LanguageOptionsProvider.set_language_enabled,
                 get_handler=LanguageOptionsProvider.is_language_enabled,
                 group_name="Pokemon languages",
-                key=f"pokemon_language_{language.short_name}",
+                key=f"pokemon_language_{language.id}",
                 display_name=language.full_name,
                 default_value=language.full_name in ["English", "French", "German"],
             )
@@ -25,7 +25,8 @@ class LanguageOptionsProvider:
         from pokemon_names.models import PokemonEnabledLanguage
 
         enabled_language = PokemonEnabledLanguage.objects.filter(
-            user=user, language__short_name=user_option.key
+            user=user,
+            language=LanguageOptionsProvider.option_key_to_language(user_option.key),
         ).first()
         if enabled_language:
             enabled_language.enabled = enabled
@@ -35,9 +36,7 @@ class LanguageOptionsProvider:
 
             PokemonEnabledLanguage.objects.create(
                 user=user,
-                language=Language.objects.get(
-                    short_name=cls.option_key_to_language_short_name(user_option.key)
-                ),
+                language=cls.option_key_to_language(user_option.key),
                 enabled=enabled,
             )
 
@@ -49,7 +48,7 @@ class LanguageOptionsProvider:
 
         enabled_language = PokemonEnabledLanguage.objects.filter(
             user=user,
-            language__short_name=cls.option_key_to_language_short_name(user_option.key),
+            language=cls.option_key_to_language(user_option.key),
         ).first()
 
         if enabled_language:
@@ -58,5 +57,16 @@ class LanguageOptionsProvider:
         return None
 
     @classmethod
-    def option_key_to_language_short_name(cls, option_key: str):
-        return option_key.split("_")[-1]
+    def option_key_to_language(cls, option_key: str):
+        from content.models import Language
+
+        language_id = option_key.split("_")[-1]
+        return Language.objects.get(id=language_id)
+
+    @classmethod
+    def get_enabled_languages(cls, user):
+        enabled_languages = []
+        for user_option in cls.provide_language_options():
+            if OptionsManager.is_option_enabled(user, user_option):
+                enabled_languages.append(cls.option_key_to_language(user_option.key))
+        return enabled_languages

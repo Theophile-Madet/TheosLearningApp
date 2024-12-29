@@ -22,14 +22,14 @@ class PokemonNameQuestionBuilder:
         given_language, expected_language = LanguagePicker.pick_languages(user, pokemon)
 
         correct_answer = PokemonName.objects.get(
-            pokemon=pokemon, language__short_name=expected_language
+            pokemon=pokemon, language=expected_language
         ).name
 
         pokemon_question_serializer = PokemonNameQuestionContentSerializer(
             {
                 "pokemon_id": pokemon.id,
                 "given_name": PokemonName.objects.get(
-                    pokemon=pokemon, language__short_name=given_language
+                    pokemon=pokemon, language=given_language
                 ).name,
                 "given_language_id": given_language.id,
                 "given_language_name": given_language.full_name,
@@ -53,11 +53,11 @@ class PokemonNameQuestionBuilder:
             pokemon=pokemon, user=user, language=expected_language
         )
         correct_answer = PokemonName.objects.get(
-            pokemon=pokemon, language__short_name=expected_language
+            pokemon=pokemon, language=expected_language
         ).name
         correct_answers = all_answers.filter(answer=correct_answer)
 
-        QuestionStatsSerializer(
+        return QuestionStatsSerializer(
             {
                 "nb_answers_total": all_answers.count(),
                 "nb_answers_correct": correct_answers.count(),
@@ -65,4 +65,4 @@ class PokemonNameQuestionBuilder:
                     user, pokemon.id, expected_language.id
                 ),
             }
-        )
+        ).data
