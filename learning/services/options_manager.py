@@ -17,3 +17,10 @@ class OptionsManager:
     @classmethod
     def register_option_provider(cls, option_provider: Callable):
         cls.option_providers.add(option_provider)
+
+    @staticmethod
+    def is_option_enabled(user, user_option: UserOption):
+        enabled = user_option.get_handler(user, user_option)
+        if enabled is None:
+            enabled = user_option.default_value
+        return enabled
