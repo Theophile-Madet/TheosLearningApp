@@ -12,13 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
 import type { Option } from './Option';
-import {
-	OptionFromJSON,
-	OptionFromJSONTyped,
-	OptionToJSON
-} from './Option';
+import { OptionFromJSON, OptionToJSON } from './Option';
 
 /**
  *

@@ -40,4 +40,9 @@ urlpatterns = [
         views.GetOptions.as_view(),
         name="get_options",
     ),
+    path(
+        "api/set_option/",
+        views.SetOption.as_view(),
+        name="set_option",
+    ),
 ]

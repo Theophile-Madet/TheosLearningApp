@@ -13,6 +13,7 @@ export * from './QuestionStats';
 export * from './QuestionTypeEnum';
 export * from './SendAnswerGermanWordRequest';
 export * from './SendAnswerPokemonNameRequest';
+export * from './SetOptionRequestRequest';
 export * from './TypeEnum';
 export * from './WasAnswerCorrect';
 export * from './WasAnswerCorrectPokemonName';

@@ -18,7 +18,7 @@ class GenerationOptionsProvider:
                 GenerationOptionsProvider.set_generation_enabled,
                 GenerationOptionsProvider.is_generation_enabled,
                 "Pokemon generations",
-                generation,
+                f"pokemon_generation_{generation}",
                 f"Generation {GenerationOptionsProvider.get_roman_numeral(generation)}",
                 generation == 1,
             )
@@ -32,7 +32,9 @@ class GenerationOptionsProvider:
         from pokemon_names.models import PokemonEnabledGeneration
 
         PokemonEnabledGeneration.objects.update_or_create(
-            user=user, generation=user_option.key, enabled=enabled
+            user=user,
+            generation=cls.option_key_to_generation_number(user_option.key),
+            enabled=enabled,
         )
 
     @classmethod
@@ -42,7 +44,7 @@ class GenerationOptionsProvider:
         from pokemon_names.models import PokemonEnabledGeneration
 
         enabled_generation = PokemonEnabledGeneration.objects.filter(
-            user=user, generation=user_option.key
+            user=user, generation=cls.option_key_to_generation_number(user_option.key)
         ).first()
 
         if enabled_generation:
@@ -73,3 +75,7 @@ class GenerationOptionsProvider:
             (factor, input_number) = divmod(input_number, arabic)
             result += roman_reference * factor
         return result
+
+    @staticmethod
+    def option_key_to_generation_number(key: str):
+        return int(key.split("_")[-1])

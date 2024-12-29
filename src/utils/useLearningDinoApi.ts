@@ -5,6 +5,7 @@ export function useLearningDinoApi<T>(ApiClient: new (configuration: Configurati
 	if (csrfToken) {
 		headers['X-Csrftoken'] = csrfToken;
 	}
+	console.log(csrfToken);
 
 	return new ApiClient(
 		new Configuration({

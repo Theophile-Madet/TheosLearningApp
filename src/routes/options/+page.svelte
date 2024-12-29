@@ -3,11 +3,20 @@
 	import { LearningApi, type OptionGroup } from '../../learning-dino-api-client';
 	import { Col, Container, Input, Row, Spinner } from '@sveltestrap/sveltestrap';
 	import { onMount } from 'svelte';
+	import { csrfToken } from '../stores';
 
 	let option_groups: OptionGroup[] = [];
 	let optionsLoading = true;
 
+	async function updateCsrfToken() {
+		const learningApi = useLearningDinoApi(LearningApi);
+		const token = await learningApi.learningApiGetCsrfTokenRetrieve();
+		$csrfToken = token.csrfToken;
+	}
+
 	onMount(async () => {
+		await updateCsrfToken();
+
 		const learningApi = useLearningDinoApi(LearningApi);
 		learningApi.learningApiGetOptionsRetrieve().then((options) => {
 			option_groups = options.groups;
@@ -19,6 +28,19 @@
 		});
 
 	});
+
+	function onOptionSet(key: string, enabled: boolean) {
+		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
+		learningApi.learningApiSetOptionCreate({
+			setOptionRequestRequest: {
+				optionKey: key,
+				enabled: enabled
+			}
+		}).catch((error) => {
+			alert('Error not implemented');
+			console.error(error);
+		});
+	}
 </script>
 
 
@@ -42,7 +64,8 @@
 					<h3>{group.name}</h3>
 					<div class="mb-2">
 						{#each group.options as option}
-							<Input type="switch" id="{option.key}" label="{option.displayName}" checked="{option.isEnabled}" />
+							<Input type="switch" id="{option.key}" label="{option.displayName}" checked="{option.enabled}"
+										 on:change={(event) => onOptionSet(option.key, event.target.checked)} />
 						{/each}
 					</div>
 				{/each}

@@ -142,6 +142,28 @@ paths:
               schema:
                 $ref: '#/components/schemas/WasAnswerCorrectPokemonName'
           description: ''
+  /learning/api/set_option/:
+    post:
+      operationId: learning_api_set_option_create
+      tags:
+        - learning
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetOptionRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetOptionRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetOptionRequestRequest'
+        required: true
+      security:
+        - cookieAuth: [ ]
+      responses:
+        '200':
+          description: No response body
 components:
   schemas:
     CsrfToken:
@@ -182,11 +204,11 @@ components:
           type: string
         display_name:
           type: string
-        is_enabled:
+        enabled:
           type: boolean
       required:
         - display_name
-        - is_enabled
+        - enabled
         - key
     OptionGroup:
       type: object
@@ -303,6 +325,17 @@ components:
         - expected_language_id
         - given_language_id
         - pokemon_id
+    SetOptionRequestRequest:
+      type: object
+      properties:
+        option_key:
+          type: string
+          minLength: 1
+        enabled:
+          type: boolean
+      required:
+        - enabled
+        - option_key
     TypeEnum:
       enum:
         - noun

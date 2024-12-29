@@ -82,7 +82,7 @@ class QuestionSerializer(serializers.Serializer):
 class OptionSerializer(serializers.Serializer):
     key = serializers.CharField()
     display_name = serializers.CharField()
-    is_enabled = serializers.BooleanField()
+    enabled = serializers.BooleanField()
 
 
 class OptionGroupSerializer(serializers.Serializer):
@@ -92,3 +92,8 @@ class OptionGroupSerializer(serializers.Serializer):
 
 class OptionsSerializer(serializers.Serializer):
     groups = OptionGroupSerializer(many=True)
+
+
+class SetOptionRequestSerializer(serializers.Serializer):
+    option_key = serializers.CharField()
+    enabled = serializers.BooleanField()

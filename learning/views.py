@@ -5,7 +5,6 @@ from django.middleware import csrf
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie
 from drf_spectacular.utils import extend_schema
-from icecream import ic
 from rest_framework import status, permissions
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
@@ -36,6 +35,7 @@ from learning.serializers import (
     OptionsSerializer,
     OptionGroupSerializer,
     OptionSerializer,
+    SetOptionRequestSerializer,
 )
 from learning.services.german_words.word_learned_checker import WordLearnedChecker
 from learning.services.german_words.word_to_learn_picker import WordToLearnPicker
@@ -303,8 +303,6 @@ class GetOptions(APIView):
 
                 options_by_group[user_option.group_name].append(user_option)
 
-        ic(options_by_group)
-
         groups = [
             self.build_option_group_data(request.user, group_name, options_in_group)
             for group_name, options_in_group in options_by_group.items()
@@ -324,13 +322,47 @@ class GetOptions(APIView):
 
     @staticmethod
     def build_option_data(user: User, user_option: OptionsManager.UserOption):
-        is_enabled = user_option.get_handler(user, user_option)
-        if is_enabled is None:
-            is_enabled = user_option.default_value
+        enabled = user_option.get_handler(user, user_option)
+        if enabled is None:
+            enabled = user_option.default_value
         return OptionSerializer(
             {
                 "key": user_option.key,
                 "display_name": user_option.display_name,
-                "is_enabled": is_enabled,
+                "enabled": enabled,
             }
         ).data
+
+
+class SetOption(APIView):
+    @extend_schema(
+        responses={200: None},
+        request=SetOptionRequestSerializer,
+    )
+    def post(self, request):
+        request_serializer = SetOptionRequestSerializer(data=request.data)
+        request_serializer.is_valid(raise_exception=True)
+
+        user_option = self.get_option_with_key(
+            request_serializer.validated_data["option_key"]
+        )
+
+        if not user_option:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        user_option.update_handler(
+            request.user,
+            user_option,
+            request_serializer.validated_data["enabled"],
+        )
+
+        return Response(status=status.HTTP_200_OK)
+
+    @staticmethod
+    def get_option_with_key(key: str):
+        for provider in OptionsManager.option_providers:
+            for user_option in provider():
+                if user_option.key == key:
+                    return user_option
+
+        return None

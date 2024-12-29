@@ -12,8 +12,6 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime';
-
 /**
  *
  * @export
@@ -37,7 +35,7 @@ export interface Option {
 	 * @type {boolean}
 	 * @memberof Option
 	 */
-	isEnabled: boolean;
+	enabled: boolean;
 }
 
 /**
@@ -46,7 +44,7 @@ export interface Option {
 export function instanceOfOption(value: object): value is Option {
 	if (!('key' in value) || value['key'] === undefined) return false;
 	if (!('displayName' in value) || value['displayName'] === undefined) return false;
-	if (!('isEnabled' in value) || value['isEnabled'] === undefined) return false;
+	if (!('enabled' in value) || value['enabled'] === undefined) return false;
 	return true;
 }
 
@@ -62,7 +60,7 @@ export function OptionFromJSONTyped(json: any, ignoreDiscriminator: boolean): Op
 
 		'key': json['key'],
 		'displayName': json['display_name'],
-		'isEnabled': json['is_enabled']
+		'enabled': json['enabled']
 	};
 }
 
@@ -74,7 +72,7 @@ export function OptionToJSON(value?: Option | null): any {
 
 		'key': value['key'],
 		'display_name': value['displayName'],
-		'is_enabled': value['isEnabled']
+		'enabled': value['enabled']
 	};
 }
 

@@ -2,8 +2,8 @@ from learning.services.options_manager import OptionsManager
 
 
 class ContentOptionsProvider:
-    CONTENT_KEY_GERMAN_WORDS = "german_words"
-    CONTENT_KEY_POKEMON_NAMES = "pokemon_names"
+    CONTENT_KEY_GERMAN_WORDS = "content_german_words"
+    CONTENT_KEY_POKEMON_NAMES = "content_pokemon_names"
 
     @staticmethod
     def provide_content_options():
@@ -32,9 +32,15 @@ class ContentOptionsProvider:
     ):
         from learning.models import EnabledContent
 
-        EnabledContent.objects.update_or_create(
-            user=user, content_key=user_option.key, enabled=enabled
+        enabled_content = EnabledContent.objects.filter(
+            user=user, content_key=user_option.key
         )
+        if enabled_content.exists():
+            enabled_content.update(enabled=enabled)
+        else:
+            EnabledContent.objects.create(
+                user=user, content_key=user_option.key, enabled=enabled
+            )
 
     @classmethod
     def is_content_enabled(
