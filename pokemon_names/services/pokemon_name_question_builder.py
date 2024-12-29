@@ -1,4 +1,4 @@
-import random
+from django.contrib.auth.models import User
 
 from content.models import PokemonName, Language
 from learning.serializers import (
@@ -6,18 +6,17 @@ from learning.serializers import (
     PokemonNameQuestionContentSerializer,
     QuestionSerializer,
 )
+from pokemon_names.services.language_picker import LanguagePicker
 from pokemon_names.services.pokemon_picker import PokemonPicker
 
 
 class PokemonNameQuestionBuilder:
     @staticmethod
-    def build_pokemon_name_question_serializer(request):
-        pokemon = PokemonPicker.get_next_pokemon()
-        allowed_languages = ["en", "fr", "de"]
-        given_language = random.choice(allowed_languages)
-        expected_language = random.choice(
-            [language for language in allowed_languages if language != given_language]
-        )
+    def build_pokemon_name_question_serializer(user: User):
+        pokemon = PokemonPicker.pick_pokemon(user)
+
+        given_language, expected_language = LanguagePicker.pick_languages(user, pokemon)
+
         stats_serializer = QuestionStatsSerializer(
             {
                 "nb_answers_total": 999,

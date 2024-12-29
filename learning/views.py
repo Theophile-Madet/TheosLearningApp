@@ -64,12 +64,14 @@ class GetNextQuestion(APIView):
         question_type = QuestionTypePicker.get_next_question_type(request.user)
         if question_type == QuestionSerializer.Type.GERMAN_WORD:
             serializer = (
-                GermanWordQuestionBuilder.build_german_word_question_serializer(request)
+                GermanWordQuestionBuilder.build_german_word_question_serializer(
+                    request.user
+                )
             )
         elif question_type == QuestionSerializer.Type.POKEMON_NAME:
             serializer = (
                 PokemonNameQuestionBuilder.build_pokemon_name_question_serializer(
-                    request
+                    request.user
                 )
             )
         else:
