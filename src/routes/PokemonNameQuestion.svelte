@@ -77,8 +77,8 @@
 	<Row class="mb-4">
 		<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap flex-row">
 			<h4>
-				{#if answerWasCorrect}Correct!{:else}Wrong!{/if} {questionContent.givenName}
-				's name in {questionContent.expectedLanguageName}
+				{#if answerWasCorrect}Correct!{:else}Wrong!{/if} {questionContent.givenName}'s
+				name in {questionContent.expectedLanguageName}
 				is {questionContent.expectedName}</h4>
 		</Col>
 	</Row>
@@ -94,7 +94,7 @@
 		<Toast class="text-bg-{toast.color}" isOpen="{toast.open}" fade="{true}" autohide
 					 on:close={() => {toasts = toasts.filter(otherToast => otherToast.pokemonName !== toast.pokemonName || otherToast.language !== toast.language)}}
 					 delay="{3000}">
-			<ToastHeader toggle="{() => toast.open = false}">{toast.pokemonName}</ToastHeader>
+			<ToastHeader toggle="{() => toast.open = false}">{toast.pokemonName} ({toast.language})</ToastHeader>
 			<ToastBody>{toast.bodyText}</ToastBody>
 		</Toast>
 	{/each}
