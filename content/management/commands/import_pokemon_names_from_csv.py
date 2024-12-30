@@ -70,7 +70,7 @@ class Command(BaseCommand):
     def create_pokemons_and_return_created_csv_ids(pokemons_from_file_by_csv_id):
         existing_pokemons = Pokemon.objects.values_list("id_from_csv", flat=True)
         pokemons_to_create = [
-            Pokemon(id_from_csv=csv_id)
+            Pokemon(id_from_csv=csv_id, generation=-1)
             for csv_id in pokemons_from_file_by_csv_id.keys()
             if csv_id not in existing_pokemons
         ]
