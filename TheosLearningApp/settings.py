@@ -189,3 +189,4 @@ EMAIL_HOST_USER = env("EMAIL_HOST_USER", cast=str, default="invalid_user")
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = env("EMAIL_HOST_USER", cast=str, default="invalid_user")
+ADMINS = [("Admin", DEFAULT_FROM_EMAIL)]
