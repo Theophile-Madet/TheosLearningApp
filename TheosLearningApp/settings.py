@@ -181,3 +181,11 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 HEADLESS_ONLY = True
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "posteo.de"
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", cast=str, default="invalid_password")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", cast=str, default="invalid_user")
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = env("EMAIL_HOST_USER", cast=str, default="invalid_user")
