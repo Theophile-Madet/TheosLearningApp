@@ -11,14 +11,18 @@
 	import { createEventDispatcher } from 'svelte';
 	import { getToastBody, getToastColor } from '../utils/toastUtils';
 
-	export let word: Word;
-	export let rank: number;
+	interface Props {
+		word: Word;
+		rank: number;
+	}
 
-	let toasts: { word: Word, open: boolean, bodyText: string, color: string }[] = [];
-	let markInvalidModalOpen = false;
-	let markInvalidLoading = false;
-	let markAnswerWrongModalOpen = false;
-	let markAnswerWrongLoading = false;
+	let { word, rank }: Props = $props();
+
+	let toasts: { word: Word, open: boolean, bodyText: string, color: string }[] = $state([]);
+	let markInvalidModalOpen = $state(false);
+	let markInvalidLoading = $state(false);
+	let markAnswerWrongModalOpen = $state(false);
+	let markAnswerWrongLoading = $state(false);
 
 	const dispatch = createEventDispatcher();
 

@@ -20,13 +20,13 @@
 	import PokemonNameQuestion from './PokemonNameQuestion.svelte';
 
 
-	let aboutModalOpen = false;
+	let aboutModalOpen = $state(false);
 
-	let questionType: QuestionTypeEnum | undefined;
-	let germanWordQuestionContent: GermanWordQuestionContent | undefined;
-	let pokemonNameQuestionContent: PokemonNameQuestionContent | undefined;
-	let questionStats: QuestionStats | undefined;
-	let logoutLoading = false;
+	let questionType: QuestionTypeEnum | undefined = $state();
+	let germanWordQuestionContent: GermanWordQuestionContent | undefined = $state();
+	let pokemonNameQuestionContent: PokemonNameQuestionContent | undefined = $state();
+	let questionStats: QuestionStats | undefined = $state();
+	let logoutLoading = $state(false);
 
 
 	onMount(async () => {

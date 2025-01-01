@@ -4,11 +4,15 @@
 	import { hasAnswered } from './stores';
 	import type { Word } from '../learning-dino-api-client';
 
-	export let text: string;
-	export let word: Word;
-	export let buttonValue: string;
+	interface Props {
+		text: string;
+		word: Word;
+		buttonValue: string;
+	}
 
-	let buttonColor = 'btn-primary';
+	let { text, word, buttonValue }: Props = $props();
+
+	let buttonColor = $state('btn-primary');
 	let clicked = false;
 
 	function determineButtonColor(hasAnswered: Boolean) {
@@ -43,7 +47,7 @@
 	}
 </script>
 
-<button on:click={sendAnswer}
+<button onclick={sendAnswer}
 				class="btn {buttonColor} answer_button d-flex align-items-center justify-content-center"
 				disabled="{$hasAnswered}">
 	{text}

@@ -2,13 +2,16 @@
 	import Header from './Header.svelte';
 	import './styles.css';
 	import { Styles } from '@sveltestrap/sveltestrap';
+
+	/** @type {{children?: import('svelte').Snippet}} */
+	let { children } = $props();
 </script>
 
 <div class="app">
 	<Header />
 
 	<main>
-		<slot />
+		{@render children?.()}
 	</main>
 
 	<footer>

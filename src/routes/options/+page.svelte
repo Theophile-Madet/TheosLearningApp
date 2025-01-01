@@ -7,8 +7,8 @@
 	import DinoButton from '../../components/DinoButton.svelte';
 	import { goto } from '$app/navigation';
 
-	let option_groups: OptionGroup[] = [];
-	let optionsLoading = true;
+	let option_groups: OptionGroup[] = $state([]);
+	let optionsLoading = $state(true);
 
 	async function updateCsrfToken() {
 		const learningApi = useLearningDinoApi(LearningApi);

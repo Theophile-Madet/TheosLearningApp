@@ -5,9 +5,13 @@
 	import type { Word } from '../learning-dino-api-client';
 	import DinoButton from '../components/DinoButton.svelte';
 
-	export let word: Word;
-	export let isOpen: boolean;
-	export let loading: boolean;
+	interface Props {
+		word: Word;
+		isOpen: boolean;
+		loading: boolean;
+	}
+
+	let { word, isOpen, loading }: Props = $props();
 	const dispatch = createEventDispatcher();
 
 	function confirm() {

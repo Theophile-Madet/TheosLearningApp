@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { useLearningDinoApi } from '../../utils/useLearningDinoApi';
 	import { LearningApi } from '../../learning-dino-api-client';
 	import { AuthenticationAccountApi } from '../../allauth-api-client';
@@ -9,10 +11,10 @@
 	import { csrfToken } from '../stores';
 	import DinoButton from '../../components/DinoButton.svelte';
 
-	let username = '';
-	let password = '';
-	let loading = false;
-	let loginError = '';
+	let username = $state('');
+	let password = $state('');
+	let loading = $state(false);
+	let loginError = $state('');
 
 	onMount(async () => {
 		if ($csrfToken) return;
@@ -53,7 +55,7 @@
 	<h1>Login</h1>
 
 	<div class="dino-login-form">
-		<form on:submit|preventDefault={doLogin}>
+		<form onsubmit={preventDefault(doLogin)}>
 			{#if loginError}
 				<Alert color="warning">{loginError}</Alert>
 			{/if}

@@ -4,7 +4,11 @@
 	import { Modal, ModalBody, ModalFooter, ModalHeader } from '@sveltestrap/sveltestrap';
 	import DinoButton from '../components/DinoButton.svelte';
 
-	export let isOpen: boolean;
+	interface Props {
+		isOpen: boolean;
+	}
+
+	let { isOpen }: Props = $props();
 
 	const dispatch = createEventDispatcher();
 

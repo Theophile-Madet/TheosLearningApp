@@ -3,13 +3,25 @@
 
 	import { Button, Icon, Spinner, type TextColor } from '@sveltestrap/sveltestrap';
 
-	export let text: string;
-	export let color: TextColor;
-	export let disabled: boolean = false;
-	export let icon: string = '';
-	export let type: string = 'button';
-	export let loading: boolean = false;
-	export let outline: boolean = false;
+	interface Props {
+		text: string;
+		color: TextColor;
+		disabled?: boolean;
+		icon?: string;
+		type?: string;
+		loading?: boolean;
+		outline?: boolean;
+	}
+
+	let {
+		text,
+		color,
+		disabled = false,
+		icon = '',
+		type = 'button',
+		loading = false,
+		outline = false
+	}: Props = $props();
 
 	let spinnerColor = (color + '-emphasis') as TextColor;
 </script>

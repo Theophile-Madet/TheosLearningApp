@@ -8,12 +8,16 @@
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import { getToastBody, getToastColor } from '../utils/toastUtils';
 
-	export let questionContent: PokemonNameQuestionContent;
+	interface Props {
+		questionContent: PokemonNameQuestionContent;
+	}
+
+	let { questionContent }: Props = $props();
 
 	const dispatch = createEventDispatcher();
-	let inputValue = '';
-	let answerWasCorrect = false;
-	let toasts: { pokemonName: string, language: string, open: boolean, bodyText: string, color: string }[] = [];
+	let inputValue = $state('');
+	let answerWasCorrect = $state(false);
+	let toasts: { pokemonName: string, language: string, open: boolean, bodyText: string, color: string }[] = $state([]);
 
 	function sendAnswer() {
 		$hasAnswered = true;
