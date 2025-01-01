@@ -27,15 +27,15 @@
 </script>
 
 <Button on:click
-				color="{color}"
-				disabled="{disabled || loading}"
-				type="{type}"
-				outline="{outline}">
+				color={color}
+				disabled={disabled || loading}
+				type={type}
+				outline={outline}>
 	{#if icon && !loading}
-		<Icon name="{icon}" />
+		<Icon name={icon} />
 	{/if}
 	{#if loading}
-		<Spinner type="border" color="{spinnerColor}" size="sm" />
+		<Spinner type="border" color={spinnerColor} size="sm" />
 	{/if}
 	{text}
 </Button>

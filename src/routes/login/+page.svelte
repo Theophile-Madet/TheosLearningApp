@@ -66,7 +66,7 @@
 				<Input type="password" name="password" bind:value={password} />
 			</FormGroup>
 			<div class="button-center">
-				<DinoButton color="primary" type="submit" text="Login" icon="box-arrow-in-right" loading="{loading}" />
+				<DinoButton color="primary" type="submit" text="Login" icon="box-arrow-in-right" loading={loading} />
 			</div>
 
 		</form>

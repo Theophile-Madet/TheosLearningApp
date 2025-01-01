@@ -23,7 +23,7 @@
 	}
 </script>
 
-<Modal isOpen={isOpen} toggle="{() => {cancel()}}">
+<Modal isOpen={isOpen} toggle={() => {cancel()}}>
 	<ModalHeader>Confirm word is invalid?</ModalHeader>
 	<ModalBody>
 		<ul>
@@ -34,6 +34,6 @@
 	</ModalBody>
 	<ModalFooter>
 		<DinoButton color="secondary" on:click={cancel} text="Cancel" icon="x-circle" />
-		<DinoButton color="danger" on:click={confirm} loading="{loading}" text="Mark as invalid" icon="bookmark-x" />
+		<DinoButton color="danger" on:click={confirm} loading={loading} text="Mark as invalid" icon="bookmark-x" />
 	</ModalFooter>
 </Modal>

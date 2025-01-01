@@ -100,7 +100,7 @@
 <Row class="mb-4">
 	<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
 		{#each Object.entries(textValuePairs) as [text, value]}
-			<AnswerButton text="{text}" word="{word}" buttonValue="{value}"
+			<AnswerButton text={text} word={word} buttonValue={value}
 										on:sendAnswer={sendAnswer} />
 		{/each}
 	</Col>
@@ -116,38 +116,38 @@
 	<Col class="d-flex justify-content-center gap-3">
 		<DinoButton
 			color="danger"
-			outline="{true}"
+			outline={true}
 			on:click={() => {markInvalidModalOpen = true;}}
 			text="That is not a valid word"
-			loading="{markInvalidLoading}"
+			loading={markInvalidLoading}
 			icon="cone-striped" />
 		<DinoButton
 			color="warning"
-			outline="{true}"
+			outline={true}
 			on:click={() => {markAnswerWrongModalOpen = true;}}
 			text="The answer was wrong"
-			loading="{markAnswerWrongLoading}"
+			loading={markAnswerWrongLoading}
 			icon="cone-striped" />
 		<DinoButton
 			color="secondary"
-			outline="{!$hasAnswered}"
+			outline={!$hasAnswered}
 			on:click={() => {dispatch("fetchNextQuestion")}} text="Next question">
 		</DinoButton>
 	</Col>
 </Row>
-<MarkWordAsInvalidConfirmationModal word="{word}" isOpen="{markInvalidModalOpen}"
+<MarkWordAsInvalidConfirmationModal word={word} isOpen={markInvalidModalOpen}
 																		on:confirm={markWordAsInvalid}
 																		on:cancel={() => {markInvalidModalOpen = false;}}
-																		loading="{markInvalidLoading}" />
-<AnswerWasWrongConfirmationModal word="{word}" isOpen="{markAnswerWrongModalOpen}"
+																		loading={markInvalidLoading} />
+<AnswerWasWrongConfirmationModal word={word} isOpen={markAnswerWrongModalOpen}
 																 on:confirm={markAnswerAsWrong}
 																 on:cancel={() => {markAnswerWrongModalOpen = false;}} />
 <div class="toast-container top-0 end-0 p-3">
 	{#each toasts as toast (toast.word.id)}
-		<Toast class="text-bg-{toast.color}" isOpen="{toast.open}" fade="{true}" autohide
+		<Toast class="text-bg-{toast.color}" isOpen={toast.open} fade={true} autohide
 					 on:close={() => {toasts = toasts.filter(otherToast => otherToast.word.id !== toast.word.id)}}
-					 delay="{1500}">
-			<ToastHeader toggle="{() => toast.open = false}">{toast.word.word}</ToastHeader>
+					 delay={1500}>
+			<ToastHeader toggle={() => toast.open = false}>{toast.word.word}</ToastHeader>
 			<ToastBody>{toast.bodyText}</ToastBody>
 		</Toast>
 	{/each}

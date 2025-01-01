@@ -18,7 +18,7 @@
 	}
 </script>
 
-<Modal isOpen={isOpen} toggle="{() => {cancel()}}" size="lg">
+<Modal isOpen={isOpen} toggle={() => {cancel()}} size="lg">
 	<ModalHeader>About Learning Dino</ModalHeader>
 	<ModalBody>
 		<p>

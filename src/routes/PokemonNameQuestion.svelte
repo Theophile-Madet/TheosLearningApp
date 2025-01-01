@@ -69,7 +69,7 @@
 	<Col>
 		<Form on:submit={sendAnswer} class="d-flex align-items-center justify-content-center gap-3 flex-wrap flex-row">
 			<div>
-				<Input valid="{$hasAnswered && answerWasCorrect}" invalid="{$hasAnswered && !answerWasCorrect}"
+				<Input valid={$hasAnswered && answerWasCorrect} invalid={$hasAnswered && !answerWasCorrect}
 							 placeholder="Answer" disabled={$hasAnswered}
 							 bind:value={inputValue} autofocus />
 			</div>
@@ -89,16 +89,16 @@
 {/if}
 <Row class="mb-4">
 	<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap flex-row">
-		<DinoButton text="Next question" disabled="{!$hasAnswered}" outline="{!$hasAnswered}" color="secondary"
+		<DinoButton text="Next question" disabled={!$hasAnswered} outline={!$hasAnswered} color="secondary"
 								on:click={nextQuestion} />
 	</Col>
 </Row>
 <div class="toast-container top-0 end-0 p-3">
 	{#each toasts as toast (toast.pokemonName + toast.language)}
-		<Toast class="text-bg-{toast.color}" isOpen="{toast.open}" fade="{true}" autohide
+		<Toast class="text-bg-{toast.color}" isOpen={toast.open} fade={true} autohide
 					 on:close={() => {toasts = toasts.filter(otherToast => otherToast.pokemonName !== toast.pokemonName || otherToast.language !== toast.language)}}
-					 delay="{3000}">
-			<ToastHeader toggle="{() => toast.open = false}">{toast.pokemonName} ({toast.language})</ToastHeader>
+					 delay={3000}>
+			<ToastHeader toggle={() => toast.open = false}>{toast.pokemonName} ({toast.language})</ToastHeader>
 			<ToastBody>{toast.bodyText}</ToastBody>
 		</Toast>
 	{/each}

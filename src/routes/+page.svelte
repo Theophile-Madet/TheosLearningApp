@@ -131,7 +131,7 @@
 			{#if !germanWordQuestionContent}
 				<div>Failed to load question content for german word</div>
 			{:else}
-				<GermanWordQuestion word="{germanWordQuestionContent.word}" rank="{germanWordQuestionContent.rank}"
+				<GermanWordQuestion word={germanWordQuestionContent.word} rank={germanWordQuestionContent.rank}
 														on:fetchNextQuestion="{fetchNextQuestion}" />
 			{/if}
 		{/if}
@@ -139,7 +139,7 @@
 			{#if !pokemonNameQuestionContent}
 				<div>Failed to load question content for pokemon name</div>
 			{:else}
-				<PokemonNameQuestion questionContent="{pokemonNameQuestionContent}"
+				<PokemonNameQuestion questionContent={pokemonNameQuestionContent}
 														 on:fetchNextQuestion="{fetchNextQuestion}" />
 			{/if}
 		{/if}
@@ -159,22 +159,22 @@
 		<Col class="d-flex justify-content-center gap-3">
 			<DinoButton
 				color="secondary"
-				outline="{true}"
+				outline={true}
 				on:click={() => {aboutModalOpen = true;}} text="About" icon="question-circle">
 			</DinoButton>
 			<DinoButton
 				color="secondary"
-				outline="{true}"
+				outline={true}
 				on:click={async () => {await goto("/options")}} text="Options" icon="settings">
 			</DinoButton>
 			<DinoButton
 				color="secondary"
-				outline="{true}"
-				on:click={logout} text="Logout" icon="door-open" loading="{logoutLoading}">
+				outline={true}
+				on:click={logout} text="Logout" icon="door-open" loading={logoutLoading}>
 			</DinoButton>
 		</Col>
 	</Row>
-	<AboutModal isOpen="{aboutModalOpen}" on:cancel={() => {aboutModalOpen = false;}} />
+	<AboutModal isOpen={aboutModalOpen} on:cancel={() => {aboutModalOpen = false;}} />
 </Container>
 
 

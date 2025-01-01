@@ -11,7 +11,6 @@
 	}
 
 	let { word, isOpen }: Props = $props();
-	let loading: boolean;
 	const dispatch = createEventDispatcher();
 
 	function confirm() {
@@ -23,7 +22,7 @@
 	}
 </script>
 
-<Modal isOpen={isOpen} toggle="{() => {cancel()}}">
+<Modal isOpen={isOpen} toggle={() => {cancel()}}>
 	<ModalHeader>Confirm answer was wrong?</ModalHeader>
 	<ModalBody>
 		<ul>
@@ -34,6 +33,6 @@
 	</ModalBody>
 	<ModalFooter>
 		<DinoButton color="secondary" on:click={cancel} text="Actually it was correct" icon="x-circle" />
-		<DinoButton color="danger" on:click={confirm} text="Yes it was wrong" icon="bug" loading="{loading}" />
+		<DinoButton color="danger" on:click={confirm} text="Yes it was wrong" icon="bug" />
 	</ModalFooter>
 </Modal>
