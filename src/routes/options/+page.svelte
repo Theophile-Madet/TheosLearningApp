@@ -61,7 +61,7 @@
 		<Col class="d-flex justify-content-center">
 			<DinoButton
 				color="secondary"
-				outline="{true}"
+				outline={true}
 				on:click={async () => {await goto("/")}} text="Back to game" icon="settings">
 			</DinoButton>
 		</Col>
@@ -80,7 +80,7 @@
 					<h3>{group.name}</h3>
 					<div class="mb-2">
 						{#each group.options as option}
-							<Input type="switch" id="{option.key}" label="{option.displayName}" checked="{option.enabled}"
+							<Input type="switch" id={option.key} label={option.displayName} checked={option.enabled}
 										 on:change={(event) => onOptionSet(option.key, event.target.checked)} />
 						{/each}
 					</div>

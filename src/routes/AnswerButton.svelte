@@ -1,6 +1,5 @@
 <script lang="ts">
 
-	import { createEventDispatcher } from 'svelte';
 	import { hasAnswered } from './stores';
 	import type { Word } from '../learning-dino-api-client';
 
@@ -8,9 +7,10 @@
 		text: string;
 		word: Word;
 		buttonValue: string;
+		onSendAnswer: (buttonValue: string) => void;
 	}
 
-	let { text, word, buttonValue }: Props = $props();
+	let { text, word, buttonValue, onSendAnswer }: Props = $props();
 
 	let buttonColor = $state('btn-primary');
 	let clicked = false;
@@ -37,13 +37,9 @@
 		buttonColor = determineButtonColor(hasAnswered);
 	});
 
-	const dispatch = createEventDispatcher();
-
 	function sendAnswer() {
 		clicked = true;
-		dispatch('sendAnswer', {
-			value: buttonValue
-		});
+		onSendAnswer(buttonValue);
 	}
 </script>
 

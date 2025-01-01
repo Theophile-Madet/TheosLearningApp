@@ -1,6 +1,5 @@
 <script lang="ts">
 
-	import { createEventDispatcher } from 'svelte';
 	import { Modal, ModalBody, ModalFooter, ModalHeader } from '@sveltestrap/sveltestrap';
 	import type { Word } from '../learning-dino-api-client';
 	import DinoButton from '../components/DinoButton.svelte';
@@ -9,21 +8,14 @@
 		word: Word;
 		isOpen: boolean;
 		loading: boolean;
+		onConfirm: () => void;
+		onCancel: () => void;
 	}
 
-	let { word, isOpen, loading }: Props = $props();
-	const dispatch = createEventDispatcher();
-
-	function confirm() {
-		dispatch('confirm');
-	}
-
-	function cancel() {
-		dispatch('cancel');
-	}
+	let { word, isOpen, loading, onConfirm, onCancel }: Props = $props();
 </script>
 
-<Modal isOpen={isOpen} toggle={() => {cancel()}}>
+<Modal isOpen={isOpen} toggle={onCancel}>
 	<ModalHeader>Confirm word is invalid?</ModalHeader>
 	<ModalBody>
 		<ul>
@@ -33,7 +25,7 @@
 		</ul>
 	</ModalBody>
 	<ModalFooter>
-		<DinoButton color="secondary" on:click={cancel} text="Cancel" icon="x-circle" />
-		<DinoButton color="danger" on:click={confirm} loading={loading} text="Mark as invalid" icon="bookmark-x" />
+		<DinoButton color="secondary" on:click={onCancel} text="Cancel" icon="x-circle" />
+		<DinoButton color="danger" on:click={onConfirm} loading={loading} text="Mark as invalid" icon="bookmark-x" />
 	</ModalFooter>
 </Modal>

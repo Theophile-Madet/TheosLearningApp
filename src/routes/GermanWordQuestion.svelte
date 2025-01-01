@@ -8,15 +8,15 @@
 	import AnswerButton from './AnswerButton.svelte';
 	import MarkWordAsInvalidConfirmationModal from './MarkWordAsInvalidConfirmationModal.svelte';
 	import { Col, Row, Toast, ToastBody, ToastHeader } from '@sveltestrap/sveltestrap';
-	import { createEventDispatcher } from 'svelte';
 	import { getToastBody, getToastColor } from '../utils/toastUtils';
 
 	interface Props {
 		word: Word;
 		rank: number;
+		onFetchNextQuestion: () => void;
 	}
 
-	let { word, rank }: Props = $props();
+	let { word, rank, onFetchNextQuestion }: Props = $props();
 
 	let toasts: { word: Word, open: boolean, bodyText: string, color: string }[] = $state([]);
 	let markInvalidModalOpen = $state(false);
@@ -24,18 +24,16 @@
 	let markAnswerWrongModalOpen = $state(false);
 	let markAnswerWrongLoading = $state(false);
 
-	const dispatch = createEventDispatcher();
-
 	const textValuePairs: { [id: string]: string } = { 'Der': 'm', 'Die': 'f', 'Das': 'n', 'Plural': '0' };
 
 
-	async function sendAnswer(event: CustomEvent) {
+	async function sendAnswer(buttonValue: string) {
 		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		$hasAnswered = true;
 		learningApi.learningApiSendAnswerGermanWordCreate({
 			sendAnswerGermanWordRequest: {
 				wordId: word.id,
-				answer: event.detail.value
+				answer: buttonValue
 			}
 		}).then((result) => {
 			toasts = [{
@@ -60,7 +58,7 @@
 				}
 			}
 		).then(() => {
-			dispatch('fetchNextQuestion');
+			onFetchNextQuestion();
 		}).catch(async (error: ResponseError) => {
 			const errorContent = await error.response.json();
 			$apiError = errorContent.errors.map((error: any) => error.message).join('\n');
@@ -82,7 +80,7 @@
 			}
 		).then(async () => {
 			markAnswerWrongModalOpen = false;
-			dispatch('fetchNextQuestion');
+			onFetchNextQuestion();
 		}).catch(async (error: ResponseError) => {
 			const errorContent = await error.response.json();
 			$apiError = errorContent.errors.map((error: any) => error.message).join('\n');
@@ -101,7 +99,7 @@
 	<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
 		{#each Object.entries(textValuePairs) as [text, value]}
 			<AnswerButton text={text} word={word} buttonValue={value}
-										on:sendAnswer={sendAnswer} />
+										onSendAnswer={sendAnswer} />
 		{/each}
 	</Col>
 </Row>
@@ -131,17 +129,17 @@
 		<DinoButton
 			color="secondary"
 			outline={!$hasAnswered}
-			on:click={() => {dispatch("fetchNextQuestion")}} text="Next question">
+			on:click={onFetchNextQuestion} text="Next question">
 		</DinoButton>
 	</Col>
 </Row>
 <MarkWordAsInvalidConfirmationModal word={word} isOpen={markInvalidModalOpen}
-																		on:confirm={markWordAsInvalid}
-																		on:cancel={() => {markInvalidModalOpen = false;}}
+																		onConfirm={markWordAsInvalid}
+																		onCancel={() => {markInvalidModalOpen = false;}}
 																		loading={markInvalidLoading} />
 <AnswerWasWrongConfirmationModal word={word} isOpen={markAnswerWrongModalOpen}
-																 on:confirm={markAnswerAsWrong}
-																 on:cancel={() => {markAnswerWrongModalOpen = false;}} />
+																 onConfirm={markAnswerAsWrong}
+																 onCancel={() => {markAnswerWrongModalOpen = false;}} />
 <div class="toast-container top-0 end-0 p-3">
 	{#each toasts as toast (toast.word.id)}
 		<Toast class="text-bg-{toast.color}" isOpen={toast.open} fade={true} autohide

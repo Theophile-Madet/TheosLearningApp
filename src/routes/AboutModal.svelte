@@ -1,24 +1,18 @@
 <script lang="ts">
 
-	import { createEventDispatcher } from 'svelte';
 	import { Modal, ModalBody, ModalFooter, ModalHeader } from '@sveltestrap/sveltestrap';
 	import DinoButton from '../components/DinoButton.svelte';
 
 	interface Props {
 		isOpen: boolean;
+		onCancel: () => void;
 	}
 
-	let { isOpen }: Props = $props();
+	let { isOpen, onCancel }: Props = $props();
 
-	const dispatch = createEventDispatcher();
-
-
-	function cancel() {
-		dispatch('cancel');
-	}
 </script>
 
-<Modal isOpen={isOpen} toggle={() => {cancel()}} size="lg">
+<Modal isOpen={isOpen} toggle={onCancel} size="lg">
 	<ModalHeader>About Learning Dino</ModalHeader>
 	<ModalBody>
 		<p>
@@ -39,6 +33,6 @@
 		</p>
 	</ModalBody>
 	<ModalFooter>
-		<DinoButton color="secondary" on:click={cancel} text="Close" icon="x-circle" />
+		<DinoButton color="secondary" on:click={onCancel} text="Close" icon="x-circle" />
 	</ModalFooter>
 </Modal>

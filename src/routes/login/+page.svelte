@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { preventDefault } from 'svelte/legacy';
-
 	import { useLearningDinoApi } from '../../utils/useLearningDinoApi';
 	import { LearningApi } from '../../learning-dino-api-client';
 	import { AuthenticationAccountApi } from '../../allauth-api-client';
@@ -43,6 +41,11 @@
 			loading = false;
 		});
 	}
+
+	function onSubmit(event: Event) {
+		event.preventDefault();
+		doLogin();
+	}
 </script>
 
 
@@ -55,7 +58,7 @@
 	<h1>Login</h1>
 
 	<div class="dino-login-form">
-		<form onsubmit={preventDefault(doLogin)}>
+		<form onsubmit={onSubmit}>
 			{#if loginError}
 				<Alert color="warning">{loginError}</Alert>
 			{/if}

@@ -132,7 +132,7 @@
 				<div>Failed to load question content for german word</div>
 			{:else}
 				<GermanWordQuestion word={germanWordQuestionContent.word} rank={germanWordQuestionContent.rank}
-														on:fetchNextQuestion="{fetchNextQuestion}" />
+														onFetchNextQuestion={fetchNextQuestion} />
 			{/if}
 		{/if}
 		{#if questionType === QuestionTypeEnum.PokemonName}
@@ -140,7 +140,7 @@
 				<div>Failed to load question content for pokemon name</div>
 			{:else}
 				<PokemonNameQuestion questionContent={pokemonNameQuestionContent}
-														 on:fetchNextQuestion="{fetchNextQuestion}" />
+														 onFetchNextQuestion={fetchNextQuestion} />
 			{/if}
 		{/if}
 		{#if questionStats}
@@ -174,7 +174,7 @@
 			</DinoButton>
 		</Col>
 	</Row>
-	<AboutModal isOpen={aboutModalOpen} on:cancel={() => {aboutModalOpen = false;}} />
+	<AboutModal isOpen={aboutModalOpen} onCancel={() => {aboutModalOpen = false;}} />
 </Container>
 
 

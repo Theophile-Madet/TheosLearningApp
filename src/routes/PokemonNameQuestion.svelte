@@ -3,18 +3,17 @@
 	import { csrfToken, hasAnswered } from './stores';
 	import { LearningApi, type PokemonNameQuestionContent } from '../learning-dino-api-client';
 	import { Col, Form, Input, Row, Toast, ToastBody, ToastHeader } from '@sveltestrap/sveltestrap';
-	import { createEventDispatcher } from 'svelte';
 	import DinoButton from '../components/DinoButton.svelte';
 	import { useLearningDinoApi } from '../utils/useLearningDinoApi';
 	import { getToastBody, getToastColor } from '../utils/toastUtils';
 
 	interface Props {
 		questionContent: PokemonNameQuestionContent;
+		onFetchNextQuestion: () => void;
 	}
 
-	let { questionContent }: Props = $props();
+	let { questionContent, onFetchNextQuestion }: Props = $props();
 
-	const dispatch = createEventDispatcher();
 	let inputValue = $state('');
 	let answerWasCorrect = $state(false);
 	let toasts: { pokemonName: string, language: string, open: boolean, bodyText: string, color: string }[] = $state([]);
@@ -51,11 +50,6 @@
 		}).catch((err: Error) => {
 			alert('Not implemented must do catch ' + err);
 		});
-
-	}
-
-	function nextQuestion() {
-		dispatch('fetchNextQuestion');
 	}
 </script>
 
@@ -90,7 +84,7 @@
 <Row class="mb-4">
 	<Col class="d-flex align-items-center justify-content-center gap-3 flex-wrap flex-row">
 		<DinoButton text="Next question" disabled={!$hasAnswered} outline={!$hasAnswered} color="secondary"
-								on:click={nextQuestion} />
+								on:click={onFetchNextQuestion} />
 	</Col>
 </Row>
 <div class="toast-container top-0 end-0 p-3">
