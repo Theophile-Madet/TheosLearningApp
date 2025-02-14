@@ -20,7 +20,7 @@
 
 	function sendAnswer() {
 		$hasAnswered = true;
-		answerWasCorrect = inputValue === questionContent.expectedName;
+		answerWasCorrect = inputValue.toLowerCase() === questionContent.expectedName.toLowerCase();
 
 		const learningApi = useLearningDinoApi(LearningApi, fetch, $csrfToken);
 		learningApi.learningApiSendAnswerPokemonNameCreate({
