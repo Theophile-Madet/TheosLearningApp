@@ -186,7 +186,9 @@ class SendAnswerPokemonName(APIView):
 
         return WasAnswerCorrectSerializer(
             {
-                "correct": given_answer == correct_answer,
+                "correct": PokemonNameLearnedChecker.is_answer_correct(
+                    given_answer, correct_answer
+                ),
                 "learned": learned,
                 "nb_answers_correct_in_a_row": PokemonNameLearnedChecker.nb_correct_in_a_row(
                     user=user, pokemon_id=pokemon_id, language_id=language_id
